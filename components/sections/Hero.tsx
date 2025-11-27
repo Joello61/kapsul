@@ -14,7 +14,10 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 0.3], [0, 30]);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-bg-ultra-dark">
+    <section 
+      id="home" 
+      className="relative min-h-screen flex items-center pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-bg-ultra-dark"
+    >
       
       {/* BACKGROUND */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -62,9 +65,8 @@ export default function Hero() {
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/3 backdrop-blur-md hover:bg-white/6 hover:border-white/20 transition-all duration-300 group">
                 <Sparkles className="w-4 h-4 text-tech animate-pulse" />
                 <span className="text-xs sm:text-sm font-medium text-text-secondary">
-                  Le 1er espace hybride Tech & Touch
+                  Un Esprit Sain dans un Corps Sain
                 </span>
-                <Zap className="w-3 h-3 text-human opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </motion.div>
 
@@ -75,14 +77,13 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.05]">
-                <span className="inline-block gradient-text-tech">
-                  Esprit Tech.
-                </span>
-                <br />
-                <span className="inline-block gradient-text-human mt-2">
-                  Corps Sain.
+                <span className="inline-block gradient-text-human">
+                  KAPSUL.
                 </span>
               </h1>
+              <h3 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter leading-[1.05]'>
+                <span className='inline-block gradient-text-tech'>Moins cher qu'une thérapie, plus efficace qu'une sieste.</span>
+              </h3>
             </motion.div>
 
             {/* Sous-titre */}
@@ -198,7 +199,7 @@ export default function Hero() {
             {/* Container principal */}
             <div className="relative aspect-4/5 rounded-3xl overflow-hidden glass border-2 border-white/10 shadow-2xl">
               
-              {/*cOPTION 1 : VIDÉO (décommente si tu as une vidéo) */}
+              {/* OPTION 1 : VIDÉO (décommente si tu as une vidéo) */}
               <video
                 autoPlay
                 loop
@@ -211,12 +212,12 @@ export default function Hero() {
               </video>
 
               {/* OPTION 2 : IMAGE (utilise celle-ci par défaut) */}
-              {/*<img
+              {/* <img
                 src="/images/hero-main.jpg"
                 alt="Espace KAPSUL - Pods VR et zone de relaxation"
                 onLoad={() => setImageLoaded(true)}
                 className="absolute inset-0 w-full h-full object-cover"
-              />*/}
+              /> */}
 
               {/* Overlay gradient pour lisibilité */}
               <div className="absolute inset-0 bg-linear-to-t from-bg-ultra-dark/60 via-transparent to-transparent" />

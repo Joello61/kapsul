@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import ScrollToTopButton from "@/components/layout/ScrollToTop";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -26,6 +28,8 @@ export default function RootLayout({
         <main>
           {children}
         </main>
+        <Footer />
+        <ScrollToTopButton />
       </body>
     </html>
   );

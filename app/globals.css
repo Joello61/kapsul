@@ -67,6 +67,11 @@ body {
 
 /* --- UTILITIES --- */
 @layer utilities {
+
+  button {
+    @apply cursor-pointer;
+  }
+
   .glass {
     @apply bg-[rgba(237,237,237,0.05)] backdrop-blur-md border border-[rgba(237,237,237,0.1)];
   }

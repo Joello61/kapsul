@@ -6,7 +6,7 @@ import Concept from '@/components/sections/Concept';
 import Services from '@/components/sections/Services';
 import Pricing from '@/components/sections/Pricing';
 import Space from '@/components/sections/Space';
-import Footer from '@/components/sections/Footer';
+import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   // Progress bar au scroll
@@ -83,15 +83,6 @@ export default function Home() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <Space />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          <Footer />
         </motion.div>
       </main>
     </>

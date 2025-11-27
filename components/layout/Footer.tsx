@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { MapPin, Mail, Phone, Instagram, Linkedin, Twitter, ArrowUp, Heart, Zap } from 'lucide-react';
+import { MapPin, Mail, Phone, Instagram, Linkedin, Twitter, Heart, Zap } from 'lucide-react';
 import { footerLinks } from '@/lib/data';
 import Link from 'next/link';
 
@@ -10,10 +10,6 @@ export default function Footer() {
   const footerRef = useRef(null);
   const inView = useInView(footerRef, { once: true, amount: 0.2 });
   const [email, setEmail] = useState('');
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <footer ref={footerRef} className="relative bg-bg-dark border-t border-white/10 overflow-hidden">
@@ -261,19 +257,6 @@ export default function Footer() {
         </motion.div>
 
       </div>
-
-      {/* SCROLL TO TOP BUTTON */}
-      <motion.button
-        onClick={scrollToTop}
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.1, y: -2 }}
-        whileTap={{ scale: 0.95 }}
-        viewport={{ once: true }}
-        className="fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full bg-tech/20 border border-tech/50 flex items-center justify-center text-tech shadow-[0_0_20px_rgba(0,255,148,0.3)] hover:shadow-[0_0_30px_rgba(0,255,148,0.5)] transition-all backdrop-blur-md"
-      >
-        <ArrowUp className="w-5 h-5" />
-      </motion.button>
     </footer>
   );
 }
