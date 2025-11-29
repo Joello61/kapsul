@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import Section from '@/components/shared/Section';
 import ZoneCard from '@/components/ui/ZoneCard';
 import { zones } from '@/lib/data';
-import { MapPin, Maximize2, Volume2 } from 'lucide-react';
+import { MapPin, Maximize2, Volume2, Sparkles, Building2 } from 'lucide-react';
 
 export default function Space() {
   const sectionRef = useRef(null);
@@ -13,67 +13,73 @@ export default function Space() {
   const [activeZone, setActiveZone] = useState<number | null>(null);
 
   return (
-    <Section id="space">
-      <div ref={sectionRef} className="max-w-7xl mx-auto px-4 sm:px-6">
+    <Section id="space" variant="gradient">
+      <div ref={sectionRef} className="max-w-7xl mx-auto">
         
-        {/* --- EN-TÊTE SECTION --- */}
+        {/* EN-TÊTE Premium */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-20"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-human/20 bg-human/5 mb-6"
+            transition={{ duration: 0.6, delay: 0.2, type: "spring", bounce: 0.4 }}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-lavender border-2 border-lavender-300 mb-8"
           >
-            <MapPin className="w-4 h-4 text-human" />
-            <span className="text-sm font-medium text-human">100m² optimisés</span>
+            <Building2 className="w-5 h-5 text-lavender-600" strokeWidth={2.5} />
+            <span className="text-sm font-bold" style={{ color: 'var(--color-lavender-700)' }}>100m² optimisés pour vous</span>
           </motion.div>
 
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight">
-            <span className="text-text-primary">L'Espace</span>{' '}
-            <span className="gradient-text-human">KAPSUL</span>
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-8 tracking-tight">
+            L'Espace <span className="gradient-sunset">Kapsul</span>
           </h2>
           
-          <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            3 zones acoustiques pensées pour votre bien-être
+          <p className="text-xl sm:text-2xl text-charcoal max-w-3xl mx-auto leading-relaxed font-medium">
+            Une architecture d'intérieur conçue pour <span className="gradient-emerald font-bold">apaiser le système nerveux</span>.
+            <br/>Trois zones, trois niveaux d'intensité sensorielle.
           </p>
         </motion.div>
 
-        {/* --- VISUALISATION INTERACTIVE (Nouveau) --- */}
+        {/* VISUALISATION INTERACTIVE Premium */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="mb-12 sm:mb-16 glass rounded-2xl p-6 sm:p-10 relative overflow-hidden"
+          className="mb-20 glass rounded-[3rem] p-10 sm:p-12 relative overflow-hidden border-2 border-white"
         >
-          {/* Fond animé */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Pattern animé */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
             <motion.div
-              className="absolute top-0 left-0 w-full h-full opacity-20"
+              className="absolute top-0 left-0 w-full h-full"
               style={{
                 backgroundImage: `
-                  linear-gradient(rgba(0,255,148,0.1) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(0,255,148,0.1) 1px, transparent 1px)
+                  linear-gradient(var(--color-emerald-500) 1px, transparent 1px),
+                  linear-gradient(90deg, var(--color-emerald-500) 1px, transparent 1px)
                 `,
-                backgroundSize: '40px 40px'
+                backgroundSize: '48px 48px'
               }}
               animate={{
-                backgroundPosition: ['0px 0px', '40px 40px']
+                backgroundPosition: ['0px 0px', '48px 48px']
               }}
               transition={{
-                duration: 20,
+                duration: 30,
                 repeat: Infinity,
                 ease: 'linear'
               }}
             />
           </div>
 
-          {/* Layout simplifié des zones */}
-          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          {/* Titre section */}
+          <div className="relative z-10 text-center mb-12">
+            <h3 className="text-3xl font-extrabold gradient-emerald mb-3">Plan Architectural</h3>
+            <p className="text-base text-charcoal font-medium">Survolez les zones pour découvrir leurs spécificités</p>
+          </div>
+
+          {/* Layout des zones Premium */}
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
             {zones.map((zone, idx) => {
               const Icon = zone.icon;
               const isActive = activeZone === idx;
@@ -83,92 +89,114 @@ export default function Space() {
                   key={zone.title}
                   onHoverStart={() => setActiveZone(idx)}
                   onHoverEnd={() => setActiveZone(null)}
-                  whileHover={{ scale: 1.05 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + idx * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -8 }}
                   className="relative cursor-pointer"
                 >
-                  {/* Zone Card Visuelle */}
+                  {/* Carte Visuelle Premium */}
                   <div 
                     className={`
-                      glass rounded-xl p-6 sm:p-8 h-48 sm:h-56
+                      relative rounded-3xl p-8 h-80 sm:h-96
                       flex flex-col items-center justify-center
-                      transition-all duration-300
-                      ${isActive ? 'border-human/50 shadow-[0_0_30px_rgba(255,179,71,0.2)]' : 'border-white/10'}
+                      transition-all duration-500 border-2
+                      ${isActive 
+                        ? 'glass-emerald border-emerald-300 shadow-emerald' 
+                        : 'glass border-white hover:border-emerald-200'
+                      }
                     `}
                   >
+                    {/* Icône 3D */}
                     <motion.div
                       animate={{
-                        scale: isActive ? 1.2 : 1,
-                        rotate: isActive ? 360 : 0
+                        scale: isActive ? 1.15 : 1,
+                        rotate: isActive ? [0, -5, 5, 0] : 0
                       }}
-                      transition={{ duration: 0.5 }}
-                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mb-4"
-                      style={{ backgroundColor: `${zone.color}20` }}
+                      transition={{ duration: 0.6 }}
+                      className="w-24 h-24 rounded-2xl flex items-center justify-center mb-8 shadow-lg transition-all duration-500"
+                      style={{ 
+                        background: isActive 
+                          ? `linear-gradient(135deg, ${zone.color}, ${zone.color}dd)` 
+                          : 'var(--color-pearl)',
+                        color: isActive ? '#fff' : zone.color
+                      }}
                     >
-                      <Icon 
-                        className="w-8 h-8 sm:w-10 sm:h-10" 
-                        style={{ color: zone.color }} 
-                      />
+                      <Icon className="w-12 h-12" strokeWidth={2} />
                     </motion.div>
 
                     <h3 
-                      className="text-base sm:text-lg font-bold mb-2 text-center"
-                      style={{ color: isActive ? zone.color : '#EDEDED' }}
+                      className="text-2xl sm:text-3xl font-extrabold mb-4 text-center transition-colors duration-300"
+                      style={{ color: isActive ? zone.color : 'var(--color-ink)' }}
                     >
                       {zone.title}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-text-secondary text-center">
+                    <p className="text-base sm:text-lg text-charcoal text-center leading-relaxed font-medium px-4">
                       {zone.desc}
                     </p>
 
-                    {/* Indicateurs */}
-                    <div className="mt-4 flex items-center gap-3">
-                      <motion.div
-                        animate={{ scale: isActive ? [1, 1.2, 1] : 1 }}
-                        transition={{ duration: 1, repeat: isActive ? Infinity : 0 }}
-                        className="flex items-center gap-1 text-xs text-text-secondary"
-                      >
-                        <Volume2 className="w-3 h-3" />
-                        {idx === 2 ? 'Silence' : idx === 1 ? 'Modéré' : 'Social'}
-                      </motion.div>
-                    </div>
-                  </div>
-
-                  {/* Badge de capacité */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: isActive ? 1 : 0.7, scale: isActive ? 1.1 : 1 }}
-                    className="absolute -top-3 -right-3 bg-bg-dark border border-human/30 rounded-full w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center"
-                  >
-                    <span className="text-xs sm:text-sm font-bold text-human">
+                    {/* Badge superficie */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="absolute top-5 right-5 px-4 py-2 glass border-2 border-white rounded-xl text-sm font-black text-ink shadow-lg"
+                    >
                       {idx === 0 ? '40m²' : idx === 1 ? '35m²' : '25m²'}
-                    </span>
-                  </motion.div>
+                    </motion.div>
+                    
+                    {/* Indicateur sonore */}
+                    <motion.div 
+                      className="absolute bottom-6 flex items-center gap-3 px-4 py-2 rounded-full glass-emerald border border-white"
+                      style={{ 
+                        opacity: isActive ? 1 : 0.7,
+                        background: isActive ? `${zone.color}20` : undefined
+                      }}
+                    >
+                      <Volume2 className="w-4 h-4" style={{ color: zone.color }} strokeWidth={2.5} />
+                      <span className="text-xs font-bold uppercase tracking-wider" style={{ color: zone.color }}>
+                        {idx === 2 ? 'Silence Absolu' : idx === 1 ? 'Ambiance Feutrée' : 'Social Soft'}
+                      </span>
+                    </motion.div>
+
+                    {/* Glow au hover */}
+                    {isActive && (
+                      <motion.div
+                        className="absolute inset-0 rounded-3xl blur-xl -z-10"
+                        style={{ backgroundColor: zone.color }}
+                        animate={{
+                          opacity: [0.2, 0.4, 0.2],
+                          scale: [1, 1.05, 1]
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                    )}
+                  </div>
                 </motion.div>
               );
             })}
           </div>
 
-          {/* Légende */}
+          {/* Légende Premium */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-8 flex items-center justify-center gap-6 text-xs sm:text-sm text-text-secondary"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="mt-12 flex items-center justify-center gap-10 relative z-10"
           >
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-tech"></div>
-              <span>Technologie</span>
+            <div className="flex items-center gap-3 px-5 py-3 rounded-full glass border-2 border-white">
+              <div className="w-4 h-4 rounded-full bg-linear-to-br from-emerald-400 to-emerald-600" />
+              <span className="text-sm font-bold text-ink">Technologie</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-human"></div>
-              <span>Expertise humaine</span>
+            <div className="flex items-center gap-3 px-5 py-3 rounded-full glass border-2 border-white">
+              <div className="w-4 h-4 rounded-full bg-linear-to-br from-coral-400 to-coral-600" />
+              <span className="text-sm font-bold text-ink">Humain</span>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* --- GRILLE DE DÉTAILS DES ZONES --- */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* GRILLE DE DÉTAILS DES ZONES */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {zones.map((zone, idx) => (
             <ZoneCard 
               key={zone.title} 
@@ -179,33 +207,34 @@ export default function Space() {
           ))}
         </div>
 
-        {/* --- INFORMATIONS PRATIQUES (Nouveau) --- */}
+        {/* INFORMATIONS PRATIQUES Premium */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {[
-            { icon: MapPin, label: 'Quartier Tech', value: 'Toulouse' },
-            { icon: Maximize2, label: 'Surface', value: '100m²' },
-            { icon: Volume2, label: 'Insonorisation', value: 'Premium' },
-            { icon: '🌿', label: 'Ambiance', value: 'Zen & Tech' }
+            { icon: MapPin, label: 'Quartier', value: 'Saint-Cyprien', gradient: 'from-[var(--color-emerald-400)] to-[var(--color-emerald-600)]' },
+            { icon: Maximize2, label: 'Surface', value: '100m²', gradient: 'from-[var(--color-coral-400)] to-[var(--color-coral-600)]' },
+            { icon: Volume2, label: 'Acoustique', value: 'Certifiée ISO', gradient: 'from-[var(--color-lavender-400)] to-[var(--color-lavender-600)]' },
+            { icon: Sparkles, label: 'Ambiance', value: 'Organique', gradient: 'from-[var(--color-emerald-400)] to-[var(--color-coral-500)]' }
           ].map((info, idx) => (
             <motion.div
               key={info.label}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.05, y: -6 }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className="glass rounded-xl p-4 text-center hover:border-human/30 transition-all duration-300 group"
+              className="glass rounded-3xl p-8 text-center border-2 border-white cursor-pointer"
             >
-              <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
-                {typeof info.icon === 'string' ? info.icon : <info.icon className="w-6 h-6 text-human mx-auto" />}
+              <div className={`w-16 h-16 mx-auto bg-linear-to-br ${info.gradient} rounded-2xl flex items-center justify-center mb-5 shadow-lg`}>
+                <info.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
               </div>
-              <div className="text-sm text-text-secondary mb-1">{info.label}</div>
-              <div className="text-base sm:text-lg font-bold text-text-primary">{info.value}</div>
+              <div className="text-sm font-bold text-slate mb-2 uppercase tracking-wider">{info.label}</div>
+              <div className="text-2xl font-extrabold text-ink">{info.value}</div>
             </motion.div>
           ))}
         </motion.div>

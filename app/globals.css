@@ -1,138 +1,381 @@
 @import "tailwindcss";
 
 @theme {
-  /* --- COULEURS --- */
-  --color-bg-ultra-dark: #050505;
-  --color-bg-dark: #0a0a0a;
-  --color-text-primary: #EDEDED;
-  --color-text-secondary: #a3a3a3;
-  --color-tech: #00FF94;
-  --color-human: #FFB347;
+  
+  /* Backgrounds : Dégradés subtils de blanc cassé à crème */
+  --color-pearl: oklch(0.99 0.005 120);      /* Blanc perle très doux */
+  --color-cream: oklch(0.97 0.01 110);        /* Crème subtil */
+  --color-mist: oklch(0.95 0.015 115);        /* Brume légère */
+  
+  /* Texte : Contraste fort et lisible */
+  --color-ink: oklch(0.25 0.02 280);          /* Encre profonde (presque noir mais chaud) */
+  --color-charcoal: oklch(0.45 0.015 270);    /* Charbon moyen */
+  --color-slate: oklch(0.60 0.01 260);        /* Ardoise pour texte secondaire */
+  --color-fog: oklch(0.75 0.008 250);         /* Brouillard pour détails */
 
-  /* --- BLURS --- */
-  --blur-xs: 8px;
-  --blur-md: 16px;
-  --blur-lg: 24px;
-  --blur-xl: 120px;
+  /* --- COULEUR PRINCIPALE : VERT ÉMERAUDE (Vitalité + Nature) --- */
+  --color-emerald-50: oklch(0.98 0.03 165);
+  --color-emerald-100: oklch(0.95 0.05 165);
+  --color-emerald-200: oklch(0.90 0.08 165);
+  --color-emerald-300: oklch(0.82 0.12 165);
+  --color-emerald-400: oklch(0.72 0.16 165);
+  --color-emerald-500: oklch(0.62 0.18 165);   /* Base - Vert vibrant */
+  --color-emerald-600: oklch(0.52 0.17 165);
+  --color-emerald-700: oklch(0.42 0.15 165);
+  --color-emerald-800: oklch(0.32 0.12 165);
+  --color-emerald-900: oklch(0.22 0.09 165);
+
+  /* --- COULEUR SECONDAIRE : CORAL (Énergie + Chaleur humaine) --- */
+  --color-coral-50: oklch(0.98 0.02 35);
+  --color-coral-100: oklch(0.95 0.05 35);
+  --color-coral-200: oklch(0.90 0.08 35);
+  --color-coral-300: oklch(0.82 0.12 35);
+  --color-coral-400: oklch(0.74 0.16 35);
+  --color-coral-500: oklch(0.68 0.18 35);      /* Base - Coral vivant */
+  --color-coral-600: oklch(0.60 0.17 35);
+  --color-coral-700: oklch(0.50 0.15 35);
+  --color-coral-800: oklch(0.40 0.12 35);
+  --color-coral-900: oklch(0.30 0.09 35);
+
+  /* --- COULEUR ACCENT : LAVANDE (Calme + Spirituel) --- */
+  --color-lavender-50: oklch(0.98 0.02 295);
+  --color-lavender-100: oklch(0.95 0.04 295);
+  --color-lavender-200: oklch(0.90 0.07 295);
+  --color-lavender-300: oklch(0.82 0.11 295);
+  --color-lavender-400: oklch(0.74 0.14 295);
+  --color-lavender-500: oklch(0.65 0.16 295);  /* Base - Lavande moderne */
+  --color-lavender-600: oklch(0.56 0.15 295);
+  --color-lavender-700: oklch(0.47 0.13 295);
+  --color-lavender-800: oklch(0.38 0.10 295);
+  --color-lavender-900: oklch(0.28 0.08 295);
+
+  /* --- COULEUR SUCCESS/WARNING/ERROR --- */
+  --color-success: oklch(0.65 0.18 150);       /* Vert menthe */
+  --color-warning: oklch(0.75 0.15 70);        /* Ambre chaud */
+  --color-error: oklch(0.60 0.20 25);          /* Rouge corail */
+  
+  /* --- SPACING & EFFECTS --- */
+  --blur-soft: 8px;
+  --blur-medium: 16px;
+  --blur-strong: 32px;
+  --blur-extreme: 64px;
+
+  --shadow-sm: 0 2px 8px oklch(0.25 0.02 280 / 0.06);
+  --shadow-md: 0 4px 16px oklch(0.25 0.02 280 / 0.1);
+  --shadow-lg: 0 8px 32px oklch(0.25 0.02 280 / 0.15);
+  --shadow-xl: 0 16px 48px oklch(0.25 0.02 280 / 0.2);
+
+  /* Glows colorés */
+  --glow-emerald: 0 8px 32px oklch(0.62 0.18 165 / 0.25);
+  --glow-coral: 0 8px 32px oklch(0.68 0.18 35 / 0.25);
+  --glow-lavender: 0 8px 32px oklch(0.65 0.16 295 / 0.25);
+
+  /* --- BORDER RADIUS --- */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-full: 9999px;
 
   /* --- ANIMATIONS --- */
   --animate-float: float 6s ease-in-out infinite;
-  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
   --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
 
   /* --- KEYFRAMES --- */
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
   }
-  @keyframes pulse-slow {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.5; }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.02); }
   }
+
   @keyframes shimmer {
-    to { left: 100%; }
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { 
+      opacity: 0; 
+      transform: translateY(30px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
   }
 }
 
-/* --- BASE --- */
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: var(--color-bg-ultra-dark);
-  color: var(--color-text-primary);
+  background: linear-gradient(135deg, var(--color-pearl) 0%, var(--color-cream) 50%, var(--color-mist) 100%);
+  color: var(--color-ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* --- SCROLLBAR --- */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-dark);
+  background: var(--color-cream);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-tech);
-  border-radius: 4px;
+  background: linear-gradient(180deg, var(--color-emerald-400), var(--color-emerald-600));
+  border-radius: var(--radius-full);
+  transition: background 0.3s ease;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-human);
+  background: linear-gradient(180deg, var(--color-emerald-500), var(--color-emerald-700));
 }
 
+/* Selection */
 ::selection {
-  background-color: var(--color-tech);
-  color: var(--color-bg-ultra-dark);
+  background-color: var(--color-emerald-200);
+  color: var(--color-emerald-900);
 }
 
-/* --- UTILITIES --- */
 @layer utilities {
 
-  button {
-    @apply cursor-pointer;
-  }
-
+  /* --- GLASSMORPHISM MODERNE --- */
   .glass {
-    @apply bg-[rgba(237,237,237,0.05)] backdrop-blur-md border border-[rgba(237,237,237,0.1)];
+    background: oklch(1 0 0 / 0.7);
+    backdrop-filter: blur(var(--blur-medium));
+    border: 1px solid oklch(1 0 0 / 0.3);
+    box-shadow: var(--shadow-sm);
   }
 
-  .glass-strong {
-    @apply bg-[rgba(237,237,237,0.1)] backdrop-blur-lg border border-[rgba(237,237,237,0.2)];
+  .glass-emerald {
+    background: linear-gradient(135deg, 
+      oklch(0.98 0.03 165 / 0.9), 
+      oklch(0.95 0.05 165 / 0.85)
+    );
+    backdrop-filter: blur(var(--blur-medium));
+    border: 1px solid var(--color-emerald-200);
+    box-shadow: var(--glow-emerald);
   }
 
-  .glow-tech {
-    box-shadow: 0 0 20px rgba(0, 255, 148, 0.3);
+  .glass-coral {
+    background: linear-gradient(135deg, 
+      oklch(0.98 0.02 35 / 0.9), 
+      oklch(0.95 0.05 35 / 0.85)
+    );
+    backdrop-filter: blur(var(--blur-medium));
+    border: 1px solid var(--color-coral-200);
+    box-shadow: var(--glow-coral);
   }
 
-  .glow-human {
-    box-shadow: 0 0 20px rgba(255, 179, 71, 0.3);
+  .glass-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
-  /* GRADIENTS POUR TEXTE (Fix Tailwind v4) */
-  .gradient-text-tech {
-    background: linear-gradient(135deg, var(--color-tech) 0%, #00CCFF 100%);
+
+  .glass-hover:hover {
+    background: oklch(1 0 0 / 0.85);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* --- DÉGRADÉS DE TEXTE --- */
+  .gradient-emerald {
+    background: linear-gradient(135deg, 
+      var(--color-emerald-500), 
+      var(--color-emerald-700)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  .gradient-text-human {
-    background: linear-gradient(135deg, var(--color-human) 0%, #FF6B6B 100%);
+  .gradient-coral {
+    background: linear-gradient(135deg, 
+      var(--color-coral-500), 
+      var(--color-coral-700)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  
-  /* LOADING STATE */
-  .loading {
+
+  .gradient-sunset {
+    background: linear-gradient(135deg, 
+      var(--color-coral-400), 
+      var(--color-lavender-500)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* --- BOUTONS PREMIUM --- */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-emerald-500), var(--color-emerald-600));
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    box-shadow: var(--glow-emerald);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-emerald-600), var(--color-emerald-700));
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px oklch(0.62 0.18 165 / 0.35);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--color-coral-500), var(--color-coral-600));
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    box-shadow: var(--glow-coral);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, var(--color-coral-600), var(--color-coral-700));
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px oklch(0.68 0.18 35 / 0.35);
+  }
+
+  /* --- CARDS PREMIUM --- */
+  .card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* --- LOADING STATE --- */
+  .loading-shimmer {
     position: relative;
     overflow: hidden;
+    background: var(--color-mist);
   }
-  
-  .loading::after {
+
+  .loading-shimmer::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 148, 0.2), transparent);
-    animation: var(--animate-shimmer); 
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(1 0 0 / 0.6),
+      transparent
+    );
+    animation: var(--animate-shimmer);
   }
 
-  /* SMOOTH TRANSITIONS */
-  .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  /* --- SECTIONS ANIMÉES --- */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .animate-on-scroll.visible {
+    animation: var(--animate-slide-up);
+  }
+
+  /* --- BORDURES ORGANIQUES --- */
+  .rounded-organic {
+    border-radius: var(--radius-xl);
+  }
+
+  .rounded-pill {
+    border-radius: var(--radius-full);
+  }
+
+  /* --- OMBRES COLORÉES --- */
+  .shadow-emerald {
+    box-shadow: var(--glow-emerald);
+  }
+
+  .shadow-coral {
+    box-shadow: var(--glow-coral);
+  }
+
+  .shadow-lavender {
+    box-shadow: var(--glow-lavender);
   }
 }
 
-/* --- ACCESSIBILITÉ --- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+h1 { 
+  font-size: clamp(2.5rem, 5vw, 4.5rem); 
+  letter-spacing: -0.02em;
+}
+
+h2 { 
+  font-size: clamp(2rem, 4vw, 3.5rem); 
+  letter-spacing: -0.01em;
+}
+
+h3 { 
+  font-size: clamp(1.5rem, 3vw, 2.5rem); 
+}
+
+p {
+  line-height: 1.7;
+  color: var(--color-charcoal);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-emerald-500);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--color-coral-500);
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
   }
 }
+

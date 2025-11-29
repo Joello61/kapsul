@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, Lightbulb, Grid3x3, DollarSign, MapPin, Home } from 'lucide-react';
+import { Menu, X, Zap, Lightbulb, Grid3x3, DollarSign, MapPin, Home, Sparkles } from 'lucide-react';
 
 const navLinks = [
   { name: 'Accueil', href: '#home', icon: Home },
@@ -54,130 +54,133 @@ export default function Header() {
 
   return (
     <>
-      {/* HEADER FLOTTANT */}
+      {/* HEADER PREMIUM FLOATING */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
       >
-        <div className="container mx-auto px-4 sm:px-6 pt-4 sm:pt-6">
+        <div className="container mx-auto px-6 sm:px-8 pt-6 sm:pt-8">
           <motion.div
             animate={{
               backgroundColor: isScrolled 
-                ? 'rgba(10, 10, 10, 0.95)' 
-                : 'rgba(10, 10, 10, 0.3)',
-              backdropFilter: isScrolled ? 'blur(20px)' : 'blur(10px)',
+                ? 'rgba(255, 255, 255, 0.9)' 
+                : 'rgba(255, 255, 255, 0.7)',
+              backdropFilter: isScrolled ? 'blur(20px)' : 'blur(12px)',
               boxShadow: isScrolled 
-                ? '0 4px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(237, 237, 237, 0.1)'
-                : '0 0 0 1px rgba(237, 237, 237, 0.05)',
-              borderRadius: isScrolled ? '16px' : '20px',
-              padding: isScrolled ? '12px 24px' : '16px 28px'
+                ? '0 8px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(87, 124, 116, 0.1)' 
+                : '0 4px 16px rgba(0, 0, 0, 0.04)',
+              borderRadius: '9999px',
+              padding: isScrolled ? '12px 28px' : '16px 32px',
+              maxWidth: isScrolled ? '920px' : '1120px',
             }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-6xl mx-auto flex items-center justify-between pointer-events-auto border border-[rgba(237,237,237,0.1)]"
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto flex items-center justify-between pointer-events-auto border border-white/60"
           >
             
-            {/* LOGO */}
+            {/* LOGO ANIMÉ */}
             <Link href="/" onClick={() => setActiveSection('')} className="relative group">
               <motion.div 
-                className="text-lg sm:text-xl font-bold tracking-tighter flex items-center gap-1"
-                whileHover={{ scale: 1.02 }}
+                className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2"
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span className="relative text-text-primary">
-                  KAPSUL
-                  <span className="absolute inset-0 blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300 text-tech">
-                    KAPSUL
-                  </span>
+                <span className="gradient-emerald font-extrabold">
+                  Kapsul
                 </span>
-                <motion.span 
-                  className="text-tech"
+                <motion.div
+                  className="w-2.5 h-2.5 rounded-full bg-linear-to-br from-emerald-500 to-coral-500"
                   animate={{ 
-                    color: ['var(--color-tech)', 'var(--color-human)', 'var(--color-tech)']
+                    scale: [1, 1.3, 1],
+                    rotate: [0, 180, 360]
                   }}
                   transition={{ 
                     duration: 3, 
                     repeat: Infinity,
                     ease: 'easeInOut'
                   }}
-                >
-                  .
-                </motion.span>
+                />
               </motion.div>
             </Link>
 
-            {/* DESKTOP NAV AVEC ACTIVE STATE */}
+            {/* DESKTOP NAV */}
             <nav className="hidden md:flex items-center gap-2">
-              {navLinks.map((link, index) => {
-                const Icon = link.icon;
+              {navLinks.map((link) => {
                 const isActive = activeSection === link.href;
                 
                 return (
-                  <motion.div
+                  <Link
                     key={link.name}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index, duration: 0.5 }}
+                    href={link.href}
+                    onClick={() => handleLinkClick(link.href)}
+                    className="relative"
                   >
-                    <Link
-                      href={link.href}
-                      onClick={() => handleLinkClick(link.href)}
+                    <motion.div
                       className={`
-                        group px-4 py-2.5 text-base font-medium transition-all duration-300 rounded-xl relative flex items-center gap-2
+                        relative px-5 py-2.5 text-sm font-bold transition-all duration-300 rounded-full
                         ${isActive 
-                          ? 'text-tech bg-[rgba(0,255,148,0.1)] border border-[rgba(0,255,148,0.3)]' 
-                          : 'text-text-secondary hover:text-text-primary hover:bg-[rgba(237,237,237,0.05)]'
+                          ? 'text-white' 
+                          : 'text-charcoal hover:text-emerald-700'
                         }
                       `}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      <Icon 
-                        className={`
-                          w-4 h-4 transition-all duration-300
-                          ${isActive ? 'scale-110' : 'group-hover:scale-110'}
-                        `} 
-                      />
-                      <span>{link.name}</span>
+                      <span className="relative z-10">{link.name}</span>
                       
-                      {/* Indicateur actif */}
-                      {isActive ? (
+                      {/* Background actif avec gradient */}
+                      {isActive && (
                         <motion.div
-                          layoutId="activeIndicator"
-                          className="absolute bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tech rounded-full"
-                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        />
-                      ) : (
-                        <motion.div
-                          className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-tech group-hover:w-8 transition-all duration-300 rounded-full"
+                          layoutId="activeNavBackground"
+                          className="absolute inset-0 bg-linear-to-r from-emerald-500 to-emerald-600 rounded-full z-0 shadow-emerald"
+                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                         />
                       )}
-                    </Link>
-                  </motion.div>
+
+                      {/* Hover glow pour états inactifs */}
+                      {!isActive && (
+                        <motion.div
+                          className="absolute inset-0 bg-emerald-100 rounded-full opacity-0 hover:opacity-100 transition-opacity"
+                          whileHover={{ scale: 1.1 }}
+                        />
+                      )}
+                    </motion.div>
+                  </Link>
                 );
               })}
             </nav>
 
             {/* CTA & MOBILE BUTTON */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* CTA Desktop */}
+            <div className="flex items-center gap-3 sm:gap-4">
+              {/* CTA Desktop Premium */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
+                transition={{ delay: 0.5, duration: 0.5, type: "spring", bounce: 0.4 }}
                 className="hidden md:block"
               >
                 <Link href="#pricing">
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="group relative px-6 py-2.5 rounded-full bg-[rgba(0,255,148,0.1)] hover:bg-[rgba(0,255,148,0.2)] border border-[rgba(0,255,148,0.3)] hover:border-[rgba(0,255,148,0.5)] text-base font-semibold text-tech transition-all overflow-hidden"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="relative px-6 py-3 rounded-full bg-linear-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold shadow-emerald hover:shadow-xl transition-all duration-300 flex items-center gap-2 overflow-hidden group"
                   >
-                    <span className="relative z-10 flex items-center gap-2">
-                      <Zap className="w-4 h-4" />
-                      Réserver
-                    </span>
+                    <Zap className="w-4 h-4 fill-white/40 relative z-10" />
+                    <span className="relative z-10">Réserver</span>
+                    
+                    {/* Shimmer effect */}
                     <motion.div
-                      className="absolute inset-0 bg-[rgba(0,255,148,0.1)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
+                      animate={{
+                        x: ['-100%', '100%']
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear",
+                        repeatDelay: 1
+                      }}
                     />
                   </motion.button>
                 </Link>
@@ -185,10 +188,10 @@ export default function Header() {
 
               {/* Mobile Menu Button */}
               <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-text-primary hover:text-tech transition-colors rounded-lg hover:bg-[rgba(237,237,237,0.05)]"
+                className="md:hidden p-2.5 text-ink hover:bg-emerald-100 rounded-full transition-all"
               >
                 <AnimatePresence mode="wait">
                   {isMobileMenuOpen ? (
@@ -199,7 +202,7 @@ export default function Header() {
                       exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <X className="w-5 h-5" />
+                      <X className="w-6 h-6" strokeWidth={2.5} />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -209,7 +212,7 @@ export default function Header() {
                       exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Menu className="w-5 h-5" />
+                      <Menu className="w-6 h-6" strokeWidth={2.5} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -219,37 +222,49 @@ export default function Header() {
         </div>
       </motion.header>
 
-      {/* MOBILE MENU AVEC ACTIVE STATE */}
+      {/* MOBILE MENU PREMIUM */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
+            {/* Backdrop blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-bg-ultra-dark/90 backdrop-blur-md md:hidden"
+              className="fixed inset-0 z-40 bg-ink/30 backdrop-blur-md md:hidden"
             />
             
+            {/* Menu panel */}
             <motion.div
-              initial={{ opacity: 0, x: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 bottom-0 z-50 w-[80%] max-w-sm bg-bg-dark/98 backdrop-blur-xl border-l border-[rgba(237,237,237,0.1)] p-6 md:hidden overflow-y-auto"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed right-0 top-0 bottom-0 z-50 w-[85%] max-w-sm glass-emerald shadow-2xl p-8 md:hidden overflow-y-auto border-l-2 border-emerald-300"
             >
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-6 right-6 p-2 text-text-secondary hover:text-text-primary transition-colors rounded-lg hover:bg-[rgba(237,237,237,0.05)]"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              <div className="text-2xl font-bold tracking-tighter mb-12 pt-4 text-text-primary">
-                KAPSUL<span className="text-tech">.</span>
+              {/* Header menu mobile */}
+              <div className="flex justify-between items-center mb-12">
+                <span className="text-2xl font-bold gradient-emerald flex items-center gap-2">
+                  Kapsul
+                  <motion.div
+                    className="w-2 h-2 rounded-full bg-linear-to-br from-emerald-500 to-coral-500"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  />
+                </span>
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 text-charcoal hover:text-emerald-700 hover:bg-emerald-100 rounded-xl transition-all"
+                >
+                  <X className="w-7 h-7" strokeWidth={2.5} />
+                </motion.button>
               </div>
 
-              <nav className="flex flex-col gap-3">
+              {/* Navigation links */}
+              <nav className="flex flex-col gap-3 mb-8">
                 {navLinks.map((link, index) => {
                   const Icon = link.icon;
                   const isActive = activeSection === link.href;
@@ -257,41 +272,39 @@ export default function Header() {
                   return (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, x: 50 }}
+                      initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index }}
+                      transition={{ delay: 0.1 * index, type: "spring", bounce: 0.3 }}
                     >
                       <Link
                         href={link.href}
                         onClick={() => handleLinkClick(link.href)}
                         className={`
-                          group flex items-center gap-3 text-xl font-medium transition-all duration-300 p-4 rounded-xl relative
+                          flex items-center gap-4 text-lg font-bold transition-all duration-300 p-5 rounded-2xl
                           ${isActive 
-                            ? 'text-tech bg-[rgba(0,255,148,0.1)] border border-[rgba(0,255,148,0.3)]' 
-                            : 'text-text-primary hover:text-tech hover:bg-[rgba(237,237,237,0.05)]'
+                            ? 'bg-linear-to-r from-emerald-500 to-emerald-600 text-white shadow-emerald' 
+                            : 'text-ink hover:bg-emerald-100 hover:text-emerald-700'
                           }
                         `}
                       >
-                        <div 
-                          className={`
-                            w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300
-                            ${isActive 
-                              ? 'bg-[rgba(0,255,148,0.3)] glow-tech' 
-                              : 'bg-[rgba(237,237,237,0.05)] group-hover:bg-[rgba(0,255,148,0.2)]'
-                            }
-                          `}
-                        >
-                          <Icon className="w-5 h-5" />
+                        <div className={`
+                          w-12 h-12 rounded-xl flex items-center justify-center transition-colors
+                          ${isActive 
+                            ? 'bg-white/20 text-white' 
+                            : 'bg-linear-to-br from-emerald-100 to-emerald-200 text-emerald-700'
+                          }
+                        `}>
+                          <Icon className="w-6 h-6" strokeWidth={2.5} />
                         </div>
                         <span>{link.name}</span>
-
-                        {/* Badge "Actif" */}
                         {isActive && (
                           <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="absolute right-4 w-2 h-2 rounded-full bg-tech glow-tech"
-                          />
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="ml-auto"
+                          >
+                            <Sparkles className="w-5 h-5" />
+                          </motion.div>
                         )}
                       </Link>
                     </motion.div>
@@ -299,26 +312,29 @@ export default function Header() {
                 })}
               </nav>
 
-              <div className="w-full h-px bg-[rgba(237,237,237,0.1)] my-8" />
+              <div className="w-full h-px bg-linear-to-r from-transparent via-emerald-300 to-transparent my-8" />
 
+              {/* CTA Mobile */}
               <Link
                 href="#pricing"
                 onClick={() => handleLinkClick('#pricing')}
               >
-                <button className="w-full py-4 text-center rounded-xl bg-tech text-bg-ultra-dark font-bold text-lg hover:bg-tech/90 transition-all glow-tech flex items-center justify-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  Réserver une séance
-                </button>
+                <motion.button 
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full py-5 rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-600 text-white font-bold text-lg shadow-emerald flex items-center justify-center gap-3 relative overflow-hidden group"
+                >
+                  <Zap className="w-6 h-6 fill-white/40 relative z-10" />
+                  <span className="relative z-10">Réserver une séance</span>
+                  
+                  {/* Shimmer */}
+                  <motion.div
+                    className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
+                    animate={{ x: ['-100%', '100%'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                  />
+                </motion.button>
               </Link>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="mt-8 text-sm text-text-secondary text-center"
-              >
-                Rejoignez 500+ pros de la tech
-              </motion.div>
             </motion.div>
           </>
         )}

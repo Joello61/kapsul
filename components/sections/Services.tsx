@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Zap, Heart, Sparkles } from 'lucide-react';
+import { Zap, Heart, Sparkles, ArrowRight } from 'lucide-react';
 import Section from '@/components/shared/Section';
 import TabButton from '@/components/ui/TabButton';
 import ServiceCard from '@/components/ui/ServiceCard';
@@ -16,42 +16,46 @@ export default function Services() {
   const currentServices = activeTab === 'tech' ? servicesTech : servicesHuman;
 
   return (
-    <Section id="services">
-      <div ref={sectionRef} className="max-w-7xl mx-auto px-4 sm:px-6">
+    <Section id="services" variant="pattern">
+      <div ref={sectionRef} className="max-w-7xl mx-auto">
         
-        {/* --- EN-TÊTE SECTION --- */}
+        {/* EN-TÊTE Premium */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-20"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-human/20 bg-human/5 mb-6"
+            transition={{ duration: 0.6, delay: 0.2, type: "spring", bounce: 0.4 }}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-coral border-2 border-coral-300 mb-8"
           >
-            <Sparkles className="w-4 h-4 text-human" />
-            <span className="text-sm font-medium text-human">6 Expériences Uniques</span>
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            >
+              <Sparkles className="w-5 h-5 text-coral-600" />
+            </motion.div>
+            <span className="text-sm font-bold gradient-coral">6 Expériences Uniques</span>
           </motion.div>
 
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight">
-            <span className="text-text-primary">Nos</span>{' '}
-            <span className="gradient-text-human">Services</span>
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-8 tracking-tight">
+            Nos <span className="gradient-sunset">Services</span>
           </h2>
           
-          <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            Choisissez votre mode de récupération : technologie immersive ou expertise humaine
+          <p className="text-xl sm:text-2xl text-charcoal max-w-3xl mx-auto leading-relaxed font-medium">
+            Choisissez votre mode de récupération : <span className="gradient-emerald font-bold">technologie immersive</span> ou <span className="gradient-coral font-bold">expertise humaine</span>.
           </p>
         </motion.div>
 
-        {/* --- TABS SYSTÈME --- */}
+        {/* TABS SYSTÈME Premium */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mb-12"
+          className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 mb-16"
         >
           <TabButton
             active={activeTab === 'tech'}
@@ -59,7 +63,7 @@ export default function Services() {
             icon={Zap}
             color="tech"
           >
-            <span className="hidden sm:inline">K-PODS</span>
+            <span className="hidden sm:inline">K-PODS (Tech)</span>
             <span className="sm:hidden">TECH</span>
           </TabButton>
           
@@ -69,72 +73,101 @@ export default function Services() {
             icon={Heart}
             color="human"
           >
-            <span className="hidden sm:inline">K-MOVE</span>
+            <span className="hidden sm:inline">K-MOVE (Humain)</span>
             <span className="sm:hidden">HUMAIN</span>
           </TabButton>
         </motion.div>
 
-        {/* --- DESCRIPTION DU TAB ACTIF --- */}
+        {/* DESCRIPTION DU TAB ACTIF Premium */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="text-center mb-10 sm:mb-12"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="text-center mb-16"
           >
-            <p className="text-sm sm:text-base text-text-secondary max-w-xl mx-auto px-4">
-              {activeTab === 'tech' 
-                ? '🎧 Immersion totale dans nos pods de dernière génération. Technologie sans contact, récupération instantanée.'
-                : '🧘 Nos experts diplômés vous accompagnent personnellement. Massage thérapeutique et yoga sur-mesure.'
-              }
-            </p>
+            <div className="glass rounded-3xl px-8 py-6 max-w-3xl mx-auto border-2 border-white">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                {activeTab === 'tech' ? (
+                  <>
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", bounce: 0.6 }}
+                      className="w-12 h-12 rounded-xl bg-linear-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-emerald"
+                    >
+                      <Zap className="w-6 h-6 text-white" fill="white" />
+                    </motion.div>
+                    <h3 className="text-2xl font-extrabold gradient-emerald">K-PODS Technology</h3>
+                  </>
+                ) : (
+                  <>
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", bounce: 0.6 }}
+                      className="w-12 h-12 rounded-xl bg-linear-to-br from-coral-400 to-coral-600 flex items-center justify-center shadow-coral"
+                    >
+                      <Heart className="w-6 h-6 text-white" fill="white" />
+                    </motion.div>
+                    <h3 className="text-2xl font-extrabold gradient-coral">K-MOVE Human</h3>
+                  </>
+                )}
+              </div>
+              <p className="text-lg text-charcoal font-medium">
+                {activeTab === 'tech' 
+                  ? 'Immersion totale dans nos pods de dernière génération. Technologie sans contact, récupération instantanée.'
+                  : 'Nos experts diplômés vous accompagnent personnellement. Massage thérapeutique et yoga sur-mesure.'
+                }
+              </p>
+            </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* --- GRILLE DE SERVICES --- */}
+        {/* GRILLE DE SERVICES Premium */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
           >
             {currentServices.map((service, idx) => (
               <ServiceCard 
                 key={service.name} 
                 service={service} 
                 delay={idx * 0.1}
-                activeColor={activeTab === 'tech' ? '#00FF94' : '#FFB347'}
               />
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* --- CTA VERS TARIFS --- */}
+        {/* CTA VERS TARIFS Premium */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-12 sm:mt-16 text-center"
+          className="text-center"
         >
           <a href="#pricing">
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group px-8 py-4 rounded-full bg-linear-to-r from-tech/20 to-human/20 border border-white/10 hover:border-white/20 text-white font-semibold transition-all duration-300 inline-flex items-center gap-2"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group px-10 py-5 rounded-2xl glass border-2 border-emerald-300 text-ink font-bold text-lg transition-all duration-300 inline-flex items-center gap-4 hover:bg-emerald-50"
             >
-              Voir les tarifs
-              <motion.span
-                animate={{ x: [0, 5, 0] }}
+              <span>Voir les tarifs</span>
+              <motion.div
+                className="w-10 h-10 rounded-full bg-linear-to-br from-emerald-400 to-emerald-600 flex items-center justify-center"
+                animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                →
-              </motion.span>
+                <ArrowRight className="w-5 h-5 text-white" strokeWidth={3} />
+              </motion.div>
             </motion.button>
           </a>
         </motion.div>
@@ -143,3 +176,4 @@ export default function Services() {
     </Section>
   );
 }
+
