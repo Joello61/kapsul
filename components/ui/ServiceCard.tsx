@@ -18,119 +18,81 @@ export default function ServiceCard({ service }: ServiceCardProps) {
       onMouseLeave={() => setIsHovered(false)}
       className="group relative h-full"
     >
-      <div className={`
-        bg-white border border-gray-100 rounded-2xl p-8 
-        h-full flex flex-col relative overflow-hidden cursor-pointer
-        shadow-sm
-        transition-all duration-350 ease-out
-        ${isHovered ? 'transform -translate-y-3 shadow-xl border-gray-200' : ''}
-      `}>
+      <div 
+        className={`
+          relative h-full flex flex-col p-8 rounded-3xl
+          bg-white border border-gray-100
+          transition-all duration-500 ease-out overflow-hidden
+          ${isHovered ? 'shadow-2xl -translate-y-1' : 'shadow-sm'}
+        `}
+        style={{
+          borderColor: isHovered ? `${service.color}40` : 'transparent', // 40 = opacity hex
+          boxShadow: isHovered ? `0 20px 40px -10px ${service.color}15` : ''
+        }}
+      >
         
-        {/* Pattern décoratif optimisé */}
+        {/* Background Gradient dynamique au survol */}
         <div 
-          className="absolute inset-0 opacity-[0.025] pointer-events-none bg-[radial-gradient(circle_at_2px_2px,currentColor_1.5px,transparent_0)] bg-size-[28px_28px] transition-opacity duration-500"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{ 
-            color: service.color,
-            opacity: isHovered ? 0.04 : 0.025
+            background: `linear-gradient(135deg, ${service.color}05 0%, transparent 100%)`
           }}
         />
 
-        {/* En-tête : Icône + Badge */}
-        <div className="relative z-10 flex items-start justify-between mb-8">
-          {/* Icône optimisée */}
+        {/* Header: Badge & Icon */}
+        <div className="flex justify-between items-start mb-8 relative z-10">
           <div 
-            className={`
-              w-16 h-16 sm:w-18 sm:h-18 rounded-2xl flex items-center justify-center
-              transition-all duration-350 ease-out
-              ${isHovered ? 'shadow-lg scale-110 rotate-3' : 'shadow-sm'}
-            `}
+            className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:rotate-6"
             style={{ 
-              backgroundColor: isHovered ? service.color : 'var(--color-cream)',
+              backgroundColor: isHovered ? service.color : '#F9FAFB', // gray-50 fallback
+              color: isHovered ? '#FFFFFF' : service.color
             }}
           >
-            <Icon 
-              className="w-8 h-8 sm:w-9 sm:h-9 transition-all duration-350" 
-              style={{ 
-                color: isHovered ? '#FFFFFF' : service.color,
-              }} 
-              strokeWidth={isHovered ? 2 : 1.5}
-            />
+            <Icon className="w-8 h-8" strokeWidth={1.5} />
           </div>
           
-          {/* Badge optimisé */}
-          <div 
-            className={`
-              px-4 py-2 rounded-full text-xs sm:text-sm font-bold
-              transition-all duration-350
-              ${isHovered 
-                ? 'border-2 scale-105' 
-                : 'border border-gray-300'
-              }
-            `}
-            style={{ 
-              borderColor: isHovered ? service.color : undefined,
-              color: isHovered ? service.color : 'var(--color-gray-700)',
-              backgroundColor: isHovered ? `${service.color}15` : 'transparent'
+          <span 
+            className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border transition-colors duration-300"
+            style={{
+              borderColor: isHovered ? service.color : '#E5E7EB',
+              color: isHovered ? service.color : '#6B7280',
+              backgroundColor: isHovered ? '#FFFFFF' : 'transparent'
             }}
           >
             {service.badge}
-          </div>
+          </span>
         </div>
-        
-        {/* Contenu */}
-        <div className="relative z-10 flex-1 mb-8">
-          <h3 
-            className="text-2xl sm:text-3xl font-bold mb-4 transition-colors duration-350"
-            style={{ 
-              color: isHovered ? service.color : 'var(--color-charcoal)' 
-            }}
-          >
+
+        {/* Content */}
+        <div className="flex-1 relative z-10">
+          <h3 className="font-heading text-2xl font-bold text-charcoal mb-3 group-hover:text-black transition-colors">
             {service.name}
           </h3>
-          
-          <p className="text-base text-gray-700 leading-relaxed">
+          <p className="text-gray-600 leading-relaxed">
             {service.desc}
           </p>
         </div>
 
-        {/* Footer optimisé */}
-        <div className="relative z-10 space-y-5">
-          {/* Barre de progression améliorée */}
-          <div className="relative h-1.5 w-full bg-sand rounded-full overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-700 ease-out"
-              style={{ 
-                backgroundColor: service.color,
-                width: isHovered ? '100%' : '0%',
-              }}
-            />
-          </div>
-
-          {/* CTA Link optimisé */}
-          <div
-            className={`
-              flex items-center gap-2 text-base font-bold
-              transition-all duration-350 ease-out
-              ${isHovered ? 'opacity-100 translate-x-2' : 'opacity-0 -translate-x-2'}
-            `}
-            style={{ color: service.color }}
+        {/* Footer / Action */}
+        <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6 group-hover:border-gray-200 transition-colors relative z-10">
+          <span 
+            className="font-bold text-sm transition-colors duration-300"
+            style={{ color: isHovered ? service.color : '#9CA3AF' }}
           >
-            <span>En savoir plus</span>
-            <ArrowUpRight className="w-5 h-5 transition-transform duration-350 group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={2.5} />
+            Découvrir
+          </span>
+          
+          <div 
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+            style={{ backgroundColor: isHovered ? service.color : '#F3F4F6' }}
+          >
+            <ArrowUpRight 
+              className={`w-4 h-4 transition-transform duration-500 ${isHovered ? 'rotate-45' : 'rotate-0'}`}
+              style={{ color: isHovered ? '#FFFFFF' : '#9CA3AF' }} 
+            />
           </div>
         </div>
 
-        {/* Border highlight optimisé */}
-        <div
-          className={`
-            absolute inset-0 rounded-2xl pointer-events-none
-            transition-all duration-350 ease-out
-            ${isHovered ? 'opacity-100' : 'opacity-0'}
-          `}
-          style={{
-            boxShadow: `0 0 0 2px ${service.color}30 inset`,
-          }}
-        />
       </div>
     </div>
   );

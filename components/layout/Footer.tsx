@@ -1,246 +1,210 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Mail, Phone, Instagram, Linkedin, Facebook, Heart, Zap, Send, CheckCircle2 } from 'lucide-react';
-import { footerLinks } from '@/lib/data';
 import Link from 'next/link';
+import { MapPin, Mail, Phone, Instagram, Linkedin, Facebook, ArrowRight, Check, Loader2 } from 'lucide-react';
+import { footerLinks } from '@/lib/data';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    if (!email) return;
+    
+    setStatus('loading');
+    // Simulation d'appel API
     await new Promise(resolve => setTimeout(resolve, 1500));
+    setStatus('success');
     setEmail('');
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 4000);
+    
+    setTimeout(() => setStatus('idle'), 3000);
   };
 
   return (
-    <footer className="relative bg-linear-to-b from-cream via-white to-sand overflow-hidden">
-      
-      {/* Pattern décoratif subtil */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.02]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,var(--color-olive-600)_1.5px,transparent_0)] bg-size-[56px_56px]" />
-      </div>
-
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        
-        {/* CTA SECTION */}
-        <div className="py-20 sm:py-24 text-center border-b border-gray-200">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-olive-100 border-2 border-olive-400 mb-8 shadow-sm">
-            <Zap className="w-5 h-5 text-olive-700" strokeWidth={2.5} />
-            <span className="text-sm font-bold text-olive-800">Prêt à transformer vos pauses ?</span>
+    <footer className="relative bg-white pt-20 pb-10 overflow-hidden">
+      {/* CTA SECTION - Intégrée visuellement au haut du footer */}
+      <div className="container mx-auto px-4 mb-20">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-charcoal text-white p-8 md:p-16 text-center shadow-2xl shadow-charcoal/20">
+          
+          {/* Background Gradients */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-olive-500/20 rounded-full blur-3xl mix-blend-screen animate-pulse" style={{ animationDuration: '4s' }} />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-terra-500/20 rounded-full blur-3xl mix-blend-screen animate-pulse" style={{ animationDuration: '5s' }} />
           </div>
 
-          {/* Titre */}
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-charcoal leading-tight">
-            Réservez votre première<br />
-            expérience <span className="text-olive-700">KAPSUL</span>
-          </h2>
-
-          <p className="text-xl sm:text-2xl text-gray-700 max-w-2xl mx-auto mb-12 leading-relaxed">
-            <span className="text-terra-600 font-bold">12€</span> pour 20 minutes qui vont changer votre rapport au bien-être.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="#pricing">
-              <button className="bg-olive-600 text-white px-10 py-5 rounded-2xl font-bold text-base flex items-center gap-3 shadow-md hover:bg-olive-700 hover:shadow-xl hover:scale-105 transition-all duration-300 ease-out active:scale-95">
-                <Zap className="w-5 h-5" strokeWidth={2.5} />
-                Je réserve maintenant
-              </button>
-            </Link>
+          <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+            <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+              Prêt à déconnecter pour mieux reconnecter ?
+            </h2>
+            <p className="text-gray-300 text-lg md:text-xl mb-10 leading-relaxed">
+              Rejoignez le mouvement Kapsul. Votre première session de 20 minutes suffit à changer votre journée.
+            </p>
             
-            <Link href="#concept">
-              <button className="bg-terra-500 text-white px-10 py-5 rounded-2xl font-bold text-base shadow-md hover:bg-terra-600 hover:shadow-xl hover:scale-105 transition-all duration-300 ease-out active:scale-95">
-                En savoir plus
-              </button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <Link href="#pricing" className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto bg-white text-charcoal hover:bg-olive-50 font-bold py-4 px-8 rounded-full transition-all transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center gap-2">
+                  Réserver ma session
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </Link>
+              <Link href="#contact" className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto bg-white/10 text-white hover:bg-white/20 font-semibold py-4 px-8 rounded-full backdrop-blur-md transition-all border border-white/10">
+                  Nous contacter
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* MAIN FOOTER CONTENT */}
-        <div className="py-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-16">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+          
+          {/* BRAND & NEWSLETTER (Colonnes 1-5) */}
+          <div className="lg:col-span-5 space-y-8">
+            <Link href="/" className="inline-block group">
+              <span className="font-heading font-bold text-3xl text-charcoal tracking-tight flex items-center gap-1">
+                Kapsul
+                <span className="w-2.5 h-2.5 rounded-full bg-olive-600 group-hover:scale-125 transition-transform duration-300" />
+              </span>
+            </Link>
             
-            {/* BRAND COLUMN */}
-            <div className="lg:col-span-2">
-              {/* Logo */}
-              <div className="flex items-center gap-2 mb-6">
-                <h3 className="text-3xl font-bold text-charcoal">Kapsul</h3>
-                <div className="w-3 h-3 rounded-full bg-olive-600" />
-              </div>
-              
-              <p className="text-base text-gray-700 mb-10 leading-relaxed">
-                La déconnexion instantanée pour les esprits hyperconnectés. 
-                <span className="font-bold text-olive-700"> Récupération physique et mentale</span> en 20 minutes.
-              </p>
+            <p className="text-gray-500 text-lg max-w-sm leading-relaxed">
+              L&apos;espace de récupération urbaine nouvelle génération. 
+              Tech & Humain réunis pour votre équilibre mental.
+            </p>
 
-              {/* Newsletter */}
-              <div className="mb-10">
-                <p className="text-sm font-bold text-charcoal mb-4 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-olive-600" strokeWidth={2} />
-                  Restez informé de l&apos;ouverture
+            <div className="max-w-sm pt-4">
+              <p className="text-sm font-semibold text-charcoal mb-3">Newsletter exclusive</p>
+              <form onSubmit={handleSubscribe} className="relative">
+                <input
+                  type="email"
+                  placeholder="votre@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={status === 'loading' || status === 'success'}
+                  className="w-full bg-gray-50 border border-gray-200 text-charcoal rounded-2xl py-3.5 pl-5 pr-14 focus:outline-none focus:ring-2 focus:ring-olive-500/20 focus:border-olive-500 transition-all placeholder:text-gray-400 disabled:opacity-70"
+                />
+                <button
+                  type="submit"
+                  disabled={status !== 'idle' || !email}
+                  className={`
+                    absolute right-2 top-2 bottom-2 aspect-square rounded-xl flex items-center justify-center transition-all
+                    ${status === 'success' ? 'bg-green-500 text-white' : 'bg-charcoal text-white hover:bg-olive-600'}
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                  `}
+                >
+                  {status === 'loading' ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : status === 'success' ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4" />
+                  )}
+                </button>
+              </form>
+              {status === 'success' && (
+                <p className="text-green-600 text-xs mt-2 font-medium animate-in fade-in slide-in-from-top-1">
+                  Merci ! Vous êtes bien inscrit.
                 </p>
-                <form onSubmit={handleNewsletterSubmit} className="flex gap-3">
-                  <input
-                    type="email"
-                    placeholder="votre@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={isSubmitting || isSubmitted}
-                    className="flex-1 px-5 py-3.5 rounded-xl border-2 border-gray-200 bg-white text-charcoal text-sm font-medium focus:outline-none focus:border-olive-500 focus:ring-4 focus:ring-olive-100 transition-all placeholder:text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || isSubmitted}
-                    className="px-6 py-3.5 bg-olive-600 text-white rounded-xl font-bold text-sm hover:bg-olive-700 transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg hover:scale-105 active:scale-95"
-                  >
-                    {isSubmitting ? (
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : isSubmitted ? (
-                      <CheckCircle2 className="w-5 h-5" strokeWidth={2.5} />
-                    ) : (
-                      <Send className="w-5 h-5" strokeWidth={2.5} />
-                    )}
-                  </button>
-                </form>
-                {isSubmitted && (
-                  <p className="text-sm text-olive-700 font-bold mt-3 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Merci ! On vous tient au courant 🎉
-                  </p>
-                )}
-              </div>
-
-              {/* Social Links */}
-              <div className="flex items-center gap-3">
-                <span className="text-sm font-bold text-gray-700">Suivez-nous :</span>
-                {[
-                  { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-                  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-                  { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' }
-                ].map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="w-12 h-12 rounded-xl bg-cream border-2 border-gray-200 hover:border-olive-500 hover:bg-olive-50 flex items-center justify-center text-charcoal hover:text-olive-700 transition-all duration-300 hover:scale-110 active:scale-95"
-                  >
-                    <social.icon className="w-5 h-5" strokeWidth={2} />
-                  </a>
-                ))}
-              </div>
+              )}
             </div>
+          </div>
 
-            {/* SERVICES COLUMN */}
+          {/* Spacer */}
+          <div className="hidden lg:block lg:col-span-1" />
+
+          {/* LINKS COLUMNS (Colonnes 7-12) */}
+          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
+            
+            {/* Services */}
             <div>
-              <h4 className="font-bold text-lg mb-6 text-charcoal flex items-center gap-2">
-                <Zap className="w-5 h-5 text-olive-600" strokeWidth={2.5} />
-                Services
-              </h4>
-              <ul className="space-y-4 text-sm text-gray-700">
-                {footerLinks.services.map((service) => (
-                  <li key={service}>
-                    <a 
-                      href="#services" 
-                      className="hover:text-olive-700 transition-colors duration-250 font-medium inline-flex items-center gap-2 group"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-olive-400 opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
-                      {service}
-                    </a>
+              <h4 className="font-heading font-bold text-charcoal mb-6">Services</h4>
+              <ul className="space-y-4">
+                {footerLinks.services.map((link) => (
+                  <li key={link}>
+                    <Link href="#services" className="text-gray-500 hover:text-olive-600 transition-colors text-sm font-medium block hover:translate-x-1 duration-200">
+                      {link}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* INFOS COLUMN */}
+            {/* Infos */}
             <div>
-              <h4 className="font-bold text-lg mb-6 text-charcoal flex items-center gap-2">
-                <Heart className="w-5 h-5 text-terra-600" strokeWidth={2.5} />
-                Informations
-              </h4>
-              <ul className="space-y-4 text-sm text-gray-700">
-                {footerLinks.infos.map((info) => (
-                  <li key={info}>
-                    <a 
-                      href="#" 
-                      className="hover:text-terra-700 transition-colors duration-250 font-medium inline-flex items-center gap-2 group"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-terra-400 opacity-0 group-hover:opacity-100 transition-opacity duration-250" />
-                      {info}
-                    </a>
+              <h4 className="font-heading font-bold text-charcoal mb-6">Informations</h4>
+              <ul className="space-y-4">
+                {footerLinks.infos.map((link) => (
+                  <li key={link}>
+                    <Link href="#" className="text-gray-500 hover:text-olive-600 transition-colors text-sm font-medium block hover:translate-x-1 duration-200">
+                      {link}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* CONTACT COLUMN */}
-            <div>
-              <h4 className="font-bold text-lg mb-6 text-charcoal">Contact</h4>
-              <ul className="space-y-5 text-sm text-gray-700">
-                <li className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-olive-100 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-olive-700" strokeWidth={2} />
-                  </div>
-                  <span className="leading-relaxed font-medium pt-1">
-                    {footerLinks.location.name}<br />
-                    <span className="text-gray-500">{footerLinks.location.city}</span>
-                  </span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-terra-100 flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5 text-terra-700" strokeWidth={2} />
-                  </div>
-                  <a 
-                    href={`mailto:${footerLinks.location.email}`}
-                    className="hover:text-terra-700 transition-colors duration-250 font-medium"
-                  >
-                    {footerLinks.location.email}
+            {/* Contact & Social */}
+            <div className="col-span-2 md:col-span-1">
+              <h4 className="font-heading font-bold text-charcoal mb-6">Contact</h4>
+              <ul className="space-y-4">
+                <li>
+                  <a href={`mailto:${footerLinks.location.email}`} className="flex items-center gap-3 text-gray-500 hover:text-terra-600 transition-colors group">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-terra-100 transition-colors">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium">Email</span>
                   </a>
                 </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-beige-100 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-beige-500" strokeWidth={2} />
-                  </div>
-                  <a 
-                    href={`tel:${footerLinks.location.phone.replace(/\s/g, '')}`}
-                    className="hover:text-olive-700 transition-colors duration-250 font-medium"
-                  >
-                    {footerLinks.location.phone}
+                <li>
+                  <a href="#" className="flex items-center gap-3 text-gray-500 hover:text-olive-600 transition-colors group">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-olive-100 transition-colors">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium">Appeler</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="flex items-center gap-3 text-gray-500 hover:text-blue-600 transition-colors group">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-medium">Toulouse</span>
                   </a>
                 </li>
               </ul>
             </div>
-
           </div>
         </div>
 
         {/* BOTTOM BAR */}
-        <div className="border-t border-gray-200 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-          <p className="font-medium">
-            © 2025 Kapsul. Fait avec <span className="text-terra-600">❤️</span> à Toulouse.
+        <div className="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-400 text-sm font-medium">
+            © {new Date().getFullYear()} Kapsul. Tous droits réservés.
           </p>
           
-          <div className="flex items-center gap-8">
-            <a href="#" className="hover:text-charcoal transition-colors duration-250 font-medium">
-              Mentions légales
-            </a>
-            <a href="#" className="hover:text-charcoal transition-colors duration-250 font-medium">
-              Confidentialité
-            </a>
+          <div className="flex items-center gap-4">
+            {[Instagram, Linkedin, Facebook].map((Icon, i) => (
+              <a 
+                key={i} 
+                href="#" 
+                className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-charcoal hover:bg-olive-600 hover:text-white transition-all duration-300 hover:-translate-y-1"
+              >
+                <Icon className="w-5 h-5" />
+              </a>
+            ))}
           </div>
         </div>
 
+        {/* GIANT TEXT BACKGROUND - Esthétique "Design" */}
+        <div className="w-full overflow-hidden mt-10 opacity-[0.03] pointer-events-none select-none">
+          <span className="text-[12vw] md:text-[14vw] font-black leading-none text-charcoal tracking-tighter text-center block">
+            KAPSUL SPACE
+          </span>
+        </div>
       </div>
     </footer>
   );

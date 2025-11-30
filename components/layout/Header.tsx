@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3 } from 'lucide-react';
+import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3, Home } from 'lucide-react';
 
 const navLinks = [
+  { name: 'Accueil', href: '#hero', icon: Home },
   { name: 'Concept', href: '#concept', icon: Sparkles },
   { name: 'Services', href: '#services', icon: Grid3x3 },
   { name: 'Tarifs', href: '#pricing', icon: DollarSign },
@@ -14,204 +15,201 @@ const navLinks = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [activeSection, setActiveSection] = useState('#hero');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
+      setIsScrolled(window.scrollY > 20);
 
       const sections = navLinks.map(link => link.href.substring(1));
-      const scrollPosition = window.scrollY + 200;
+      let currentSection = '#hero';
 
       for (const sectionId of sections) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const { offsetTop, offsetHeight } = section;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(`#${sectionId}`);
-            break;
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // Détection plus souple : si la section occupe une bonne partie de l'écran
+          if (rect.top <= 300 && rect.bottom >= 300) {
+            currentSection = `#${sectionId}`;
           }
         }
       }
-
-      if (window.scrollY < 150) {
-        setActiveSection('');
-      }
+      setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLinkClick = (href: string) => {
-    setActiveSection(href);
-    setIsMobileMenuOpen(false);
-  };
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <>
-      {/* HEADER FLOATING */}
-      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
-        <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-6">
-          <nav
+      <header 
+        className={`
+          fixed top-0 left-0 right-0 z-50 flex justify-center
+          transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+          ${isScrolled ? 'pt-3' : 'pt-6'} 
+        `}
+      >
+        <div className="w-full max-w-7xl px-4 flex justify-center">
+          <nav 
             className={`
-              mx-auto flex items-center justify-between
-              pointer-events-auto
-              rounded-full
-              border
-              transition-all duration-500 ease-out
+              relative flex items-center justify-between
+              transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+              backdrop-blur-xl border shadow-lg shadow-black/5
               ${isScrolled 
-                ? 'bg-white/95 backdrop-blur-xl shadow-lg border-gray-200 py-3 px-6 sm:px-8 max-w-4xl' 
-                : 'bg-white/90 backdrop-blur-lg shadow-md border-gray-100 py-4 px-7 sm:px-10 max-w-5xl'
+                ? 'w-auto min-w-[320px] bg-white/90 border-white/60 rounded-full py-2 pl-4 pr-2 scale-95' 
+                : 'w-full md:w-auto md:min-w-[800px] bg-white/70 border-white/40 rounded-2xl md:rounded-full py-3 pl-6 pr-3'
               }
             `}
           >
-            
             {/* LOGO */}
             <Link 
               href="/" 
-              onClick={() => setActiveSection('')}
-              className="group flex items-center gap-2"
+              className="group flex items-center gap-2 pr-6 focus:outline-none"
+              onClick={() => setActiveSection('#hero')}
             >
-              <span className="text-2xl font-bold tracking-tight text-olive-700 transition-transform duration-300 group-hover:scale-105">
-                Kapsul
+              <div className="relative flex items-center justify-center w-9 h-9 rounded-full bg-olive-600 text-white overflow-hidden transition-transform duration-500 group-hover:rotate-12">
+                <span className="font-bold text-lg leading-none mb-0.5">K</span>
+                <div className="absolute inset-0 bg-linear-to-tr from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <span className={`
+                font-heading font-bold text-xl tracking-tight text-charcoal
+                transition-all duration-500 origin-left
+                ${isScrolled ? 'w-0 opacity-0 overflow-hidden scale-0 md:w-auto md:opacity-100 md:scale-100' : 'w-auto opacity-100 scale-100'}
+              `}>
+                Kapsul<span className="text-olive-600">.</span>
               </span>
-              <div className="w-2.5 h-2.5 rounded-full bg-olive-600 transition-all duration-300 group-hover:scale-125 group-hover:bg-terra-500" />
             </Link>
 
-            {/* DESKTOP NAV */}
-            <div className="hidden md:flex items-center gap-2">
+            {/* DESKTOP NAVIGATION */}
+            <div className={`
+              hidden md:flex items-center gap-1
+              transition-all duration-500
+              ${isScrolled ? 'bg-transparent' : 'bg-gray-100/50 p-1.5 rounded-full border border-white/50'}
+            `}>
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href;
-                
+                const Icon = link.icon;
                 return (
                   <Link
                     key={link.name}
                     href={link.href}
-                    onClick={() => handleLinkClick(link.href)}
+                    onClick={() => setActiveSection(link.href)}
                     className={`
-                      relative px-5 py-2.5 rounded-full
-                      font-bold text-sm
-                      transition-all duration-300 ease-out
+                      relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+                      group
                       ${isActive 
-                        ? 'bg-olive-600 text-white shadow-md scale-105' 
-                        : 'text-charcoal hover:text-olive-700 hover:bg-olive-50'
+                        ? 'text-olive-800 bg-white shadow-sm' 
+                        : 'text-gray-600 hover:text-olive-700 hover:bg-white/60'
                       }
                     `}
                   >
-                    {link.name}
-                    {isActive && (
-                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1/2 h-1 rounded-full bg-olive-400 shadow-sm" />
-                    )}
+                    {/* Icône toujours visible maintenant */}
+                    <Icon 
+                      className={`
+                        w-4 h-4 transition-colors duration-300
+                        ${isActive ? 'text-olive-600 fill-olive-600/20' : 'text-gray-400 group-hover:text-olive-600'}
+                      `} 
+                      strokeWidth={isActive ? 2 : 1.5}
+                    />
+                    <span>{link.name}</span>
                   </Link>
                 );
               })}
             </div>
 
-            {/* CTA & MOBILE BUTTON */}
-            <div className="flex items-center gap-3">
-              {/* CTA Desktop */}
+            {/* ACTIONS */}
+            <div className="flex items-center gap-3 pl-2">
               <Link href="#pricing" className="hidden md:block">
-                <button className="bg-olive-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md hover:bg-olive-700 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-out active:scale-95">
-                  <Zap className="w-4 h-4" strokeWidth={2.5} />
-                  <span>Réserver</span>
+                <button className={`
+                  group relative overflow-hidden rounded-full bg-charcoal text-white shadow-md transition-all 
+                  hover:bg-olive-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0
+                  ${isScrolled ? 'px-4 py-2 text-xs' : 'px-6 py-2.5 text-sm'}
+                `}>
+                  <span className="relative z-10 flex items-center gap-2 font-semibold">
+                    Réserver
+                    <Zap className={`${isScrolled ? 'w-3 h-3' : 'w-3.5 h-3.5'} transition-transform group-hover:fill-current`} />
+                  </span>
+                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-linear-to-r from-transparent via-white/20 to-transparent z-0" />
                 </button>
               </Link>
 
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2.5 text-charcoal hover:bg-olive-100 rounded-xl transition-all duration-250 active:scale-95"
-                aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              {/* Mobile Toggle */}
+              <button 
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="md:hidden p-2 text-charcoal hover:bg-olive-50 rounded-full transition-colors"
+                aria-label="Ouvrir le menu"
               >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" strokeWidth={2.5} />
-                ) : (
-                  <Menu className="w-6 h-6" strokeWidth={2.5} />
-                )}
+                <Menu className="w-6 h-6" strokeWidth={1.5} />
               </button>
             </div>
           </nav>
         </div>
       </header>
 
-      {/* MOBILE MENU */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-charcoal/40 backdrop-blur-sm md:hidden transition-opacity duration-300"
-          />
-          
-          {/* Menu panel */}
-          <div className="fixed right-0 top-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-2xl p-8 md:hidden overflow-y-auto border-l border-gray-100">
-            
-            {/* Header menu mobile */}
-            <div className="flex justify-between items-center mb-10">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-olive-700">Kapsul</span>
-                <div className="w-2.5 h-2.5 rounded-full bg-olive-600" />
-              </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 text-charcoal hover:text-olive-700 hover:bg-olive-100 rounded-xl transition-all duration-250"
-                aria-label="Fermer le menu"
-              >
-                <X className="w-6 h-6" strokeWidth={2.5} />
-              </button>
-            </div>
+      {/* MOBILE MENU OVERLAY */}
+      <div 
+        className={`
+          fixed inset-0 z-60 md:hidden transition-all duration-500
+          ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none delay-200'}
+        `}
+      >
+        <div 
+          className={`absolute inset-0 bg-charcoal/20 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`} 
+          onClick={closeMobileMenu}
+        />
 
-            {/* Navigation links */}
-            <nav className="flex flex-col gap-3 mb-8">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                const isActive = activeSection === link.href;
-                
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => handleLinkClick(link.href)}
-                    className={`
-                      flex items-center gap-4 text-base font-bold
-                      transition-all duration-300 p-5 rounded-2xl
-                      ${isActive 
-                        ? 'bg-olive-600 text-white shadow-md scale-105' 
-                        : 'text-charcoal hover:bg-olive-50 hover:text-olive-700'
-                      }
-                    `}
-                  >
-                    <div className={`
-                      w-12 h-12 rounded-xl flex items-center justify-center
-                      transition-all duration-300
-                      ${isActive 
-                        ? 'bg-white/20 text-white' 
-                        : 'bg-olive-100 text-olive-700'
-                      }
-                    `}>
-                      <Icon className="w-6 h-6" strokeWidth={2} />
-                    </div>
-                    <span>{link.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
+        <div 
+          className={`
+            absolute top-2 right-2 bottom-2 w-full max-w-[320px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden
+            transform transition-transform duration-500 cubic-bezier(0.22, 1, 0.36, 1)
+            ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-[110%]'}
+          `}
+        >
+          <div className="flex items-center justify-between p-6 border-b border-gray-100">
+            <span className="font-heading font-bold text-xl text-olive-800">Menu</span>
+            <button 
+              onClick={closeMobileMenu}
+              className="p-2 bg-gray-50 text-gray-500 rounded-full hover:bg-red-50 hover:text-red-500 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
-            {/* Divider */}
-            <div className="h-px w-full bg-linear-to-r from-transparent via-gray-300 to-transparent my-8" />
+          <div className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+            {navLinks.map((link, index) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={closeMobileMenu}
+                  className="group flex items-center gap-4 p-4 rounded-xl hover:bg-olive-50 transition-colors"
+                  style={{ transitionDelay: `${index * 50}ms` }}
+                >
+                  <div className="w-10 h-10 rounded-lg bg-olive-100/50 flex items-center justify-center text-olive-600 group-hover:bg-olive-600 group-hover:text-white transition-colors">
+                    <Icon className="w-5 h-5" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <span className="block font-semibold text-charcoal">{link.name}</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
 
-            {/* CTA Mobile */}
-            <Link href="#pricing" onClick={() => handleLinkClick('#pricing')}>
-              <button className="bg-olive-600 text-white w-full py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-2 shadow-md hover:bg-olive-700 hover:shadow-lg transition-all duration-300 active:scale-95">
-                <Zap className="w-5 h-5" strokeWidth={2.5} />
-                <span>Réserver une séance</span>
+          <div className="p-6 bg-gray-50 border-t border-gray-100">
+            <Link href="#pricing" onClick={closeMobileMenu}>
+              <button className="w-full bg-charcoal text-white font-bold py-4 rounded-xl shadow-lg hover:bg-olive-700 transition-colors flex justify-center items-center gap-2">
+                <Zap className="w-4 h-4" />
+                Réserver ma session
               </button>
             </Link>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   );
 }

@@ -16,67 +16,48 @@ export default function TabButton({
   children 
 }: TabButtonProps) {
   
-  const colorStyles = {
+  // Configuration des styles selon la couleur active
+  const styles = {
     olive: {
-      active: 'bg-olive-600 text-white shadow-md',
-      activeHover: 'hover:bg-olive-700 hover:shadow-lg',
-      inactive: 'bg-white text-charcoal border-2 border-gray-200',
-      inactiveHover: 'hover:bg-cream hover:border-olive-300',
-      focusRing: 'focus-visible:ring-olive-400'
+      active: 'bg-olive-600 text-white shadow-lg shadow-olive-600/20 ring-2 ring-olive-600 ring-offset-2',
+      hover: 'hover:bg-olive-50 hover:text-olive-700',
+      icon: 'text-olive-600'
     },
     terra: {
-      active: 'bg-terra-500 text-white shadow-md',
-      activeHover: 'hover:bg-terra-600 hover:shadow-lg',
-      inactive: 'bg-white text-charcoal border-2 border-gray-200',
-      inactiveHover: 'hover:bg-cream hover:border-terra-300',
-      focusRing: 'focus-visible:ring-terra-400'
+      active: 'bg-terra-500 text-white shadow-lg shadow-terra-500/20 ring-2 ring-terra-500 ring-offset-2',
+      hover: 'hover:bg-terra-50 hover:text-terra-700',
+      icon: 'text-terra-500'
     }
   };
 
-  const currentColor = colorStyles[color];
+  const currentStyle = styles[color];
 
   return (
     <button
       onClick={onClick}
       className={`
-        relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full 
-        flex items-center gap-3
-        font-bold text-sm sm:text-base 
-        transition-all duration-300 ease-out cursor-pointer
+        group relative px-6 py-3 rounded-full flex items-center gap-3
+        font-heading font-bold text-sm md:text-base tracking-wide
+        transition-all duration-300 ease-out active:scale-95
         ${active 
-          ? `${currentColor.active} ${currentColor.activeHover} scale-105` 
-          : `${currentColor.inactive} ${currentColor.inactiveHover}`
+          ? currentStyle.active 
+          : `bg-white text-gray-500 border border-gray-200 ${currentStyle.hover}`
         }
-        focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2
-        ${currentColor.focusRing}
-        active:scale-95
       `}
     >
-      {/* Icône optimisée */}
       <Icon 
         className={`
-          w-5 h-5 sm:w-6 sm:h-6 
-          transition-all duration-300 ease-out
-          ${active ? 'scale-110 rotate-12' : ''}
-        `}
-        strokeWidth={active ? 2.5 : 2}
+          w-5 h-5 transition-transform duration-300
+          ${active ? 'scale-110' : 'scale-100 group-hover:scale-110'}
+          ${active ? 'text-white' : 'text-gray-400 group-hover:text-current'}
+        `} 
+        strokeWidth={2.5} 
       />
-
-      {/* Texte */}
-      <span className="whitespace-nowrap font-bold">
-        {children}
-      </span>
-
-      {/* Indicateur actif optimisé */}
+      <span>{children}</span>
+      
+      {/* Indicateur de chargement / animation subtile au click */}
       {active && (
-        <div 
-          className={`
-            absolute -bottom-1.5 left-1/2 -translate-x-1/2
-            w-2/3 h-1 rounded-full
-            ${color === 'olive' ? 'bg-olive-400' : 'bg-terra-400'}
-            shadow-sm
-          `}
-        />
+        <span className="absolute inset-0 rounded-full animate-ping opacity-20 bg-white" style={{ animationDuration: '1s' }} />
       )}
     </button>
   );

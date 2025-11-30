@@ -1,182 +1,137 @@
 'use client';
 
-import { useState, useRef } from 'react';
 import Section from '@/components/shared/Section';
 import PricingCard from '@/components/ui/PricingCard';
 import { pricingPlans } from '@/lib/data';
 import { TrendingDown, Calculator, ShieldCheck, Sparkles, Calendar, Bath, HandHelping } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useRef } from 'react';
 
 export default function Pricing() {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
 
   return (
-    <Section id="pricing">
+    <Section id="pricing" background="olive">
       
-      {/* EN-TÊTE */}
-      <motion.div 
-        className="text-center mb-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        ref={ref}
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-terra-100 border border-terra-300 mb-6">
-          <TrendingDown className="w-5 h-5 text-terra-700" strokeWidth={2.5} />
-          <span className="text-sm font-semibold text-terra-800">Prix cassés, Qualité Premium</span>
-        </div>
+      {/* HEADER */}
+      <div className="text-center mb-16 md:mb-24" ref={ref}>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-olive-200 mb-6 shadow-sm"
+        >
+          <TrendingDown className="w-4 h-4 text-olive-600" />
+          <span className="text-xs font-bold text-olive-800 uppercase tracking-wide">Le bien-être démocratisé</span>
+        </motion.div>
 
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-charcoal">
-          Tarifs <span className="text-olive-700">Transparents</span>
-        </h2>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-heading text-4xl md:text-5xl font-bold text-charcoal mb-6"
+        >
+          Un tarif unique, <br/>
+          <span className="text-olive-700">Zéro engagement</span>
+        </motion.h2>
         
-        <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-6">
-          Accessible à tous, sans engagement caché.
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Nous avons supprimé le superflu pour ne garder que l&apos;essentiel : votre détente.
+          Payez à la séance ou abonnez-vous pour plus d&apos;avantages.
         </p>
-        
-        <div className="inline-flex items-center gap-2 bg-white px-5 py-3 rounded-full border border-olive-300 shadow-sm">
-          <Calculator className="w-5 h-5 text-olive-600" strokeWidth={2} />
-          <span className="text-sm font-semibold text-charcoal">1 Crédit = 20 min de Pod, Massage ou Yoga</span>
-        </div>
-      </motion.div>
+      </div>
 
-      {/* COMPARAISON */}
+      {/* COMPARAISON INTELLIGENTE */}
       <motion.div 
-        className="mb-16 bg-olive-50 rounded-2xl p-8 sm:p-10 border border-olive-200"
         initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="max-w-5xl mx-auto mb-20"
       >
-        <div className="flex items-center gap-3 mb-8">
-          <Sparkles className="w-6 h-6 text-olive-700" strokeWidth={2} />
-          <h3 className="text-xl sm:text-2xl font-bold text-olive-800">
-            Pourquoi c&apos;est plus doux pour votre budget ?
-          </h3>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {[
-            { label: 'Spa classique', price: '80-120€', time: '60 min', icon: Bath },
-            { label: 'Massage indépendant', price: '60-90€', time: '45 min', icon: HandHelping },
-            { label: 'KAPSUL', price: '12€', time: '20 min', highlight: true, icon: Sparkles }
-          ].map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.label}
-                className={`
-                  p-6 rounded-xl flex flex-col items-center text-center
-                  transition-all duration-300 hover:-translate-y-1
-                  ${item.highlight 
-                    ? 'bg-terra-600 text-white shadow-md scale-105' 
-                    : 'bg-white border border-gray-100'
-                  }
-                `}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: item.highlight ? 1.05 : 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.3 + (index * 0.1) }}
-              >
-                {/* icône */}
-                <Icon className={`w-10 h-10 mb-4 ${item.highlight ? 'text-white' : 'text-terra-600'}`} />
+        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl shadow-olive-900/5 border border-olive-100">
+           <h3 className="text-xl font-bold text-charcoal mb-8 flex items-center gap-3">
+             <Calculator className="w-6 h-6 text-olive-500" />
+             Comparatif de rentabilité
+           </h3>
 
-                <div className={`text-xs mb-2 font-semibold uppercase tracking-wide ${item.highlight ? 'text-white/90' : 'text-gray-500'}`}>
-                  {item.label}
-                </div>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Classique 1 */}
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100 text-center opacity-60 hover:opacity-100 transition-opacity">
+                 <Bath className="w-8 h-8 mx-auto mb-4 text-gray-400" />
+                 <div className="text-sm font-bold uppercase text-gray-400 mb-1">Spa Urbain</div>
+                 <div className="text-3xl font-bold text-gray-600 mb-2">90€</div>
+                 <div className="text-xs text-gray-400">pour 60 minutes</div>
+              </div>
 
-                <div className={`text-3xl sm:text-4xl font-bold mb-1 ${item.highlight ? 'text-white' : 'text-charcoal'}`}>
-                  {item.price}
-                </div>
+              {/* Classique 2 */}
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100 text-center opacity-60 hover:opacity-100 transition-opacity">
+                 <HandHelping className="w-8 h-8 mx-auto mb-4 text-gray-400" />
+                 <div className="text-sm font-bold uppercase text-gray-400 mb-1">Massage</div>
+                 <div className="text-3xl font-bold text-gray-600 mb-2">75€</div>
+                 <div className="text-xs text-gray-400">pour 45 minutes</div>
+              </div>
 
-                <div className={`text-xs font-semibold uppercase ${item.highlight ? 'text-white/80' : 'text-gray-500'}`}>
-                  {item.time}
-                </div>
-              </motion.div>
-            );
-          })}
+              {/* Kapsul Winner */}
+              <div className="relative p-6 rounded-2xl bg-charcoal text-white text-center shadow-lg transform scale-105 border-2 border-olive-500">
+                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-olive-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                   Winner
+                 </div>
+                 <Sparkles className="w-8 h-8 mx-auto mb-4 text-olive-400 animate-pulse" />
+                 <div className="text-sm font-bold uppercase text-olive-200 mb-1">Kapsul</div>
+                 <div className="text-4xl font-bold text-white mb-2">12€</div>
+                 <div className="text-xs text-gray-300">pour 20 minutes</div>
+                 <p className="mt-3 text-xs text-olive-200 font-medium">Récupération équivalente en 3x moins de temps</p>
+              </div>
+           </div>
         </div>
       </motion.div>
 
-      {/* GRILLE DE PRICING */}
+      {/* CARDS PRICING */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
       >
-        {pricingPlans.map((plan, index) => (
-          <motion.div
-            key={plan.name}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.7 + (index * 0.1) }}
-          >
+        {pricingPlans.map((plan) => (
+          <motion.div key={plan.name} variants={itemVariants}>
             <PricingCard 
               plan={plan} 
-              isSelected={selectedPlan === plan.name}
-              onSelect={() => setSelectedPlan(plan.name)}
             />
           </motion.div>
         ))}
       </motion.div>
 
-      {/* CALCULATEUR */}
+      {/* REASSURANCE */}
       <motion.div 
-        className="bg-terra-50 rounded-2xl p-8 sm:p-10 border border-terra-200 mb-16"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 1 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5 }}
+        className="mt-20 flex flex-wrap justify-center gap-4 md:gap-8"
       >
-        <h3 className="text-xl sm:text-2xl font-bold text-terra-800 mb-8 flex items-center gap-3">
-          <Calculator className="w-7 h-7 text-terra-700" strokeWidth={2} />
-          Calculez votre économie réelle
-        </h3>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-          {[
-            { label: 'À la carte', price: '12€', credit: '/crédit', highlight: false },
-            { label: 'Student Pass', price: '7.47€', credit: '/crédit', highlight: true },
-            { label: 'Standard Pass', price: '6.24€', credit: '/crédit', highlight: true }
-          ].map((item, index) => (
-            <motion.div
-              key={item.label}
-              className={`p-5 rounded-xl ${item.highlight ? 'bg-olive-600 text-white' : 'bg-white border border-gray-100'}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: 1.1 + (index * 0.1) }}
-            >
-              <div className={`text-sm mb-2 font-semibold uppercase ${item.highlight ? 'text-white/90' : 'text-gray-500'}`}>
-                {item.label}
-              </div>
-              <div className="text-3xl font-bold">
-                {item.price}<span className={`text-base font-normal ${item.highlight ? 'text-white/80' : 'text-gray-500'}`}>{item.credit}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* BADGES CONFIANCE */}
-      <motion.div 
-        className="flex justify-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 1.4 }}
-      >
-        <div className="inline-flex flex-col sm:flex-row items-center gap-6 sm:gap-8 bg-white px-8 py-5 rounded-full border border-olive-300 shadow-sm">
-          {[
-            { icon: ShieldCheck, text: 'Sans engagement', color: 'text-olive-700' },
-            { icon: Sparkles, text: 'Réservation instantanée', color: 'text-terra-700' },
-            { icon: Calendar, text: 'Annulation flexible', color: 'text-beige-500' }
-          ].map((badge, idx) => (
-            <div key={idx} className="flex items-center gap-2">
-              {idx > 0 && <div className="w-1.5 h-1.5 rounded-full bg-gray-300 hidden sm:block" />}
-              <badge.icon className={`w-5 h-5 ${badge.color}`} strokeWidth={2.5} />
-              <span className="text-sm font-semibold text-charcoal">{badge.text}</span>
-            </div>
-          ))}
-        </div>
+         {[
+           { icon: ShieldCheck, text: "Sans Engagement" },
+           { icon: Calendar, text: "Annulation Flexible" },
+           { icon: Sparkles, text: "Report de crédits" }
+         ].map((item, i) => (
+           <div key={i} className="flex items-center gap-2 px-5 py-3 bg-white/50 rounded-full border border-olive-100 text-sm font-semibold text-gray-600 backdrop-blur-sm">
+             <item.icon className="w-4 h-4 text-olive-600" />
+             {item.text}
+           </div>
+         ))}
       </motion.div>
 
     </Section>

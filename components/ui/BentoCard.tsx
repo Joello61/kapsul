@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 interface BentoCardProps {
@@ -12,6 +12,7 @@ interface BentoCardProps {
   children?: React.ReactNode;
   image?: string;
   imagePosition?: 'top' | 'background' | 'side';
+  href?: string;
 }
 
 export default function BentoCard({ 
@@ -21,7 +22,7 @@ export default function BentoCard({
   highlight = false, 
   children,
   image,
-  imagePosition = 'top'
+  imagePosition = 'top',
 }: BentoCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -29,20 +30,18 @@ export default function BentoCard({
     <div
       className={`
         group relative overflow-hidden h-full flex flex-col
-        bg-white rounded-xl
+        bg-white rounded-3xl
         border border-gray-100
-        shadow-sm
-        transition-all duration-300 ease-out
-        hover:shadow-lg hover:-translate-y-1
-        ${highlight ? 'ring-2 ring-olive-500 ring-offset-4' : ''}
+        shadow-sm hover:shadow-2xl hover:shadow-olive-900/5
+        transition-all duration-500 cubic-bezier(0.22, 1, 0.36, 1)
+        ${highlight ? 'ring-1 ring-olive-500/30' : ''}
         ${className}
       `}
     >
-      {/* === CAS 1 : IMAGE EN BACKGROUND === */}
+      {/* === CAS 1 : IMAGE EN BACKGROUND (Style Immersif) === */}
       {image && imagePosition === 'background' && (
         <>
-          {/* Image de fond */}
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-0 overflow-hidden">
             <Image 
               src={image} 
               alt={title} 
@@ -51,46 +50,47 @@ export default function BentoCard({
               onLoad={() => setImageLoaded(true)}
               className={`
                 object-cover
-                transition-all duration-700 ease-out
-                ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
+                transition-transform duration-700 ease-out
+                group-hover:scale-105
+                ${imageLoaded ? 'opacity-100' : 'opacity-0'}
               `}
               priority
             />
-            {/* Overlay gradient optimisé */}
-            <div className="absolute inset-0 bg-linear-to-t from-charcoal/95 via-charcoal/60 to-transparent" />
+            {/* Gradient Overlay plus prononcé pour la lisibilité du texte blanc */}
+            <div className="absolute inset-0 bg-linear-to-t from-charcoal/95 via-charcoal/60 to-transparent opacity-90 transition-opacity duration-500" />
+            
+            {/* Noise texture subtile */}
+            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
           </div>
 
-          {/* Contenu */}
-          <div className="relative z-10 p-8 sm:p-10 lg:p-12 mt-auto">
+          <div className="relative z-10 p-8 sm:p-10 flex flex-col justify-end h-full mt-auto">
             {highlight && (
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100/95 backdrop-blur-sm border border-olive-400 mb-6 shadow-sm">
-                <Sparkles className="w-4 h-4 text-olive-700" strokeWidth={2} />
-                <span className="text-sm font-semibold text-olive-800">Recommandé</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-olive-500/20 backdrop-blur-md border border-olive-500/30 mb-6 self-start">
+                <Sparkles className="w-3.5 h-3.5 text-olive-100" />
+                <span className="text-xs font-bold text-white tracking-wide uppercase">Recommandé</span>
               </div>
             )}
 
-            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
+            <h3 className="font-heading text-3xl md:text-4xl font-bold text-white mb-3 leading-tight tracking-tight drop-shadow-sm">
               {title}
             </h3>
             
-            <p className="text-base sm:text-lg lg:text-xl text-white/95 mb-8 leading-relaxed max-w-2xl">
+            <p className="text-gray-200 text-lg leading-relaxed max-w-xl text-balance transition-colors duration-300">
               {desc}
             </p>
 
-            {children}
+            {/* CORRECTION : Contenu toujours visible (plus d'opacité 0) */}
+            <div className="mt-8 relative">
+               {children}
+            </div>
           </div>
-
-          {/* Loading skeleton amélioré */}
-          {!imageLoaded && (
-            <div className="absolute inset-0 bg-linear-to-br from-sand to-cream animate-pulse" />
-          )}
         </>
       )}
 
-      {/* === CAS 2 : IMAGE TOP === */}
+      {/* === CAS 2 : IMAGE TOP (Style Classique) === */}
       {image && imagePosition === 'top' && (
         <>
-          <div className="relative h-56 sm:h-64 overflow-hidden shrink-0">
+          <div className="relative h-64 overflow-hidden shrink-0 m-2 rounded-2xl">
             <Image
               src={image}
               alt={title}
@@ -99,107 +99,59 @@ export default function BentoCard({
               onLoad={() => setImageLoaded(true)}
               className={`
                 object-cover
-                transition-all duration-700 ease-out
-                group-hover:scale-105
+                transition-transform duration-700 ease-out
+                group-hover:scale-110
                 ${imageLoaded ? 'opacity-100' : 'opacity-0'}
               `}
-              priority
             />
-            
-            {/* Badge highlight optimisé */}
+            {/* Badge flottant */}
             {highlight && (
-              <div className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md border border-olive-400 shadow-md">
-                <Sparkles className="w-4 h-4 text-olive-600" strokeWidth={2} />
-                <span className="text-sm font-semibold text-olive-700">Top choix</span>
+              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-olive-800 shadow-sm border border-olive-100">
+                Top Choix
               </div>
-            )}
-
-            {/* Loading skeleton */}
-            {!imageLoaded && (
-              <div className="absolute inset-0 bg-linear-to-br from-sand to-cream animate-pulse" />
             )}
           </div>
 
-          <div className="p-6 sm:p-8 flex flex-col grow">
-            <h3 className={`
-              text-xl sm:text-2xl lg:text-3xl font-bold mb-3 leading-tight
-              transition-colors duration-300
-              ${highlight ? 'text-olive-700' : 'text-charcoal group-hover:text-olive-700'}
-            `}>
+          <div className="p-8 flex flex-col grow">
+            <h3 className="font-heading text-2xl font-bold text-charcoal mb-3 group-hover:text-olive-700 transition-colors">
               {title}
             </h3>
-            
-            <p className="text-sm sm:text-base text-gray-700 mb-6 leading-relaxed grow">
+            <p className="text-gray-600 leading-relaxed mb-6 grow">
               {desc}
             </p>
-
+            <div className="flex items-center text-olive-600 font-bold text-sm gap-2 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+              Découvrir <ArrowRight className="w-4 h-4" />
+            </div>
             {children}
           </div>
         </>
       )}
 
-      {/* === CAS 3 : IMAGE SIDE === */}
-      {image && imagePosition === 'side' && (
-        <div className="flex flex-col sm:flex-row h-full">
-          <div className="w-full sm:w-2/5 h-56 sm:h-full relative overflow-hidden shrink-0">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              sizes="(max-width: 640px) 100vw, 40vw"
-              onLoad={() => setImageLoaded(true)}
-              className={`
-                object-cover
-                transition-all duration-700 ease-out
-                group-hover:scale-105
-                ${imageLoaded ? 'opacity-100' : 'opacity-0'}
-              `}
-              priority
-            />
-            
-            {/* Loading skeleton */}
-            {!imageLoaded && (
-              <div className="absolute inset-0 bg-linear-to-br from-sand to-cream animate-pulse" />
-            )}
-          </div>
-
-          <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 text-charcoal leading-tight transition-colors duration-300 group-hover:text-olive-700">
-              {title}
-            </h3>
-            
-            <p className="text-sm sm:text-base text-gray-700 mb-4 leading-relaxed">
-              {desc}
-            </p>
-
-            {children}
-          </div>
-        </div>
-      )}
-
-      {/* === CAS 4 : SANS IMAGE === */}
+      {/* === CAS 3 : SANS IMAGE (Style Minimaliste) === */}
       {!image && (
-        <div className="relative z-10 p-6 sm:p-8 lg:p-10 flex flex-col h-full">
+        <div className="relative p-8 h-full flex flex-col bg-linear-to-br from-white to-gray-50/50">
+           {/* Décoration d'arrière-plan */}
+           <div className="absolute top-0 right-0 w-32 h-32 bg-olive-100/50 rounded-bl-full -mr-8 -mt-8 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+           
           {highlight && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100 border border-olive-400 mb-6 w-fit shadow-sm">
-              <Sparkles className="w-4 h-4 text-olive-700" strokeWidth={2} />
-              <span className="text-sm font-semibold text-olive-800">Premium</span>
+            <div className="mb-6">
+               <span className="inline-block px-3 py-1 rounded-full bg-olive-100 text-olive-800 text-xs font-bold uppercase tracking-wider">
+                 Premium
+               </span>
             </div>
           )}
 
-          <h3 className={`
-            text-xl sm:text-2xl lg:text-3xl font-bold mb-4 leading-tight
-            transition-colors duration-300
-            ${highlight ? 'text-olive-700' : 'text-charcoal group-hover:text-olive-700'}
-          `}>
+          <h3 className="font-heading text-2xl md:text-3xl font-bold text-charcoal mb-4 group-hover:text-olive-700 transition-colors">
             {title}
           </h3>
           
-          <p className="text-sm sm:text-base text-gray-700 mb-6 leading-relaxed flex-1">
+          <p className="text-gray-600 leading-relaxed grow">
             {desc}
           </p>
 
-          {children}
+          <div className="mt-6 pt-6 border-t border-gray-100">
+             {children}
+          </div>
         </div>
       )}
     </div>

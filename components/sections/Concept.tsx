@@ -2,16 +2,16 @@
 
 import Section from '@/components/shared/Section';
 import BentoCard from '@/components/ui/BentoCard';
-import { problems, solutions } from '@/lib/data';
-import { TrendingUp, ArrowRight } from 'lucide-react';
-import { cubicBezier, motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { problems } from '@/lib/data';
+import { TrendingUp, ArrowRight, Zap, Heart } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
 export default function Concept() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
+  // Mapping des images pour les cartes problèmes
   const problemImages = [
     '/images/back-pain.jpg',
     '/images/stress.jpg',
@@ -22,170 +22,126 @@ export default function Concept() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
+      transition: { staggerChildren: 0.1 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: cubicBezier(0, 0, 0.58, 1)
-      }
-    }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
   return (
-    <Section id="concept">
+    <Section id="concept" background="white">
       
-      {/* EN-TÊTE */}
-      <motion.div 
-        className="text-center mb-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        ref={ref}
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100 border border-olive-300 mb-6">
-          <TrendingUp className="w-5 h-5 text-olive-700" strokeWidth={2.5} />
-          <span className="text-sm font-semibold text-olive-800">Innovation Hybride</span>
-        </div>
+      {/* HEADER DE SECTION */}
+      <div className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-olive-50 border border-olive-200 mb-6"
+        >
+          <TrendingUp className="w-4 h-4 text-olive-600" />
+          <span className="text-xs font-bold text-olive-800 uppercase tracking-wide">Le constat est clair</span>
+        </motion.div>
 
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-charcoal">
-          Le Concept <span className="text-olive-700">Tech & Touch</span>
-        </h2>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="font-heading text-4xl md:text-5xl font-bold text-charcoal mb-6 leading-tight"
+        >
+          Pourquoi sommes-nous tous <br/>
+          <span className="text-terra-600">si fatigués ?</span>
+        </motion.h2>
         
-        <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          Votre corps et votre esprit méritent mieux qu&apos;un café et une chaise de bureau.
-        </p>
-      </motion.div>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-gray-600 leading-relaxed"
+        >
+          La vie urbaine moderne impose un rythme que notre corps n&apos;est pas conçu pour suivre. 
+          Kapsul répond à ces trois fléaux majeurs.
+        </motion.p>
+      </div>
 
       {/* BENTO GRID */}
       <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 auto-rows-fr mb-16"
+        ref={ref}
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 auto-rows-[minmax(280px,auto)]"
       >
         
-        {/* PROBLÈMES avec images */}
+        {/* === LES PROBLÈMES (Petites cartes) === */}
         {problems.map((problem, idx) => (
-          <motion.div
-            key={problem.title}
-            variants={itemVariants}
-            className="lg:col-span-2"
-          >
+          <motion.div key={problem.title} variants={itemVariants} className="lg:col-span-2">
             <BentoCard
               title={problem.title}
               desc={problem.desc}
               image={problemImages[idx]}
-              imagePosition="top"
-              className="h-full"
+              imagePosition="top" // Image en haut pour bien illustrer
+              className="h-full border-gray-200"
             />
           </motion.div>
         ))}
         
-        {/* SOLUTION PRINCIPALE Hero Card */}
-        <motion.div
-          variants={itemVariants}
-          className="lg:col-span-6"
-        >
+        {/* === LA SOLUTION (Grande carte majeure) === */}
+        <motion.div variants={itemVariants} className="lg:col-span-6 mt-6 md:mt-0">
           <BentoCard
-            title="La Solution KAPSUL"
-            desc="L'alliance parfaite entre haute technologie et expertise humaine."
+            title="La Réponse Kapsul"
+            desc="Une fusion inédite entre technologies immersives et soins manuels ancestraux pour une récupération totale."
             image="/images/kapsul-space.jpg"
             imagePosition="background"
-            className="min-h-[600px]"
             highlight={true}
+            className="min-h-[500px] md:min-h-[600px] shadow-2xl shadow-olive-900/10"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
-              {solutions.map((solution) => {
-                const Icon = solution.icon;
-                return (
-                  <div 
-                    key={solution.title}
-                    className="group p-6 rounded-2xl bg-white/95 backdrop-blur-sm border border-white/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer"
-                  >
-                    <div 
-                      className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 shadow-sm"
-                      style={{ 
-                        backgroundColor: `${solution.color}20`
-                      }}
-                    >
-                      <Icon 
-                        className="w-7 h-7" 
-                        style={{ color: solution.color }}
-                        strokeWidth={2.5}
-                      />
-                    </div>
-                    
-                    <h4 
-                      className="font-bold text-lg sm:text-xl mb-2"
-                      style={{ color: solution.color }}
-                    >
-                      {solution.title}
-                    </h4>
-                    <p className="text-sm sm:text-base text-white/90 leading-relaxed">
-                      {solution.desc}
-                    </p>
+            {/* Contenu interne de la carte Solution */}
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+              
+              {/* Feature 1 */}
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 hover:bg-white/20 transition-colors">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-olive-500 flex items-center justify-center text-white">
+                    <Zap className="w-5 h-5" />
                   </div>
-                );
-              })}
+                  <h4 className="font-bold text-white text-lg">Tech</h4>
+                </div>
+                <p className="text-sm text-gray-200 leading-relaxed">
+                  Réalité virtuelle, luminothérapie et sons binauraux pour pirater votre cerveau vers la détente.
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 hover:bg-white/20 transition-colors">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-terra-500 flex items-center justify-center text-white">
+                    <Heart className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-white text-lg">Touch</h4>
+                </div>
+                <p className="text-sm text-gray-200 leading-relaxed">
+                  L&apos;expertise humaine de nos praticiens pour dénouer les tensions physiques réelles.
+                </p>
+              </div>
+
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/30">
-              <a 
-                href="#services" 
-                className="group inline-flex items-center gap-2 text-white font-semibold text-base hover:gap-3 transition-all duration-300"
-              >
-                <span>Découvrir nos services</span>
-                <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
-              </a>
+            <div className="mt-10">
+              <button className="bg-white text-charcoal hover:bg-olive-50 font-bold py-4 px-8 rounded-full transition-all flex items-center gap-2 group shadow-lg">
+                Découvrir l&apos;expérience
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </button>
             </div>
           </BentoCard>
         </motion.div>
-      </motion.div>
 
-      {/* STATISTIQUES */}
-      <motion.div 
-        className="grid grid-cols-2 lg:grid-cols-4 gap-5"
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        {[
-          { value: '12€', label: 'Prix unique', color: 'olive' },
-          { value: '20min', label: 'Séance moyenne', color: 'terra' },
-          { value: '100m²', label: 'Espace modulaire', color: 'beige' },
-          { value: '7j/7', label: 'Ouvert', color: 'olive' }
-        ].map((stat) => (
-          <motion.div
-            key={stat.label}
-            variants={itemVariants}
-            className="bg-white border border-gray-100 rounded-xl p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md cursor-pointer"
-          >
-            <div 
-              className={`
-                text-3xl sm:text-4xl font-bold mb-2
-                ${stat.color === 'olive' ? 'text-olive-700' : ''}
-                ${stat.color === 'terra' ? 'text-terra-600' : ''}
-                ${stat.color === 'beige' ? 'text-beige-500' : ''}
-              `}
-            >
-              {stat.value}
-            </div>
-            <div className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              {stat.label}
-            </div>
-          </motion.div>
-        ))}
       </motion.div>
-
     </Section>
   );
 }

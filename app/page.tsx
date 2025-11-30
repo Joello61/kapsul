@@ -6,15 +6,15 @@ import Space from '@/components/sections/Space';
 
 export default function Home() {
   return (
-    <>
-      {/* Hero sans padding (plein écran) */}
+    <div className="flex flex-col w-full overflow-hidden">
       <Hero />
       
-      {/* Sections avec espacement cohérent */}
       <Concept />
       <Services />
+      
       <Pricing />
+      
       <Space />
-    </>
+    </div>
   );
 }

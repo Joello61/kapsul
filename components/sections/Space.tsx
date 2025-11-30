@@ -2,9 +2,8 @@
 
 import { useState, useRef } from 'react';
 import Section from '@/components/shared/Section';
-import ZoneCard from '@/components/ui/ZoneCard';
 import { zones } from '@/lib/data';
-import { MapPin, Maximize2, Volume2, Sparkles, Building2 } from 'lucide-react';
+import { MapPin, Maximize2, Volume2, Sparkles, Building2, MousePointer2 } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 
 export default function Space() {
@@ -13,204 +12,136 @@ export default function Space() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <Section id="space">
+    <Section id="space" background="cream">
       
-      {/* EN-TÊTE */}
-      <motion.div 
-        className="text-center mb-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        ref={ref}
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-beige-100 border border-beige-300 mb-6">
-          <Building2 className="w-5 h-5 text-beige-500" strokeWidth={2.5} />
-          <span className="text-sm font-semibold text-charcoal">100m² optimisés pour vous</span>
-        </div>
+      {/* HEADER */}
+      <div className="text-center mb-16" ref={ref}>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 mb-6"
+        >
+          <Building2 className="w-4 h-4 text-gray-500" />
+          <span className="text-xs font-bold text-gray-600 uppercase tracking-wide">Design Biophilique</span>
+        </motion.div>
 
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight text-charcoal">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.1 }}
+          className="font-heading text-4xl md:text-5xl font-bold text-charcoal mb-6"
+        >
           L&apos;Espace <span className="text-terra-600">Kapsul</span>
-        </h2>
+        </motion.h2>
         
-        <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          Une architecture d&apos;intérieur conçue pour <span className="text-olive-700 font-semibold">apaiser le système nerveux</span>.
-          <br />Trois zones, trois niveaux d&apos;intensité sensorielle.
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          100m² optimisés pour le calme au cœur de l&apos;agitation toulousaine.
+          Une architecture conçue pour abaisser votre fréquence cardiaque dès l&apos;entrée.
         </p>
-      </motion.div>
+      </div>
 
-      {/* VISUALISATION INTERACTIVE */}
+      {/* PLAN INTERACTIF STYLISÉ */}
       <motion.div 
-        className="mb-16 bg-white border border-gray-100 rounded-3xl p-8 sm:p-10 relative overflow-hidden shadow-sm"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="relative bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-gray-200/50 mb-20 overflow-hidden border border-gray-100"
       >
-        
-        {/* Pattern subtil */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.015]">
-          <div
-            className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(var(--color-olive-600)_1px,transparent_1px),linear-gradient(90deg,var(--color-olive-600)_1px,transparent_1px)] bg-size-[32px_32px]"
-          />
-        </div>
-
-        {/* Titre section */}
-        <div className="relative z-10 text-center mb-10">
-          <h3 className="text-2xl sm:text-3xl font-bold text-olive-700 mb-2">Plan Architectural</h3>
-          <p className="text-base text-gray-700">Survolez les zones pour découvrir leurs spécificités</p>
-        </div>
-
-        {/* Layout des zones */}
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {zones.map((zone, idx) => {
-            const Icon = zone.icon;
-            const isActive = activeZone === idx;
-
-            return (
-              <motion.div
-                key={zone.title}
-                onMouseEnter={() => setActiveZone(idx)}
-                onMouseLeave={() => setActiveZone(null)}
-                className="relative cursor-pointer"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.4 + (idx * 0.1) }}
-              >
-                {/* Carte Visuelle */}
-                <div 
+         {/* Background Grid */}
+         <div className="absolute inset-0 opacity-[0.03]" 
+              style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
+         />
+         
+         <div className="relative z-10 flex flex-col md:flex-row items-stretch gap-6 h-[500px] md:h-[400px]">
+           
+           {/* Zone Items - Interactive Map Logic */}
+           {zones.map((zone, idx) => {
+             const isActive = activeZone === idx;
+             const Icon = zone.icon;
+             
+             return (
+               <div 
+                  key={zone.title}
+                  onMouseEnter={() => setActiveZone(idx)}
+                  onMouseLeave={() => setActiveZone(null)}
                   className={`
-                    relative rounded-2xl p-6 h-80
-                    flex flex-col items-center justify-center
-                    transition-all duration-300 border-2
-                    ${isActive 
-                      ? 'bg-olive-50 border-olive-400 shadow-md transform -translate-y-2' 
-                      : 'bg-white border-gray-100 hover:border-olive-200'
-                    }
+                    relative flex-1 rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer group overflow-hidden border
+                    ${isActive ? 'flex-2 bg-gray-50 border-gray-200 shadow-inner' : 'bg-white border-gray-100 hover:border-gray-300'}
                   `}
-                >
-                  {/* Icône */}
-                  <div
-                    className="w-20 h-20 rounded-xl flex items-center justify-center mb-6 shadow-sm transition-all duration-300"
-                    style={{ 
-                      backgroundColor: isActive ? zone.color : 'var(--color-cream)',
-                    }}
-                  >
-                    <Icon 
-                      className="w-10 h-10 transition-colors duration-300" 
-                      style={{ color: isActive ? '#fff' : zone.color }}
-                      strokeWidth={2}
-                    />
-                  </div>
+               >
+                 {/* Zone Background Color Fade */}
+                 <div 
+                    className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
+                    style={{ backgroundColor: zone.color, opacity: isActive ? 0.05 : 0 }} 
+                 />
 
-                  <h3 
-                    className="text-xl sm:text-2xl font-bold mb-3 text-center transition-colors duration-300"
-                    style={{ color: isActive ? zone.color : 'var(--color-charcoal)' }}
-                  >
-                    {zone.title}
-                  </h3>
+                 <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center">
+                    <div 
+                      className={`
+                        w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-500
+                        ${isActive ? 'scale-110 shadow-lg' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}
+                      `}
+                      style={{ backgroundColor: isActive ? zone.color : '#f3f4f6', color: isActive ? '#fff' : '#6b7280' }}
+                    >
+                      <Icon className="w-8 h-8" strokeWidth={1.5} />
+                    </div>
 
-                  <p className="text-sm sm:text-base text-gray-700 text-center leading-relaxed px-2">
-                    {zone.desc}
-                  </p>
+                    <h3 className={`font-heading font-bold text-lg mb-2 transition-colors ${isActive ? 'text-charcoal' : 'text-gray-400 group-hover:text-charcoal'}`}>
+                      {zone.title}
+                    </h3>
 
-                  {/* Badge superficie */}
-                  <div className="absolute top-4 right-4 px-3 py-1.5 bg-white border border-gray-100 rounded-lg text-xs font-bold text-charcoal shadow-sm">
-                    {idx === 0 ? '40m²' : idx === 1 ? '35m²' : '25m²'}
-                  </div>
-                  
-                  {/* Indicateur sonore */}
-                  <div 
-                    className="absolute bottom-4 flex items-center gap-2 px-3 py-1.5 rounded-full border"
-                    style={{ 
-                      backgroundColor: isActive ? `${zone.color}20` : 'white',
-                      borderColor: isActive ? zone.color : 'var(--color-gray-300)'
-                    }}
-                  >
-                    <Volume2 className="w-4 h-4" style={{ color: zone.color }} strokeWidth={2.5} />
-                    <span className="text-xs font-semibold" style={{ color: zone.color }}>
-                      {idx === 2 ? 'Silence' : idx === 1 ? 'Feutré' : 'Social'}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                    {/* Contenu visible seulement si actif ou survolé */}
+                    <div className={`
+                      transition-all duration-500 overflow-hidden
+                      ${isActive ? 'opacity-100 max-h-20 mt-2' : 'opacity-0 max-h-0'}
+                    `}>
+                       <p className="text-sm text-gray-600 leading-tight px-4">{zone.desc}</p>
+                    </div>
 
-        {/* Légende */}
-        <div className="mt-10 flex items-center justify-center gap-8 relative z-10">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-100 shadow-sm">
-            <div className="w-3 h-3 rounded-full bg-olive-600" />
-            <span className="text-sm font-semibold text-charcoal">Technologie</span>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-100 shadow-sm">
-            <div className="w-3 h-3 rounded-full bg-terra-600" />
-            <span className="text-sm font-semibold text-charcoal">Humain</span>
-          </div>
-        </div>
+                    {/* Indicateur "Survolez-moi" si inactif */}
+                    {!isActive && activeZone === null && (
+                      <div className="absolute bottom-6 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-bold text-gray-400 flex items-center gap-1">
+                        <MousePointer2 className="w-3 h-3" />
+                        Explorer
+                      </div>
+                    )}
+                 </div>
+               </div>
+             );
+           })}
+         </div>
+
+         {/* Légende bas de plan */}
+         <div className="absolute bottom-1 left-0 right-0 text-center pointer-events-none">
+            <span className="inline-block px-4 py-2 bg-white/80 backdrop-blur text-xs font-bold text-gray-400 rounded-full border border-gray-100">
+               Plan interactif de l&apos;espace
+            </span>
+         </div>
       </motion.div>
 
-      {/* GRILLE DE DÉTAILS DES ZONES */}
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
-        {zones.map((zone, idx) => (
-          <motion.div
-            key={zone.title}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.9 + (idx * 0.1) }}
-          >
-            <ZoneCard 
-              zone={zone}
-              isActive={activeZone === idx}
-            />
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* INFORMATIONS PRATIQUES */}
-      <motion.div 
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 1.2 }}
-      >
+      {/* INFO GRID */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto">
         {[
-          { icon: MapPin, label: 'Quartier', value: 'Saint-Cyprien', color: 'olive' },
-          { icon: Maximize2, label: 'Surface', value: '100m²', color: 'terra' },
-          { icon: Volume2, label: 'Acoustique', value: 'Certifiée ISO', color: 'beige' },
-          { icon: Sparkles, label: 'Ambiance', value: 'Organique', color: 'olive' }
-        ].map((info, index) => (
-          <motion.div
-            key={info.label}
-            className="bg-white border border-gray-100 rounded-xl p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-md cursor-pointer"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.4, delay: 1.3 + (index * 0.1) }}
+          { icon: Maximize2, label: "Surface", val: "100m²" },
+          { icon: Volume2, label: "Acoustique", val: "-40dB" },
+          { icon: Sparkles, label: "Air", val: "Purifié HEPA" },
+          { icon: MapPin, label: "Quartier", val: "St-Cyprien" },
+        ].map((item, i) => (
+          <motion.div 
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 + (i * 0.1) }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
           >
-            <div className={`
-              w-14 h-14 mx-auto rounded-xl flex items-center justify-center mb-4
-              ${info.color === 'olive' ? 'bg-olive-100' : ''}
-              ${info.color === 'terra' ? 'bg-terra-100' : ''}
-              ${info.color === 'beige' ? 'bg-beige-100' : ''}
-            `}>
-              <info.icon 
-                className={`w-7 h-7
-                  ${info.color === 'olive' ? 'text-olive-700' : ''}
-                  ${info.color === 'terra' ? 'text-terra-700' : ''}
-                  ${info.color === 'beige' ? 'text-beige-500' : ''}
-                `} 
-                strokeWidth={2.5} 
-              />
-            </div>
-            <div className="text-sm font-semibold text-gray-500 mb-2 uppercase">{info.label}</div>
-            <div className="text-xl font-bold text-charcoal">{info.value}</div>
+            <item.icon className="w-6 h-6 text-olive-600 mb-3" strokeWidth={1.5} />
+            <div className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">{item.label}</div>
+            <div className="text-xl font-bold text-charcoal">{item.val}</div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
 
     </Section>
   );

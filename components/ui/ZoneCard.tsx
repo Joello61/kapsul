@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Zone } from '@/lib/data';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface ZoneCardProps {
   zone: Zone;
@@ -13,150 +13,112 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
   const Icon = zone.icon;
   const [isHovered, setIsHovered] = useState(false);
 
-  const isActiveState = isHovered || isActive;
+  // Combine l'état actif (sélectionné) et survolé
+  const showActiveState = isHovered || isActive;
 
-  // Tags par zone
-  const zoneTags: Record<string, string[]> = {
-    'Zone Sociale': ['Fuel Bar', 'WiFi', 'Prises'],
-    'Zone Active': ['Tapis yoga', 'Miroirs', 'Massage'],
-    'Zone Silence': ['VR Pods', 'Sleep Pods', 'Silence']
-  };
-
-  const tags = zoneTags[zone.title] || [];
+  // Données fictives pour les équipements (à enrichir si besoin dans data.ts)
+  const features = zone.title.includes('Sociale') ? ['Fuel Bar', 'Networking', 'Coworking'] :
+                   zone.title.includes('Active') ? ['Studio Yoga', 'Massage', 'Douches'] :
+                   ['K-Pods', 'Silence Absolu', 'Lumière Tamisée'];
 
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative"
+      className="group relative h-full cursor-pointer"
     >
       <div
         className={`
-          bg-white border border-gray-100 rounded-2xl p-8 sm:p-10
-          shadow-sm
-          transition-all duration-350 ease-out
-          cursor-pointer
-          relative overflow-hidden
-          ${isActiveState ? 'transform -translate-y-3 shadow-xl border-gray-200' : ''}
+          relative h-full overflow-hidden rounded-3xl p-8 sm:p-10
+          bg-white border transition-all duration-500 ease-out
+          flex flex-col
+          ${showActiveState 
+            ? 'shadow-2xl -translate-y-1 border-transparent' 
+            : 'shadow-sm border-gray-100 hover:border-gray-200'
+          }
         `}
+        style={{
+          boxShadow: showActiveState ? `0 20px 40px -12px ${zone.color}20` : ''
+        }}
       >
-        {/* Pattern décoratif optimisé */}
+        {/* Background Gradient dynamique */}
         <div 
-          className="absolute inset-0 opacity-[0.025] pointer-events-none bg-[radial-gradient(circle_at_2px_2px,currentColor_1.5px,transparent_0)] bg-size-[28px_28px] transition-opacity duration-500"
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none"
           style={{ 
-            color: zone.color,
-            opacity: isActiveState ? 0.04 : 0.025
+            background: `linear-gradient(135deg, ${zone.color}10 0%, transparent 60%)`,
+            opacity: showActiveState ? 1 : 0
           }}
         />
 
-        {/* Badge "Active" optimisé */}
+        {/* Badge "En direct" (Optionnel - pour simuler l'activité) */}
         {isActive && (
-          <div 
-            className="absolute top-6 right-6 flex items-center gap-2 px-4 py-2 rounded-full border-2 z-20 shadow-md"
-            style={{
-              backgroundColor: `${zone.color}20`,
-              borderColor: `${zone.color}50`,
-              color: zone.color
-            }}
-          >
-            <Sparkles className="w-4 h-4" strokeWidth={2.5} />
-            <span className="text-sm font-bold">Active</span>
+          <div className="absolute top-6 right-6 flex items-center gap-2 animate-pulse">
+            <span className="relative flex h-3 w-3">
+              <span 
+                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                style={{ backgroundColor: zone.color }}
+              />
+              <span 
+                className="relative inline-flex rounded-full h-3 w-3"
+                style={{ backgroundColor: zone.color }}
+              />
+            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Zone Active</span>
           </div>
         )}
 
-        <div className="relative z-10 flex items-start gap-6">
-          {/* Icône optimisée */}
-          <div className="relative shrink-0">
-            <div 
-              className={`
-                w-18 h-18 rounded-2xl 
-                flex items-center justify-center
-                transition-all duration-350 ease-out
-                ${isActiveState ? 'shadow-lg scale-110 rotate-3' : 'shadow-sm'}
-              `}
-              style={{ 
-                backgroundColor: isActiveState ? zone.color : 'var(--color-cream)',
-              }}
-            >
-              <Icon 
-                className="w-9 h-9 transition-all duration-350" 
-                style={{ 
-                  color: isActiveState ? '#FFFFFF' : zone.color,
-                }} 
-                strokeWidth={isActiveState ? 2 : 1.5}
-              />
-            </div>
-          </div>
-          
-          {/* Contenu principal */}
-          <div className="flex-1 min-w-0">
-            <h4 
-              className="text-2xl sm:text-3xl font-bold mb-4 transition-colors duration-350"
-              style={{ 
-                color: isActiveState ? zone.color : 'var(--color-charcoal)'
-              }}
-            >
-              {zone.title}
-            </h4>
-            
-            <p className="text-base text-gray-700 leading-relaxed mb-6">
-              {zone.desc}
-            </p>
-
-            {/* Equipements (Tags) optimisés */}
-            <div className="flex flex-wrap gap-3">
-              {tags.map((tag, idx) => (
-                <span
-                  key={tag}
-                  className="text-sm px-4 py-2 rounded-full font-bold border-2 transition-all duration-300"
-                  style={{
-                    backgroundColor: `${zone.color}${isActiveState ? '20' : '10'}`,
-                    borderColor: `${zone.color}${isActiveState ? '50' : '30'}`,
-                    color: zone.color,
-                    transform: isActiveState ? `translateY(-${idx * 2}px)` : 'translateY(0)',
-                    transitionDelay: `${idx * 50}ms`
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Flèche indicatrice optimisée */}
-          <div
-            className={`
-              shrink-0 transition-all duration-350 ease-out
-              ${isActiveState ? 'opacity-100 translate-x-2 scale-110' : 'opacity-40'}
-            `}
+        {/* Header avec Icône */}
+        <div className="relative z-10 flex items-start justify-between mb-6">
+          <div 
+            className="w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:rotate-3 group-hover:scale-105"
             style={{ 
-              color: isActiveState ? zone.color : 'var(--color-gray-500)' 
+              backgroundColor: showActiveState ? zone.color : '#F9FAFB',
+              color: showActiveState ? '#FFFFFF' : zone.color
             }}
           >
-            <ChevronRight className="w-7 h-7" strokeWidth={2.5} />
+            <Icon className="w-10 h-10" strokeWidth={1.5} />
           </div>
         </div>
 
-        {/* Barre de progression optimisée */}
-        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-sand overflow-hidden">
-          <div
-            className="h-full transition-all duration-700 ease-out"
-            style={{ 
-              backgroundColor: zone.color,
-              width: isActiveState ? '100%' : '0%'
-            }}
-          />
+        {/* Contenu */}
+        <div className="relative z-10 mb-8 flex-1">
+          <h3 
+            className="font-heading text-3xl font-bold mb-3 transition-colors duration-300"
+            style={{ color: showActiveState ? zone.color : 'var(--color-charcoal)' }}
+          >
+            {zone.title}
+          </h3>
+          <p className="text-gray-600 leading-relaxed text-lg">
+            {zone.desc}
+          </p>
         </div>
 
-        {/* Border highlight optimisé */}
-        <div
-          className={`
-            absolute inset-0 rounded-2xl pointer-events-none
-            transition-all duration-350 ease-out
-            ${isActiveState ? 'opacity-100' : 'opacity-0'}
-          `}
-          style={{
-            boxShadow: `0 0 0 2px ${zone.color}30 inset`,
+        {/* Tags / Features */}
+        <div className="relative z-10 flex flex-wrap gap-2 mb-8">
+          {features.map((feature) => (
+            <span 
+              key={feature}
+              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-gray-100 text-gray-500 shadow-sm"
+            >
+              {feature}
+            </span>
+          ))}
+        </div>
+
+        {/* Footer / CTA */}
+        <div className="relative z-10 mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wide transition-all duration-300 group-hover:gap-4"
+             style={{ color: zone.color }}
+        >
+          Explorer la zone
+          <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
+        </div>
+
+        {/* Border Active Highlight */}
+        <div 
+          className="absolute inset-0 rounded-3xl border-2 pointer-events-none transition-opacity duration-500"
+          style={{ 
+            borderColor: zone.color,
+            opacity: showActiveState ? 0.1 : 0
           }}
         />
       </div>
