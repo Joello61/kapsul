@@ -4,56 +4,58 @@ import { ArrowRight, PlayCircle, Zap, Timer, DollarSign, ThumbsUp, Star } from '
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Hero() {
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex items-center pt-32 sm:pt-40 pb-20 overflow-hidden bg-cream"
+      className="relative min-h-screen flex items-center pt-32 sm:pt-40 lg:pt-44 pb-24 overflow-hidden bg-cream"
     >
-      <div className="px-6 sm:px-8 lg:px-12 relative z-10 w-full">
+      <div className="mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
           
           {/* === COLONNE GAUCHE : CONTENU === */}
           <motion.div 
-            className="space-y-8"
-            initial={{ opacity: 0, y: 30 }}
+            className="space-y-10"
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             
-            {/* Badge */}
+            {/* Badge premium */}
             <motion.div 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100 border border-olive-300"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-olive-100 border-2 border-olive-400 shadow-sm"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <Zap className="w-4 h-4 text-olive-700" strokeWidth={2} />
-              <span className="text-sm font-semibold text-olive-800">
+              <Zap className="w-5 h-5 text-olive-700" strokeWidth={2.5} />
+              <span className="text-sm font-bold text-olive-800">
                 Un Esprit Sain dans un Corps Sain
               </span>
             </motion.div>
 
-            {/* Titre Principal */}
-            <div className="space-y-4">
+            {/* Titres */}
+            <div className="space-y-6">
               <motion.h1 
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-none"
+                className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold tracking-tight leading-none"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               >
                 <span className="text-olive-700">KAPSUL</span>
                 <span className="text-terra-600">.</span>
               </motion.h1>
               
               <motion.h2 
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-charcoal"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-charcoal"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
                 Moins cher qu&apos;un psy,<br />
                 <span className="text-terra-600">plus efficace qu&apos;une sieste.</span>
@@ -62,23 +64,23 @@ export default function Hero() {
 
             {/* Sous-titre */}
             <motion.p 
-              className="text-lg sm:text-xl text-gray-700 leading-relaxed"
+              className="text-xl sm:text-2xl text-gray-700 leading-relaxed max-w-xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
             >
               10h/jour devant un écran ?{' '}
-              <span className="text-olive-700 font-semibold">Récupérez</span> en 20 minutes avec nos{' '}
-              <span className="text-olive-700 font-semibold">pods immersifs</span> et{' '}
-              <span className="text-terra-600 font-semibold">soins experts</span>.
+              <span className="text-olive-700 font-bold">Récupérez</span> en 20 minutes avec nos{' '}
+              <span className="text-olive-700 font-bold">pods immersifs</span> et{' '}
+              <span className="text-terra-600 font-bold">soins experts</span>.
             </motion.p>
 
-            {/* Stats Cards */}
+            {/* Stats Cards optimisées */}
             <motion.div 
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
             >
               {[
                 { 
@@ -105,19 +107,19 @@ export default function Hero() {
               ].map((stat, i) => (
                 <motion.div 
                   key={i}
-                  className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white border border-gray-100 shadow-sm transition-transform duration-250 hover:-translate-y-1"
+                  className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.6 + (i * 0.1) }}
+                  transition={{ duration: 0.5, delay: 0.6 + (i * 0.1) }}
                 >
-                  <div className={`w-12 h-12 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
-                    <stat.icon className={`w-6 h-6 ${stat.iconColor}`} strokeWidth={2.5} />
+                  <div className={`w-14 h-14 rounded-xl ${stat.bgColor} flex items-center justify-center`}>
+                    <stat.icon className={`w-7 h-7 ${stat.iconColor}`} strokeWidth={2.5} />
                   </div>
                   <div>
-                    <div className="text-xl sm:text-2xl font-bold text-charcoal">
+                    <div className="text-2xl sm:text-3xl font-bold text-charcoal">
                       {stat.val}
                     </div>
-                    <div className="text-xs text-gray-500 font-semibold uppercase">
+                    <div className="text-xs text-gray-500 font-bold uppercase tracking-wide">
                       {stat.label}
                     </div>
                   </div>
@@ -125,46 +127,46 @@ export default function Hero() {
               ))}
             </motion.div>
 
-            {/* CTAs */}
+            {/* CTAs premium */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-5"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
+              transition={{ duration: 0.7, delay: 0.9 }}
             >
               <Link href="#pricing" className="flex-1 sm:flex-initial">
-                <button className="bg-olive-600 text-white w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 shadow-sm hover:bg-olive-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-250">
+                <button className="bg-olive-600 text-white w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-md hover:bg-olive-700 hover:shadow-xl hover:scale-105 transition-all duration-300 ease-out active:scale-95">
                   <span>Réserver maintenant</span>
-                  <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
                 </button>
               </Link>
 
               <Link href="#concept" className="flex-1 sm:flex-initial">
-                <button className="bg-transparent border-2 border-olive-400 text-olive-700 w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 hover:bg-olive-50 hover:border-olive-600 transition-all duration-250">
+                <button className="bg-white border-2 border-olive-400 text-olive-700 w-full sm:w-auto px-10 py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-sm hover:bg-olive-50 hover:border-olive-600 hover:shadow-md transition-all duration-300 active:scale-95">
                   <PlayCircle className="w-5 h-5" strokeWidth={2.5} />
                   <span>Le concept</span>
                 </button>
               </Link>
             </motion.div>
 
-            {/* Social Proof */}
+            {/* Social Proof optimisé */}
             <motion.div 
-              className="flex items-center gap-4"
+              className="flex items-center gap-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1 }}
+              transition={{ duration: 0.7, delay: 1 }}
             >
-              <div className="flex -space-x-3">
+              <div className="flex -space-x-4">
                 {[...Array(5)].map((_, i) => (
                   <div 
                     key={i}
-                    className="w-10 h-10 rounded-full bg-linear-to-br from-olive-200 to-terra-200 border-2 border-white flex items-center justify-center text-sm font-bold text-charcoal shadow-sm"
+                    className="w-12 h-12 rounded-full bg-linear-to-br from-olive-200 to-terra-200 border-3 border-white flex items-center justify-center text-sm font-bold text-charcoal shadow-md"
                   >
                     {String.fromCharCode(65 + i)}
                   </div>
                 ))}
               </div>
-              <div className="text-sm text-gray-700 font-medium">
+              <div className="text-base text-gray-700 font-medium">
                 Rejoignez <span className="text-olive-700 font-bold">500+ pros</span> de la tech
               </div>
             </motion.div>
@@ -174,69 +176,75 @@ export default function Hero() {
           {/* === COLONNE DROITE : MÉDIA === */}
           <motion.div 
             className="relative"
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             
             {/* Container principal */}
-            <div className="relative aspect-4/5 rounded-3xl overflow-hidden bg-sand shadow-xl">
+            <div className="relative w-full rounded-3xl overflow-hidden bg-sand shadow-2xl" style={{ aspectRatio: '4/5' }}>
 
               <Image
                 src="/images/hero-image.jpg"
-                alt="Hero Image"
+                alt="Espace Kapsul - Bien-être urbain"
                 fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw,
-                      (max-width: 1024px) 50vw,
-                      33vw"
+                className={`object-cover transition-all duration-1000 ease-out ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
                 priority
-                loading='eager'
+                onLoad={() => setImageLoaded(true)}
               />
 
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-linear-to-t from-charcoal/80 via-charcoal/20 to-transparent" />
+              {/* Overlay gradient premium */}
+              <div className="absolute inset-0 bg-linear-to-t from-charcoal/90 via-charcoal/30 to-transparent pointer-events-none" />
 
               {/* Card flottante "En ce moment" */}
-              <motion.div 
-                  className="absolute bottom-6 left-6 right-6"
-                  initial={{ opacity: 0, y: 20 }}
+              {imageLoaded && (
+                <motion.div 
+                  className="absolute bottom-8 left-6 right-6"
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
                 >
-                  <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-lg">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-semibold text-charcoal">En ce moment</span>
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500 border border-green-400">
-                        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                  <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 border border-gray-100 shadow-xl">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-sm font-bold text-charcoal">En ce moment</span>
+                      <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500 shadow-sm">
+                        <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
                         <span className="text-white text-xs font-bold uppercase">Live</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-14 h-14 rounded-xl bg-olive-600 flex items-center justify-center text-white shadow-sm">
-                        <Zap className="w-7 h-7" strokeWidth={2} />
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-olive-600 flex items-center justify-center text-white shadow-md">
+                        <Zap className="w-8 h-8" strokeWidth={2} />
                       </div>
                       <div className="flex-1">
-                        <div className="text-base font-bold text-charcoal">K-ESCAPE VR</div>
-                        <div className="text-sm text-gray-700">Session immersive active</div>
+                        <div className="text-lg font-bold text-charcoal">K-ESCAPE VR</div>
+                        <div className="text-sm text-gray-700 font-medium">Session immersive active</div>
                       </div>
                     </div>
                   </div>
                 </motion.div>
+              )}
 
-              {/* Badge "Nouveau" */}
-
+              {/* Badge "Nouveau" premium */}
+              {imageLoaded && (
                 <motion.div 
-                  className="absolute top-6 right-6"
+                  className="absolute top-8 right-6"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1 }}
+                  transition={{ duration: 0.5, delay: 1.1 }}
                 >
-                  <div className="px-4 py-2 rounded-full bg-terra-600 text-white font-bold text-sm flex items-center gap-2 shadow-md">
-                    <span><Star className='' fill='yellow'/></span>
+                  <div className="px-5 py-2.5 rounded-full bg-terra-600 text-white font-bold text-sm flex items-center gap-2 shadow-lg">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" strokeWidth={0} />
                     <span>Nouveau</span>
                   </div>
                 </motion.div>
+              )}
+
+              {/* Loading skeleton premium */}
+              {!imageLoaded && (
+                <div className="absolute inset-0 bg-linear-to-br from-sand via-cream to-beige-100 animate-pulse" />
+              )}
 
             </div>
           </motion.div>

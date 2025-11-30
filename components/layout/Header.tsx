@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3, Home } from 'lucide-react';
+import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3 } from 'lucide-react';
 
 const navLinks = [
-  {name: 'Accueil', href: '#home', icon: Home },
   { name: 'Concept', href: '#concept', icon: Sparkles },
   { name: 'Services', href: '#services', icon: Grid3x3 },
   { name: 'Tarifs', href: '#pricing', icon: DollarSign },
@@ -19,11 +18,10 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 80);
 
-      // Détection de la section active
       const sections = navLinks.map(link => link.href.substring(1));
-      const scrollPosition = window.scrollY + 150;
+      const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
         const section = document.getElementById(sectionId);
@@ -36,12 +34,12 @@ export default function Header() {
         }
       }
 
-      if (window.scrollY < 100) {
+      if (window.scrollY < 150) {
         setActiveSection('');
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -55,17 +53,17 @@ export default function Header() {
     <>
       {/* HEADER FLOATING */}
       <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
-        <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-4 sm:pt-6">
-          <div
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-6">
+          <nav
             className={`
               mx-auto flex items-center justify-between
               pointer-events-auto
               rounded-full
-              border border-gray-100
-              transition-all duration-300 ease-out
+              border
+              transition-all duration-500 ease-out
               ${isScrolled 
-                ? 'bg-white/95 backdrop-blur-lg shadow-md py-2.5 px-5 sm:px-7 max-w-4xl' 
-                : 'bg-white/90 backdrop-blur-md shadow-sm py-3 px-6 sm:px-8 max-w-5xl'
+                ? 'bg-white/95 backdrop-blur-xl shadow-lg border-gray-200 py-3 px-6 sm:px-8 max-w-4xl' 
+                : 'bg-white/90 backdrop-blur-lg shadow-md border-gray-100 py-4 px-7 sm:px-10 max-w-5xl'
               }
             `}
           >
@@ -74,18 +72,17 @@ export default function Header() {
             <Link 
               href="/" 
               onClick={() => setActiveSection('')}
-              className="group"
+              className="group flex items-center gap-2"
             >
-              <div className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 transition-transform duration-250 hover:scale-105">
-                <span className="text-olive-700">Kapsul</span>
-                <div className="w-2 h-2 rounded-full bg-olive-600 transition-transform duration-250 group-hover:scale-125" />
-              </div>
+              <span className="text-2xl font-bold tracking-tight text-olive-700 transition-transform duration-300 group-hover:scale-105">
+                Kapsul
+              </span>
+              <div className="w-2.5 h-2.5 rounded-full bg-olive-600 transition-all duration-300 group-hover:scale-125 group-hover:bg-terra-500" />
             </Link>
 
             {/* DESKTOP NAV */}
-            <nav className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-2">
               {navLinks.map((link) => {
-                const Icon = link.icon;
                 const isActive = activeSection === link.href;
                 
                 return (
@@ -94,32 +91,30 @@ export default function Header() {
                     href={link.href}
                     onClick={() => handleLinkClick(link.href)}
                     className={`
-                      relative px-3 py-1 text-md text-olive-600 font-semibold rounded-full
-                      transition-all duration-250
+                      relative px-5 py-2.5 rounded-full
+                      font-bold text-sm
+                      transition-all duration-300 ease-out
                       ${isActive 
-                        ? 'bg-olive-600 text-white shadow-sm' 
+                        ? 'bg-olive-600 text-white shadow-md scale-105' 
                         : 'text-charcoal hover:text-olive-700 hover:bg-olive-50'
                       }
                     `}
                   >
-                    <div className="flex items-center gap-2">
-                      <Icon className="w-4 h-4 inline-block" strokeWidth={2} />
-                      {link.name}
-                    </div>
+                    {link.name}
                     {isActive && (
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1/2 h-1 rounded-full bg-olive-400" />
+                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1/2 h-1 rounded-full bg-olive-400 shadow-sm" />
                     )}
                   </Link>
                 );
               })}
-            </nav>
+            </div>
 
             {/* CTA & MOBILE BUTTON */}
             <div className="flex items-center gap-3">
               {/* CTA Desktop */}
               <Link href="#pricing" className="hidden md:block">
-                <button className="bg-olive-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 shadow-sm hover:bg-olive-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-250">
-                  <Zap className="w-4 h-4" strokeWidth={2} />
+                <button className="bg-olive-600 text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md hover:bg-olive-700 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-out active:scale-95">
+                  <Zap className="w-4 h-4" strokeWidth={2.5} />
                   <span>Réserver</span>
                 </button>
               </Link>
@@ -127,7 +122,8 @@ export default function Header() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 text-charcoal hover:bg-olive-100 rounded-full transition-all duration-200"
+                className="md:hidden p-2.5 text-charcoal hover:bg-olive-100 rounded-xl transition-all duration-250 active:scale-95"
+                aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6" strokeWidth={2.5} />
@@ -136,7 +132,7 @@ export default function Header() {
                 )}
               </button>
             </div>
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -146,29 +142,29 @@ export default function Header() {
           {/* Backdrop */}
           <div
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-charcoal/30 backdrop-blur-sm md:hidden transition-opacity duration-250"
+            className="fixed inset-0 z-40 bg-charcoal/40 backdrop-blur-sm md:hidden transition-opacity duration-300"
           />
           
           {/* Menu panel */}
-          <div
-            className="fixed right-0 top-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-xl p-6 md:hidden overflow-y-auto border-l border-gray-100"
-          >
+          <div className="fixed right-0 top-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-2xl p-8 md:hidden overflow-y-auto border-l border-gray-100">
+            
             {/* Header menu mobile */}
-            <div className="flex justify-between items-center mb-8">
-              <span className="text-xl font-bold text-olive-700 flex items-center gap-2">
-                Kapsul
-                <div className="w-2 h-2 rounded-full bg-olive-600" />
-              </span>
+            <div className="flex justify-between items-center mb-10">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-bold text-olive-700">Kapsul</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-olive-600" />
+              </div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 text-charcoal hover:text-olive-700 hover:bg-olive-100 rounded-lg transition-all duration-200"
+                className="p-2 text-charcoal hover:text-olive-700 hover:bg-olive-100 rounded-xl transition-all duration-250"
+                aria-label="Fermer le menu"
               >
                 <X className="w-6 h-6" strokeWidth={2.5} />
               </button>
             </div>
 
             {/* Navigation links */}
-            <nav className="flex flex-col gap-2 mb-6">
+            <nav className="flex flex-col gap-3 mb-8">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = activeSection === link.href;
@@ -179,22 +175,23 @@ export default function Header() {
                     href={link.href}
                     onClick={() => handleLinkClick(link.href)}
                     className={`
-                      flex items-center gap-3 text-olive-600 text-base font-semibold
-                      transition-all duration-250 p-4 rounded-xl
+                      flex items-center gap-4 text-base font-bold
+                      transition-all duration-300 p-5 rounded-2xl
                       ${isActive 
-                        ? 'bg-olive-600 text-white shadow-sm' 
+                        ? 'bg-olive-600 text-white shadow-md scale-105' 
                         : 'text-charcoal hover:bg-olive-50 hover:text-olive-700'
                       }
                     `}
                   >
                     <div className={`
-                      w-10 h-10 rounded-lg flex items-center justify-center
+                      w-12 h-12 rounded-xl flex items-center justify-center
+                      transition-all duration-300
                       ${isActive 
                         ? 'bg-white/20 text-white' 
                         : 'bg-olive-100 text-olive-700'
                       }
                     `}>
-                      <Icon className="w-5 h-5" strokeWidth={2} />
+                      <Icon className="w-6 h-6" strokeWidth={2} />
                     </div>
                     <span>{link.name}</span>
                   </Link>
@@ -203,15 +200,12 @@ export default function Header() {
             </nav>
 
             {/* Divider */}
-            <div className="h-px w-full bg-linear-to-r from-transparent via-gray-300 to-transparent my-6" />
+            <div className="h-px w-full bg-linear-to-r from-transparent via-gray-300 to-transparent my-8" />
 
             {/* CTA Mobile */}
-            <Link
-              href="#pricing"
-              onClick={() => handleLinkClick('#pricing')}
-            >
-              <button className="bg-olive-600 text-white w-full py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 shadow-sm hover:bg-olive-700 transition-all duration-250">
-                <Zap className="w-5 h-5" strokeWidth={2} />
+            <Link href="#pricing" onClick={() => handleLinkClick('#pricing')}>
+              <button className="bg-olive-600 text-white w-full py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-2 shadow-md hover:bg-olive-700 hover:shadow-lg transition-all duration-300 active:scale-95">
+                <Zap className="w-5 h-5" strokeWidth={2.5} />
                 <span>Réserver une séance</span>
               </button>
             </Link>

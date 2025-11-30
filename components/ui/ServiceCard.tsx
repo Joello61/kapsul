@@ -19,68 +19,68 @@ export default function ServiceCard({ service }: ServiceCardProps) {
       className="group relative h-full"
     >
       <div className={`
-        bg-white border border-gray-100 rounded-xl p-6 sm:p-8 
+        bg-white border border-gray-100 rounded-2xl p-8 
         h-full flex flex-col relative overflow-hidden cursor-pointer
         shadow-sm
-        transition-all duration-300
-        ${isHovered ? 'transform -translate-y-2 shadow-md' : ''}
+        transition-all duration-350 ease-out
+        ${isHovered ? 'transform -translate-y-3 shadow-xl border-gray-200' : ''}
       `}>
         
-        {/* Pattern décoratif subtil */}
+        {/* Pattern décoratif optimisé */}
         <div 
-          className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(circle_at_2px_2px,currentColor_1px,transparent_0)] bg-size-[24px_24px]"
-          style={{ color: service.color }}
+          className="absolute inset-0 opacity-[0.025] pointer-events-none bg-[radial-gradient(circle_at_2px_2px,currentColor_1.5px,transparent_0)] bg-size-[28px_28px] transition-opacity duration-500"
+          style={{ 
+            color: service.color,
+            opacity: isHovered ? 0.04 : 0.025
+          }}
         />
 
         {/* En-tête : Icône + Badge */}
-        <div className="relative z-10 flex items-start justify-between mb-6">
-          {/* Icône */}
+        <div className="relative z-10 flex items-start justify-between mb-8">
+          {/* Icône optimisée */}
           <div 
             className={`
-              w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center
-              transition-all duration-300
-              ${isHovered ? 'shadow-md scale-105' : 'shadow-sm'}
+              w-16 h-16 sm:w-18 sm:h-18 rounded-2xl flex items-center justify-center
+              transition-all duration-350 ease-out
+              ${isHovered ? 'shadow-lg scale-110 rotate-3' : 'shadow-sm'}
             `}
             style={{ 
               backgroundColor: isHovered ? service.color : 'var(--color-cream)',
             }}
           >
             <Icon 
-              className="w-7 h-7 sm:w-8 sm:h-8 transition-colors duration-300" 
+              className="w-8 h-8 sm:w-9 sm:h-9 transition-all duration-350" 
               style={{ 
                 color: isHovered ? '#FFFFFF' : service.color,
               }} 
-              strokeWidth={1.5}
+              strokeWidth={isHovered ? 2 : 1.5}
             />
           </div>
           
-          {/* Badge */}
+          {/* Badge optimisé */}
           <div 
             className={`
-              px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold
-              transition-all duration-300
+              px-4 py-2 rounded-full text-xs sm:text-sm font-bold
+              transition-all duration-350
               ${isHovered 
-                ? 'border-2' 
+                ? 'border-2 scale-105' 
                 : 'border border-gray-300'
               }
             `}
             style={{ 
               borderColor: isHovered ? service.color : undefined,
               color: isHovered ? service.color : 'var(--color-gray-700)',
-              backgroundColor: isHovered ? `${service.color}10` : 'transparent'
+              backgroundColor: isHovered ? `${service.color}15` : 'transparent'
             }}
           >
             {service.badge}
           </div>
         </div>
         
-        {/* Contenu textuel */}
-        <div className="relative z-10 grow mb-6">
+        {/* Contenu */}
+        <div className="relative z-10 flex-1 mb-8">
           <h3 
-            className={`
-              text-xl sm:text-2xl font-bold mb-3
-              transition-colors duration-300
-            `}
+            className="text-2xl sm:text-3xl font-bold mb-4 transition-colors duration-350"
             style={{ 
               color: isHovered ? service.color : 'var(--color-charcoal)' 
             }}
@@ -88,20 +88,17 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             {service.name}
           </h3>
           
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+          <p className="text-base text-gray-700 leading-relaxed">
             {service.desc}
           </p>
         </div>
 
-        {/* Footer : Barre de progression + CTA */}
-        <div className="relative z-10 space-y-4">
-          {/* Barre de progression */}
-          <div className="relative h-1 w-full bg-sand rounded-full overflow-hidden">
+        {/* Footer optimisé */}
+        <div className="relative z-10 space-y-5">
+          {/* Barre de progression améliorée */}
+          <div className="relative h-1.5 w-full bg-sand rounded-full overflow-hidden">
             <div
-              className={`
-                h-full rounded-full
-                transition-all duration-500 ease-out
-              `}
+              className="h-full rounded-full transition-all duration-700 ease-out"
               style={{ 
                 backgroundColor: service.color,
                 width: isHovered ? '100%' : '0%',
@@ -109,30 +106,31 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             />
           </div>
 
-          {/* CTA Link */}
+          {/* CTA Link optimisé */}
           <div
             className={`
-              flex items-center gap-2 text-sm sm:text-base font-semibold
-              transition-all duration-300
-              ${isHovered ? 'opacity-100 translate-x-1' : 'opacity-0'}
+              flex items-center gap-2 text-base font-bold
+              transition-all duration-350 ease-out
+              ${isHovered ? 'opacity-100 translate-x-2' : 'opacity-0 -translate-x-2'}
             `}
             style={{ color: service.color }}
           >
             <span>En savoir plus</span>
-            <ArrowUpRight className="w-5 h-5" strokeWidth={2.5} />
+            <ArrowUpRight className="w-5 h-5 transition-transform duration-350 group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={2.5} />
           </div>
         </div>
 
-        {/* Border highlight au hover */}
-        {isHovered && (
-          <div
-            className="absolute inset-0 rounded-xl pointer-events-none transition-all duration-300"
-            style={{
-              outline: `2px solid ${service.color}40`,
-              outlineOffset: '2px'
-            }}
-          />
-        )}
+        {/* Border highlight optimisé */}
+        <div
+          className={`
+            absolute inset-0 rounded-2xl pointer-events-none
+            transition-all duration-350 ease-out
+            ${isHovered ? 'opacity-100' : 'opacity-0'}
+          `}
+          style={{
+            boxShadow: `0 0 0 2px ${service.color}30 inset`,
+          }}
+        />
       </div>
     </div>
   );

@@ -32,55 +32,58 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
     >
       <div
         className={`
-          bg-white border border-gray-100 rounded-xl p-6 sm:p-8 lg:p-10
+          bg-white border border-gray-100 rounded-2xl p-8 sm:p-10
           shadow-sm
-          transition-all duration-300
+          transition-all duration-350 ease-out
           cursor-pointer
           relative overflow-hidden
-          ${isActiveState ? 'transform -translate-y-2 shadow-lg' : ''}
+          ${isActiveState ? 'transform -translate-y-3 shadow-xl border-gray-200' : ''}
         `}
       >
-        {/* Pattern décoratif subtil */}
+        {/* Pattern décoratif optimisé */}
         <div 
-          className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(circle_at_2px_2px,currentColor_1px,transparent_0)] bg-size-[24px_24px]"
-          style={{ color: zone.color }}
+          className="absolute inset-0 opacity-[0.025] pointer-events-none bg-[radial-gradient(circle_at_2px_2px,currentColor_1.5px,transparent_0)] bg-size-[28px_28px] transition-opacity duration-500"
+          style={{ 
+            color: zone.color,
+            opacity: isActiveState ? 0.04 : 0.025
+          }}
         />
 
-        {/* Badge "Active" */}
+        {/* Badge "Active" optimisé */}
         {isActive && (
           <div 
-            className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 z-20"
+            className="absolute top-6 right-6 flex items-center gap-2 px-4 py-2 rounded-full border-2 z-20 shadow-md"
             style={{
-              backgroundColor: `${zone.color}15`,
-              borderColor: `${zone.color}30`,
+              backgroundColor: `${zone.color}20`,
+              borderColor: `${zone.color}50`,
               color: zone.color
             }}
           >
-            <Sparkles className="w-3 h-3" strokeWidth={2} />
-            <span className="text-xs font-bold">Active</span>
+            <Sparkles className="w-4 h-4" strokeWidth={2.5} />
+            <span className="text-sm font-bold">Active</span>
           </div>
         )}
 
-        <div className="relative z-10 flex items-start gap-5">
-          {/* Icône */}
+        <div className="relative z-10 flex items-start gap-6">
+          {/* Icône optimisée */}
           <div className="relative shrink-0">
             <div 
               className={`
-                w-14 h-14 sm:w-16 sm:h-16 rounded-xl 
+                w-18 h-18 rounded-2xl 
                 flex items-center justify-center
-                transition-all duration-300
-                ${isActiveState ? 'shadow-md scale-105' : 'shadow-sm'}
+                transition-all duration-350 ease-out
+                ${isActiveState ? 'shadow-lg scale-110 rotate-3' : 'shadow-sm'}
               `}
               style={{ 
                 backgroundColor: isActiveState ? zone.color : 'var(--color-cream)',
               }}
             >
               <Icon 
-                className="w-7 h-7 sm:w-8 sm:h-8 transition-colors duration-300" 
+                className="w-9 h-9 transition-all duration-350" 
                 style={{ 
                   color: isActiveState ? '#FFFFFF' : zone.color,
                 }} 
-                strokeWidth={1.5}
+                strokeWidth={isActiveState ? 2 : 1.5}
               />
             </div>
           </div>
@@ -88,10 +91,7 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
           {/* Contenu principal */}
           <div className="flex-1 min-w-0">
             <h4 
-              className={`
-                text-xl sm:text-2xl font-bold mb-3
-                transition-colors duration-300
-              `}
+              className="text-2xl sm:text-3xl font-bold mb-4 transition-colors duration-350"
               style={{ 
                 color: isActiveState ? zone.color : 'var(--color-charcoal)'
               }}
@@ -99,20 +99,22 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
               {zone.title}
             </h4>
             
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-5">
+            <p className="text-base text-gray-700 leading-relaxed mb-6">
               {zone.desc}
             </p>
 
-            {/* Equipements (Tags) */}
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
+            {/* Equipements (Tags) optimisés */}
+            <div className="flex flex-wrap gap-3">
+              {tags.map((tag, idx) => (
                 <span
                   key={tag}
-                  className="text-xs sm:text-sm px-3 py-1.5 rounded-full font-semibold border-2"
+                  className="text-sm px-4 py-2 rounded-full font-bold border-2 transition-all duration-300"
                   style={{
-                    backgroundColor: `${zone.color}10`,
-                    borderColor: `${zone.color}30`,
-                    color: zone.color
+                    backgroundColor: `${zone.color}${isActiveState ? '20' : '10'}`,
+                    borderColor: `${zone.color}${isActiveState ? '50' : '30'}`,
+                    color: zone.color,
+                    transform: isActiveState ? `translateY(-${idx * 2}px)` : 'translateY(0)',
+                    transitionDelay: `${idx * 50}ms`
                   }}
                 >
                   {tag}
@@ -121,26 +123,24 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
             </div>
           </div>
 
-          {/* Flèche indicatrice */}
+          {/* Flèche indicatrice optimisée */}
           <div
             className={`
-              shrink-0 transition-all duration-300
-              ${isActiveState ? 'opacity-100 translate-x-1' : 'opacity-40'}
+              shrink-0 transition-all duration-350 ease-out
+              ${isActiveState ? 'opacity-100 translate-x-2 scale-110' : 'opacity-40'}
             `}
             style={{ 
               color: isActiveState ? zone.color : 'var(--color-gray-500)' 
             }}
           >
-            <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
+            <ChevronRight className="w-7 h-7" strokeWidth={2.5} />
           </div>
         </div>
 
-        {/* Barre de progression bottom */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-sand overflow-hidden rounded-b-xl">
+        {/* Barre de progression optimisée */}
+        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-sand overflow-hidden">
           <div
-            className={`
-              h-full transition-all duration-500 ease-out
-            `}
+            className="h-full transition-all duration-700 ease-out"
             style={{ 
               backgroundColor: zone.color,
               width: isActiveState ? '100%' : '0%'
@@ -148,16 +148,17 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
           />
         </div>
 
-        {/* Border highlight */}
-        {isActiveState && (
-          <div
-            className="absolute inset-0 rounded-xl pointer-events-none transition-all duration-300"
-            style={{
-              outline: `2px solid ${zone.color}40`,
-              outlineOffset: '2px'
-            }}
-          />
-        )}
+        {/* Border highlight optimisé */}
+        <div
+          className={`
+            absolute inset-0 rounded-2xl pointer-events-none
+            transition-all duration-350 ease-out
+            ${isActiveState ? 'opacity-100' : 'opacity-0'}
+          `}
+          style={{
+            boxShadow: `0 0 0 2px ${zone.color}30 inset`,
+          }}
+        />
       </div>
     </div>
   );

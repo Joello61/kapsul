@@ -28,13 +28,13 @@ export default function BentoCard({
   return (
     <div
       className={`
-        relative overflow-hidden h-full flex flex-col
+        group relative overflow-hidden h-full flex flex-col
         bg-white rounded-xl
         border border-gray-100
         shadow-sm
-        transition-all duration-300
-        hover:shadow-md hover:-translate-y-1
-        ${highlight ? 'ring-2 ring-olive-400 ring-offset-2' : ''}
+        transition-all duration-300 ease-out
+        hover:shadow-lg hover:-translate-y-1
+        ${highlight ? 'ring-2 ring-olive-500 ring-offset-4' : ''}
         ${className}
       `}
     >
@@ -54,35 +54,35 @@ export default function BentoCard({
                 transition-all duration-700 ease-out
                 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
               `}
-              loading="eager"
+              priority
             />
-            {/* Overlay gradiant pour lisibilité */}
-            <div className="absolute inset-0 bg-linear-to-t from-charcoal/95 via-charcoal/70 to-charcoal/30" />
+            {/* Overlay gradient optimisé */}
+            <div className="absolute inset-0 bg-linear-to-t from-charcoal/95 via-charcoal/60 to-transparent" />
           </div>
 
           {/* Contenu */}
-          <div className="relative z-10 p-6 sm:p-8 lg:p-10 mt-auto">
+          <div className="relative z-10 p-8 sm:p-10 lg:p-12 mt-auto">
             {highlight && (
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100/90 backdrop-blur-sm border border-olive-300 mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100/95 backdrop-blur-sm border border-olive-400 mb-6 shadow-sm">
                 <Sparkles className="w-4 h-4 text-olive-700" strokeWidth={2} />
                 <span className="text-sm font-semibold text-olive-800">Recommandé</span>
               </div>
             )}
 
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 text-white leading-tight">
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight">
               {title}
             </h3>
             
-            <p className="text-base sm:text-lg text-white/95 mb-6 leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg lg:text-xl text-white/95 mb-8 leading-relaxed max-w-2xl">
               {desc}
             </p>
 
             {children}
           </div>
 
-          {/* Loading skeleton */}
+          {/* Loading skeleton amélioré */}
           {!imageLoaded && (
-            <div className="absolute inset-0 bg-sand animate-pulse" />
+            <div className="absolute inset-0 bg-linear-to-br from-sand to-cream animate-pulse" />
           )}
         </>
       )}
@@ -90,7 +90,7 @@ export default function BentoCard({
       {/* === CAS 2 : IMAGE TOP === */}
       {image && imagePosition === 'top' && (
         <>
-          <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden shrink-0 rounded-t-xl">
+          <div className="relative h-56 sm:h-64 overflow-hidden shrink-0">
             <Image
               src={image}
               alt={title}
@@ -100,14 +100,15 @@ export default function BentoCard({
               className={`
                 object-cover
                 transition-all duration-700 ease-out
-                ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
+                group-hover:scale-105
+                ${imageLoaded ? 'opacity-100' : 'opacity-0'}
               `}
-              loading="eager"
+              priority
             />
             
-            {/* Badge highlight */}
+            {/* Badge highlight optimisé */}
             {highlight && (
-              <div className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm border border-olive-300 shadow-sm">
+              <div className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md border border-olive-400 shadow-md">
                 <Sparkles className="w-4 h-4 text-olive-600" strokeWidth={2} />
                 <span className="text-sm font-semibold text-olive-700">Top choix</span>
               </div>
@@ -115,14 +116,15 @@ export default function BentoCard({
 
             {/* Loading skeleton */}
             {!imageLoaded && (
-              <div className="absolute inset-0 bg-sand animate-pulse" />
+              <div className="absolute inset-0 bg-linear-to-br from-sand to-cream animate-pulse" />
             )}
           </div>
 
           <div className="p-6 sm:p-8 flex flex-col grow">
             <h3 className={`
               text-xl sm:text-2xl lg:text-3xl font-bold mb-3 leading-tight
-              ${highlight ? 'text-olive-700' : 'text-charcoal'}
+              transition-colors duration-300
+              ${highlight ? 'text-olive-700' : 'text-charcoal group-hover:text-olive-700'}
             `}>
               {title}
             </h3>
@@ -139,7 +141,7 @@ export default function BentoCard({
       {/* === CAS 3 : IMAGE SIDE === */}
       {image && imagePosition === 'side' && (
         <div className="flex flex-col sm:flex-row h-full">
-          <div className="w-full sm:w-2/5 h-48 sm:h-full relative overflow-hidden shrink-0 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none">
+          <div className="w-full sm:w-2/5 h-56 sm:h-full relative overflow-hidden shrink-0">
             <Image
               src={image}
               alt={title}
@@ -148,20 +150,21 @@ export default function BentoCard({
               onLoad={() => setImageLoaded(true)}
               className={`
                 object-cover
-                transition-opacity duration-700 ease-out
+                transition-all duration-700 ease-out
+                group-hover:scale-105
                 ${imageLoaded ? 'opacity-100' : 'opacity-0'}
               `}
-              loading="eager"
+              priority
             />
             
             {/* Loading skeleton */}
             {!imageLoaded && (
-              <div className="absolute inset-0 bg-sand animate-pulse" />
+              <div className="absolute inset-0 bg-linear-to-br from-sand to-cream animate-pulse" />
             )}
           </div>
 
           <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 text-charcoal leading-tight">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 text-charcoal leading-tight transition-colors duration-300 group-hover:text-olive-700">
               {title}
             </h3>
             
@@ -176,26 +179,25 @@ export default function BentoCard({
 
       {/* === CAS 4 : SANS IMAGE === */}
       {!image && (
-        <div className="relative z-10 p-6 sm:p-8 lg:p-10 flex flex-col h-full justify-between">
-          <div>
-            {highlight && (
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100 border border-olive-300 mb-4">
-                <Sparkles className="w-4 h-4 text-olive-700" strokeWidth={2} />
-                <span className="text-sm font-semibold text-olive-800">Premium</span>
-              </div>
-            )}
+        <div className="relative z-10 p-6 sm:p-8 lg:p-10 flex flex-col h-full">
+          {highlight && (
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100 border border-olive-400 mb-6 w-fit shadow-sm">
+              <Sparkles className="w-4 h-4 text-olive-700" strokeWidth={2} />
+              <span className="text-sm font-semibold text-olive-800">Premium</span>
+            </div>
+          )}
 
-            <h3 className={`
-              text-xl sm:text-2xl lg:text-3xl font-bold mb-4 leading-tight
-              ${highlight ? 'text-olive-700' : 'text-charcoal'}
-            `}>
-              {title}
-            </h3>
-            
-            <p className="text-sm sm:text-base text-gray-700 mb-6 leading-relaxed">
-              {desc}
-            </p>
-          </div>
+          <h3 className={`
+            text-xl sm:text-2xl lg:text-3xl font-bold mb-4 leading-tight
+            transition-colors duration-300
+            ${highlight ? 'text-olive-700' : 'text-charcoal group-hover:text-olive-700'}
+          `}>
+            {title}
+          </h3>
+          
+          <p className="text-sm sm:text-base text-gray-700 mb-6 leading-relaxed flex-1">
+            {desc}
+          </p>
 
           {children}
         </div>

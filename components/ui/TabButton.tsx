@@ -16,20 +16,19 @@ export default function TabButton({
   children 
 }: TabButtonProps) {
   
-  // Mapping des couleurs avec le nouveau design system OKLCH
   const colorStyles = {
     olive: {
-      active: 'bg-olive-600 text-white shadow-sm',
-      activeHover: 'hover:bg-olive-700',
-      inactive: 'bg-cream text-charcoal',
-      inactiveHover: 'hover:bg-sand',
+      active: 'bg-olive-600 text-white shadow-md',
+      activeHover: 'hover:bg-olive-700 hover:shadow-lg',
+      inactive: 'bg-white text-charcoal border-2 border-gray-200',
+      inactiveHover: 'hover:bg-cream hover:border-olive-300',
       focusRing: 'focus-visible:ring-olive-400'
     },
     terra: {
-      active: 'bg-terra-500 text-white shadow-sm',
-      activeHover: 'hover:bg-terra-600',
-      inactive: 'bg-cream text-charcoal',
-      inactiveHover: 'hover:bg-sand',
+      active: 'bg-terra-500 text-white shadow-md',
+      activeHover: 'hover:bg-terra-600 hover:shadow-lg',
+      inactive: 'bg-white text-charcoal border-2 border-gray-200',
+      inactiveHover: 'hover:bg-cream hover:border-terra-300',
       focusRing: 'focus-visible:ring-terra-400'
     }
   };
@@ -40,42 +39,42 @@ export default function TabButton({
     <button
       onClick={onClick}
       className={`
-        relative px-5 sm:px-7 py-3 sm:py-4 rounded-full 
+        relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full 
         flex items-center gap-3
-        font-semibold text-sm sm:text-base 
-        transition-all duration-250 cursor-pointer
+        font-bold text-sm sm:text-base 
+        transition-all duration-300 ease-out cursor-pointer
         ${active 
-          ? `${currentColor.active} ${currentColor.activeHover}` 
+          ? `${currentColor.active} ${currentColor.activeHover} scale-105` 
           : `${currentColor.inactive} ${currentColor.inactiveHover}`
         }
-        ${active ? 'transform -translate-y-1' : ''}
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+        focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2
         ${currentColor.focusRing}
+        active:scale-95
       `}
     >
-      {/* Icône */}
+      {/* Icône optimisée */}
       <Icon 
         className={`
           w-5 h-5 sm:w-6 sm:h-6 
-          transition-transform duration-250
-          ${active ? 'scale-110' : 'opacity-70'}
+          transition-all duration-300 ease-out
+          ${active ? 'scale-110 rotate-12' : ''}
         `}
-        strokeWidth={active ? 2 : 1.5}
+        strokeWidth={active ? 2.5 : 2}
       />
 
       {/* Texte */}
-      <span className="whitespace-nowrap">
+      <span className="whitespace-nowrap font-bold">
         {children}
       </span>
 
-      {/* Indicateur actif subtil */}
+      {/* Indicateur actif optimisé */}
       {active && (
         <div 
           className={`
-            absolute -bottom-1 left-1/2 -translate-x-1/2
-            w-1/2 h-1 rounded-full
+            absolute -bottom-1.5 left-1/2 -translate-x-1/2
+            w-2/3 h-1 rounded-full
             ${color === 'olive' ? 'bg-olive-400' : 'bg-terra-400'}
-            transition-all duration-250
+            shadow-sm
           `}
         />
       )}
