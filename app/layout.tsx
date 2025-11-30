@@ -1,104 +1,110 @@
-import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import ScrollToTop from "@/components/layout/ScrollToTop";
-
-// Font principale : Plus Jakarta Sans (moderne et géométrique)
-const plusJakarta = Plus_Jakarta_Sans({ 
-  subsets: ["latin"],
-  variable: "--font-plus-jakarta",
-  display: "swap",
-  weight: ['400', '500', '600', '700', '800']
-});
-
-// Font secondaire : Inter (fallback)
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+import type { Metadata, Viewport } from 'next';
+import './globals.css';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import ScrollToTop from '@/components/layout/ScrollToTop';
 
 export const metadata: Metadata = {
-  title: "KAPSUL - La Déconnexion Instantanée | Bien-être Urbain Toulouse",
-  description: "Espace de bien-être urbain hybride à Toulouse. Pods VR immersifs, Massage expert, Yoga & Méditation. 20 minutes pour régénérer corps et esprit. Réservez dès maintenant.",
+  metadataBase: new URL('https://kapsul.co'),
+  title: 'KAPSUL - La Déconnexion Instantanée | Bien-être Urbain Toulouse',
+  description: 'Espace de bien-être urbain hybride à Toulouse. Pods VR immersifs, Massage expert, Yoga & Méditation. 20 minutes pour régénérer corps et esprit. Réservez dès maintenant.',
   keywords: [
-    "bien-être Toulouse",
-    "relaxation urbaine",
-    "pods VR",
-    "massage Toulouse",
-    "yoga Toulouse",
-    "méditation",
-    "déconnexion",
-    "récupération mentale",
-    "KAPSUL"
+    'bien-être Toulouse',
+    'relaxation urbaine',
+    'pods VR',
+    'massage Toulouse',
+    'yoga Toulouse',
+    'méditation',
+    'déconnexion',
+    'récupération mentale',
+    'KAPSUL',
+    'wellness',
+    'micro-sieste'
   ],
-  authors: [{ name: "KAPSUL Team" }],
+  authors: [{ name: 'KAPSUL Team' }],
+  creator: 'KAPSUL',
+  publisher: 'KAPSUL',
   openGraph: {
-    title: "KAPSUL - La Déconnexion Instantanée",
-    description: "20 minutes pour régénérer corps et esprit. Espace bien-être nouvelle génération à Toulouse.",
-    type: "website",
-    locale: "fr_FR",
+    type: 'website',
+    locale: 'fr_FR',
+    url: 'https://kapsul.co',
+    siteName: 'KAPSUL',
+    title: 'KAPSUL - La Déconnexion Instantanée',
+    description: '20 minutes pour régénérer corps et esprit. Espace bien-être nouvelle génération à Toulouse.',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'KAPSUL - Espace de bien-être urbain'
+      }
+    ]
   },
   twitter: {
-    card: "summary_large_image",
-    title: "KAPSUL - La Déconnexion Instantanée",
-    description: "Bien-être urbain nouvelle génération à Toulouse",
+    card: 'summary_large_image',
+    title: 'KAPSUL - La Déconnexion Instantanée',
+    description: 'Bien-être urbain nouvelle génération à Toulouse',
+    images: ['/twitter-image.jpg'],
+    creator: '@kapsul'
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
+  },
+  verification: {
+    google: 'YOUR_GOOGLE_VERIFICATION_CODE',
+  }
 };
 
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F8F7F5' },
+    { media: '(prefers-color-scheme: dark)', color: '#F8F7F5' }
+  ]
 };
 
-export const themeColor = [
-  { media: "(prefers-color-scheme: light)", color: "#577C74" },
-  { media: "(prefers-color-scheme: dark)", color: "#3D5A53" }
-];
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ 
+  children 
+}: Readonly<{ 
+  children: React.ReactNode 
+}>) {
   return (
     <html lang="fr" className="scroll-smooth">
       <head>
+        {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body 
-        className={` 
-          ${plusJakarta.variable} ${inter.variable} 
-          font-sans antialiased 
-          bg-linear-to-br from-pearl via-cream to-mist
-          text-ink
-        `}
-        style={{
-          fontFamily: 'var(--font-plus-jakarta), var(--font-inter), system-ui, sans-serif'
-        }}
-      >
+      
+      <body className="antialiased">
+        
+        {/* Skip to main content for accessibility */}
         <a 
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-200 focus:px-6 focus:py-3 focus:rounded-full focus:bg-emerald-500 focus:text-white focus:font-bold focus:shadow-emerald"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:px-6 focus:py-3 focus:rounded-full focus:bg-olive-600 focus:text-white focus:font-bold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-olive-400 focus:ring-offset-2"
         >
           Aller au contenu principal
         </a>
 
+        {/* Layout structure */}
         <Header />
-        <main id="main-content" className="relative flex flex-col min-h-screen">
+        
+        <main id="main-content" className="relative">
           {children}
         </main>
+        
         <Footer />
         <ScrollToTop />
-
-        <div 
-          className="fixed inset-0 pointer-events-none z-90 opacity-[0.015] mix-blend-overlay"
-          style={{
-            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
-            backgroundRepeat: 'repeat',
-            backgroundSize: '200px 200px'
-          }}
-        />
       </body>
     </html>
   );

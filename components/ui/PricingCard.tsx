@@ -1,236 +1,148 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Check, Star, Zap, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { Check, Star, Zap } from 'lucide-react';
 import { PricingPlan } from '@/lib/data';
 
 interface PricingCardProps {
   plan: PricingPlan;
-  delay: number;
   isSelected?: boolean;
   onSelect?: () => void;
 }
 
-export default function PricingCard({ plan, delay, isSelected, onSelect }: PricingCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
+export default function PricingCard({ plan, isSelected, onSelect }: PricingCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ 
-        duration: 0.6, 
-        delay, 
-        ease: [0.22, 1, 0.36, 1] 
-      }}
+    <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="relative h-full"
     >
-      {/* Badge Populaire Moderne */}
+      {/* Badge Populaire */}
       {plan.popular && (
-        <motion.div
-          initial={{ opacity: 0, y: -15, scale: 0.8 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ 
-            duration: 0.5, 
-            delay: delay + 0.2,
-            type: "spring",
-            bounce: 0.4
-          }}
-          className="absolute -top-4 left-1/2 -translate-x-1/2 z-30"
-        >
-          <div className="relative">
-            <div className="bg-linear-to-r from-emerald-500 to-emerald-600 text-white px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-emerald border border-emerald-400/50">
-              <Star className="w-4 h-4 fill-current" />
-              <span>Plus populaire</span>
-            </div>
-            {/* Glow pulse */}
-            <motion.div
-              className="absolute inset-0 bg-emerald-500 rounded-full blur-md -z-10"
-              animate={{
-                opacity: [0.5, 0.8, 0.5],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+          <div className="bg-olive-600 text-white px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-md">
+            <Star className="w-4 h-4 fill-current" strokeWidth={2} />
+            <span>Plus populaire</span>
           </div>
-        </motion.div>
+        </div>
       )}
 
-      <motion.div
-        animate={{
-          y: isHovered ? -8 : 0,
-          scale: isHovered ? 1.02 : 1
-        }}
-        transition={{ 
-          duration: 0.4, 
-          ease: [0.22, 1, 0.36, 1] 
-        }}
+      <div
         className={`
-          rounded-organic p-8 sm:p-10
+          rounded-xl p-6 sm:p-8 lg:p-10
           h-full flex flex-col
           relative overflow-hidden
-          transition-all duration-500
+          transition-all duration-300
           ${plan.popular 
-            ? 'glass-emerald border-2 border-emerald-400' 
-            : 'glass glass-hover'
+            ? 'bg-olive-50 border-2 border-olive-400' 
+            : 'bg-white border border-gray-100 shadow-sm'
           }
-          ${isSelected ? 'ring-4 ring-emerald-500 ring-offset-4 ring-offset-pearl' : ''}
+          ${isSelected ? 'ring-4 ring-olive-400 ring-offset-4' : ''}
+          ${isHovered ? 'transform -translate-y-2 shadow-lg' : ''}
         `}
       >
-        {/* Background Pattern pour la carte populaire */}
+        {/* Pattern décoratif subtil pour la carte populaire */}
         {plan.popular && (
-          <>
-            <div className="absolute inset-0 opacity-[0.03]">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(circle at 2px 2px, var(--color-emerald-600) 1px, transparent 0)`,
-                backgroundSize: '32px 32px'
-              }} />
-            </div>
-            {/* Gradient glow */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-400/20 rounded-full blur-[80px]" />
-          </>
+          <div className="absolute inset-0 opacity-[0.025] pointer-events-none">
+            <div 
+              className="absolute inset-0 bg-[radial-gradient(circle_at_2px_2px,currentColor_1px,transparent_0)] bg-size-[24px_24px]"
+              style={{ color: 'var(--color-olive-700)' }}
+            />
+          </div>
         )}
 
         {/* En-tête du plan */}
         <div className="mb-8 relative z-10">
-          <div className="flex items-start justify-between mb-6">
+          <div className="flex items-start justify-between mb-4">
             <div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-ink mb-2">
+              <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-1">
                 {plan.name}
               </h3>
               {plan.popular && (
-                <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="flex items-center gap-1.5 text-emerald-600 text-sm font-medium"
-                >
-                  <TrendingUp className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-olive-700 text-sm font-medium mt-2">
+                  <Zap className="w-4 h-4" strokeWidth={2} />
                   <span>Meilleur rapport qualité/prix</span>
-                </motion.div>
+                </div>
               )}
             </div>
-            {plan.popular && (
-              <motion.div
-                animate={{ rotate: isHovered ? 12 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Zap className="w-7 h-7 text-emerald-600 fill-emerald-200" />
-              </motion.div>
-            )}
           </div>
           
-          {/* Prix avec animation */}
-          <div className="flex items-baseline gap-3">
-            <motion.span 
-              className={`text-5xl sm:text-6xl font-bold tracking-tight ${
-                plan.popular 
-                  ? 'gradient-emerald' 
-                  : 'text-ink'
-              }`}
-              animate={{ scale: isHovered ? 1.05 : 1 }}
-              transition={{ duration: 0.3 }}
-            >
+          {/* Prix */}
+          <div className="flex items-baseline gap-2">
+            <span className={`
+              text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight 
+              ${plan.popular ? 'text-olive-700' : 'text-charcoal'}
+            `}>
               {plan.price}
-            </motion.span>
-            <span className="text-lg sm:text-xl text-charcoal font-medium">
+            </span>
+            <span className="text-lg text-gray-700 font-medium">
               {plan.period}
             </span>
           </div>
 
-          {/* Prix par crédit avec badge */}
+          {/* Prix par crédit */}
           {plan.period === '/mois' && (
-            <motion.div 
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-coral-100 border border-coral-300"
-            >
-              <span className="text-xs sm:text-sm font-bold gradient-coral">
+            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-terra-100 border border-terra-300">
+              <span className="text-xs sm:text-sm font-semibold text-terra-700">
                 {plan.name === 'STUDENT PASS' && '≈ 7.47€/crédit'}
                 {plan.name === 'STANDARD PASS' && '≈ 6.24€/crédit'}
               </span>
-            </motion.div>
+            </div>
           )}
         </div>
         
-        {/* Features avec animations échelonnées */}
-        <ul className="space-y-4 sm:space-y-5 mb-8 flex-1 relative z-10">
+        {/* Features */}
+        <ul className="space-y-4 mb-8 flex-1 relative z-10">
           {plan.features.map((feature, idx) => (
-            <motion.li 
+            <li 
               key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ 
-                duration: 0.5, 
-                delay: delay + 0.1 * idx,
-                ease: "easeOut"
-              }}
-              className="flex items-start gap-4 text-base sm:text-lg"
+              className="flex items-start gap-3 text-sm sm:text-base"
             >
-              {/* Icône check modernisée */}
-              <motion.div 
-                className={`
-                  mt-1 w-6 h-6 rounded-full flex items-center justify-center shrink-0
-                  ${plan.popular 
-                    ? 'bg-emerald-500 shadow-emerald' 
-                    : 'bg-emerald-100'
-                  }
-                `}
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ duration: 0.2 }}
-              >
+              {/* Icône check */}
+              <div className={`
+                mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0
+                transition-colors duration-200
+                ${plan.popular 
+                  ? 'bg-olive-600' 
+                  : 'bg-olive-100'
+                }
+              `}>
                 <Check 
-                  className={`w-4 h-4 ${
+                  className={`w-3 h-3 ${
                     plan.popular 
                       ? 'text-white' 
-                      : 'text-emerald-600'
+                      : 'text-olive-700'
                   }`} 
                   strokeWidth={3}
                 />
-              </motion.div>
-              <span className="leading-relaxed text-charcoal">
+              </div>
+              <span className="leading-relaxed text-gray-700">
                 {feature}
               </span>
-            </motion.li>
+            </li>
           ))}
         </ul>
         
-        {/* CTA Button Premium */}
-        <motion.button
+        {/* CTA Button */}
+        <button
           onClick={onSelect}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
           className={`
-            w-full py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg
-            transition-all duration-300 relative overflow-hidden
+            w-full py-4 rounded-lg font-semibold text-base
+            transition-all duration-250
+            flex items-center justify-center gap-2
             ${plan.popular 
-              ? 'btn-primary' 
-              : 'btn-secondary'
+              ? 'bg-olive-600 text-white hover:bg-olive-700 shadow-sm hover:shadow-md hover:-translate-y-0.5' 
+              : 'bg-terra-500 text-white hover:bg-terra-600 shadow-sm hover:shadow-md hover:-translate-y-0.5'
             }
+            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive-400
           `}
         >
-          <span className="relative z-10 flex items-center justify-center gap-2">
-            {plan.cta}
-            {plan.popular && <Zap className="w-5 h-5 fill-current" />}
-          </span>
-        </motion.button>
-
-        {/* Décorations subtiles */}
-        {!plan.popular && (
-          <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-lavender-300/20 rounded-full blur-[60px] pointer-events-none" />
-        )}
-      </motion.div>
-    </motion.div>
+          <span>{plan.cta}</span>
+          {plan.popular && <Zap className="w-4 h-4" strokeWidth={2} />}
+        </button>
+      </div>
+    </div>
   );
 }

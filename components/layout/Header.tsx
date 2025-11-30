@@ -2,12 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, Lightbulb, Grid3x3, DollarSign, MapPin, Home, Sparkles } from 'lucide-react';
+import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3 } from 'lucide-react';
 
 const navLinks = [
-  { name: 'Accueil', href: '#home', icon: Home },
-  { name: 'Concept', href: '#concept', icon: Lightbulb },
+  { name: 'Concept', href: '#concept', icon: Sparkles },
   { name: 'Services', href: '#services', icon: Grid3x3 },
   { name: 'Tarifs', href: '#pricing', icon: DollarSign },
   { name: 'Espace', href: '#space', icon: MapPin },
@@ -54,58 +52,37 @@ export default function Header() {
 
   return (
     <>
-      {/* HEADER PREMIUM FLOATING */}
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
-      >
-        <div className="container mx-auto px-6 sm:px-8 pt-6 sm:pt-8">
-          <motion.div
-            animate={{
-              backgroundColor: isScrolled 
-                ? 'rgba(255, 255, 255, 0.9)' 
-                : 'rgba(255, 255, 255, 0.7)',
-              backdropFilter: isScrolled ? 'blur(20px)' : 'blur(12px)',
-              boxShadow: isScrolled 
-                ? '0 8px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(87, 124, 116, 0.1)' 
-                : '0 4px 16px rgba(0, 0, 0, 0.04)',
-              borderRadius: '9999px',
-              padding: isScrolled ? '12px 28px' : '16px 32px',
-              maxWidth: isScrolled ? '920px' : '1120px',
-            }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto flex items-center justify-between pointer-events-auto border border-white/60"
+      {/* HEADER FLOATING */}
+      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-4 sm:pt-6">
+          <div
+            className={`
+              mx-auto flex items-center justify-between
+              pointer-events-auto
+              rounded-full
+              border border-gray-100
+              transition-all duration-300 ease-out
+              ${isScrolled 
+                ? 'bg-white/95 backdrop-blur-lg shadow-md py-2.5 px-5 sm:px-7 max-w-4xl' 
+                : 'bg-white/90 backdrop-blur-md shadow-sm py-3 px-6 sm:px-8 max-w-5xl'
+              }
+            `}
           >
             
-            {/* LOGO ANIMÉ */}
-            <Link href="/" onClick={() => setActiveSection('')} className="relative group">
-              <motion.div 
-                className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="gradient-emerald font-extrabold">
-                  Kapsul
-                </span>
-                <motion.div
-                  className="w-2.5 h-2.5 rounded-full bg-linear-to-br from-emerald-500 to-coral-500"
-                  animate={{ 
-                    scale: [1, 1.3, 1],
-                    rotate: [0, 180, 360]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    ease: 'easeInOut'
-                  }}
-                />
-              </motion.div>
+            {/* LOGO */}
+            <Link 
+              href="/" 
+              onClick={() => setActiveSection('')}
+              className="group"
+            >
+              <div className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2 transition-transform duration-250 hover:scale-105">
+                <span className="text-olive-700">Kapsul</span>
+                <div className="w-2 h-2 rounded-full bg-olive-600 transition-transform duration-250 group-hover:scale-125" />
+              </div>
             </Link>
 
             {/* DESKTOP NAV */}
-            <nav className="hidden md:flex items-center gap-2">
+            <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href;
                 
@@ -114,231 +91,128 @@ export default function Header() {
                     key={link.name}
                     href={link.href}
                     onClick={() => handleLinkClick(link.href)}
-                    className="relative"
+                    className={`
+                      relative px-4 py-2 text-sm font-semibold rounded-full
+                      transition-all duration-250
+                      ${isActive 
+                        ? 'bg-olive-600 text-white shadow-sm' 
+                        : 'text-charcoal hover:text-olive-700 hover:bg-olive-50'
+                      }
+                    `}
                   >
-                    <motion.div
-                      className={`
-                        relative px-5 py-2.5 text-sm font-bold transition-all duration-300 rounded-full
-                        ${isActive 
-                          ? 'text-white' 
-                          : 'text-charcoal hover:text-emerald-700'
-                        }
-                      `}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <span className="relative z-10">{link.name}</span>
-                      
-                      {/* Background actif avec gradient */}
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeNavBackground"
-                          className="absolute inset-0 bg-linear-to-r from-emerald-500 to-emerald-600 rounded-full z-0 shadow-emerald"
-                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                        />
-                      )}
-
-                      {/* Hover glow pour états inactifs */}
-                      {!isActive && (
-                        <motion.div
-                          className="absolute inset-0 bg-emerald-100 rounded-full opacity-0 hover:opacity-100 transition-opacity"
-                          whileHover={{ scale: 1.1 }}
-                        />
-                      )}
-                    </motion.div>
+                    {link.name}
+                    {isActive && (
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1/2 h-1 rounded-full bg-olive-400" />
+                    )}
                   </Link>
                 );
               })}
             </nav>
 
             {/* CTA & MOBILE BUTTON */}
-            <div className="flex items-center gap-3 sm:gap-4">
-              {/* CTA Desktop Premium */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.5, type: "spring", bounce: 0.4 }}
-                className="hidden md:block"
-              >
-                <Link href="#pricing">
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="relative px-6 py-3 rounded-full bg-linear-to-r from-emerald-500 to-emerald-600 text-white text-sm font-bold shadow-emerald hover:shadow-xl transition-all duration-300 flex items-center gap-2 overflow-hidden group"
-                  >
-                    <Zap className="w-4 h-4 fill-white/40 relative z-10" />
-                    <span className="relative z-10">Réserver</span>
-                    
-                    {/* Shimmer effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
-                      animate={{
-                        x: ['-100%', '100%']
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "linear",
-                        repeatDelay: 1
-                      }}
-                    />
-                  </motion.button>
-                </Link>
-              </motion.div>
+            <div className="flex items-center gap-3">
+              {/* CTA Desktop */}
+              <Link href="#pricing" className="hidden md:block">
+                <button className="bg-olive-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 shadow-sm hover:bg-olive-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-250">
+                  <Zap className="w-4 h-4" strokeWidth={2} />
+                  <span>Réserver</span>
+                </button>
+              </Link>
 
               {/* Mobile Menu Button */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2.5 text-ink hover:bg-emerald-100 rounded-full transition-all"
+                className="md:hidden p-2 text-charcoal hover:bg-olive-100 rounded-full transition-all duration-200"
               >
-                <AnimatePresence mode="wait">
-                  {isMobileMenuOpen ? (
-                    <motion.div
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <X className="w-6 h-6" strokeWidth={2.5} />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Menu className="w-6 h-6" strokeWidth={2.5} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" strokeWidth={2.5} />
+                ) : (
+                  <Menu className="w-6 h-6" strokeWidth={2.5} />
+                )}
+              </button>
             </div>
-          </motion.div>
+          </div>
         </div>
-      </motion.header>
+      </header>
 
-      {/* MOBILE MENU PREMIUM */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop blur */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-ink/30 backdrop-blur-md md:hidden"
-            />
-            
-            {/* Menu panel */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 z-50 w-[85%] max-w-sm glass-emerald shadow-2xl p-8 md:hidden overflow-y-auto border-l-2 border-emerald-300"
-            >
-              {/* Header menu mobile */}
-              <div className="flex justify-between items-center mb-12">
-                <span className="text-2xl font-bold gradient-emerald flex items-center gap-2">
-                  Kapsul
-                  <motion.div
-                    className="w-2 h-2 rounded-full bg-linear-to-br from-emerald-500 to-coral-500"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  />
-                </span>
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-charcoal hover:text-emerald-700 hover:bg-emerald-100 rounded-xl transition-all"
-                >
-                  <X className="w-7 h-7" strokeWidth={2.5} />
-                </motion.button>
-              </div>
-
-              {/* Navigation links */}
-              <nav className="flex flex-col gap-3 mb-8">
-                {navLinks.map((link, index) => {
-                  const Icon = link.icon;
-                  const isActive = activeSection === link.href;
-                  
-                  return (
-                    <motion.div
-                      key={link.name}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index, type: "spring", bounce: 0.3 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => handleLinkClick(link.href)}
-                        className={`
-                          flex items-center gap-4 text-lg font-bold transition-all duration-300 p-5 rounded-2xl
-                          ${isActive 
-                            ? 'bg-linear-to-r from-emerald-500 to-emerald-600 text-white shadow-emerald' 
-                            : 'text-ink hover:bg-emerald-100 hover:text-emerald-700'
-                          }
-                        `}
-                      >
-                        <div className={`
-                          w-12 h-12 rounded-xl flex items-center justify-center transition-colors
-                          ${isActive 
-                            ? 'bg-white/20 text-white' 
-                            : 'bg-linear-to-br from-emerald-100 to-emerald-200 text-emerald-700'
-                          }
-                        `}>
-                          <Icon className="w-6 h-6" strokeWidth={2.5} />
-                        </div>
-                        <span>{link.name}</span>
-                        {isActive && (
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="ml-auto"
-                          >
-                            <Sparkles className="w-5 h-5" />
-                          </motion.div>
-                        )}
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-              </nav>
-
-              <div className="w-full h-px bg-linear-to-r from-transparent via-emerald-300 to-transparent my-8" />
-
-              {/* CTA Mobile */}
-              <Link
-                href="#pricing"
-                onClick={() => handleLinkClick('#pricing')}
+      {/* MOBILE MENU */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 z-40 bg-charcoal/30 backdrop-blur-sm md:hidden transition-opacity duration-250"
+          />
+          
+          {/* Menu panel */}
+          <div
+            className="fixed right-0 top-0 bottom-0 z-50 w-[85%] max-w-sm bg-white shadow-xl p-6 md:hidden overflow-y-auto border-l border-gray-100"
+          >
+            {/* Header menu mobile */}
+            <div className="flex justify-between items-center mb-8">
+              <span className="text-xl font-bold text-olive-700 flex items-center gap-2">
+                Kapsul
+                <div className="w-2 h-2 rounded-full bg-olive-600" />
+              </span>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 text-charcoal hover:text-olive-700 hover:bg-olive-100 rounded-lg transition-all duration-200"
               >
-                <motion.button 
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full py-5 rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-600 text-white font-bold text-lg shadow-emerald flex items-center justify-center gap-3 relative overflow-hidden group"
-                >
-                  <Zap className="w-6 h-6 fill-white/40 relative z-10" />
-                  <span className="relative z-10">Réserver une séance</span>
-                  
-                  {/* Shimmer */}
-                  <motion.div
-                    className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
-                    animate={{ x: ['-100%', '100%'] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                  />
-                </motion.button>
-              </Link>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+                <X className="w-6 h-6" strokeWidth={2.5} />
+              </button>
+            </div>
+
+            {/* Navigation links */}
+            <nav className="flex flex-col gap-2 mb-6">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const isActive = activeSection === link.href;
+                
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => handleLinkClick(link.href)}
+                    className={`
+                      flex items-center gap-3 text-base font-semibold
+                      transition-all duration-250 p-4 rounded-xl
+                      ${isActive 
+                        ? 'bg-olive-600 text-white shadow-sm' 
+                        : 'text-charcoal hover:bg-olive-50 hover:text-olive-700'
+                      }
+                    `}
+                  >
+                    <div className={`
+                      w-10 h-10 rounded-lg flex items-center justify-center
+                      ${isActive 
+                        ? 'bg-white/20 text-white' 
+                        : 'bg-olive-100 text-olive-700'
+                      }
+                    `}>
+                      <Icon className="w-5 h-5" strokeWidth={2} />
+                    </div>
+                    <span>{link.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Divider */}
+            <div className="h-px w-full bg-linear-to-r from-transparent via-gray-300 to-transparent my-6" />
+
+            {/* CTA Mobile */}
+            <Link
+              href="#pricing"
+              onClick={() => handleLinkClick('#pricing')}
+            >
+              <button className="bg-olive-600 text-white w-full py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 shadow-sm hover:bg-olive-700 transition-all duration-250">
+                <Zap className="w-5 h-5" strokeWidth={2} />
+                <span>Réserver une séance</span>
+              </button>
+            </Link>
+          </div>
+        </>
+      )}
     </>
   );
 }

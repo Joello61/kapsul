@@ -1,181 +1,124 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles, PlayCircle, Zap, Timer, DollarSign, ThumbsUp, TrendingUp } from 'lucide-react';
+import { ArrowRight, PlayCircle, Zap, Timer, DollarSign, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Hero() {
-  const { scrollYProgress } = useScroll();
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.96]);
-  const y = useTransform(scrollYProgress, [0, 0.3], [0, 40]);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   return (
     <section 
       id="home" 
-      className="relative min-h-screen flex items-center pt-32 sm:pt-40 pb-24 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-32 sm:pt-40 pb-20 overflow-hidden bg-cream"
     >
-      
-      {/* BACKGROUND EFFECTS Premium */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Grille moderne ultra-subtile */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 2px 2px, var(--color-emerald-500) 1px, transparent 0),
-              radial-gradient(circle at 2px 2px, var(--color-coral-500) 1px, transparent 0)
-            `,
-            backgroundSize: '80px 80px, 120px 120px',
-            backgroundPosition: '0 0, 40px 60px'
-          }}
-        />
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 w-full">
         
-        {/* Blurs colorés animés */}
-        <motion.div 
-          animate={{ 
-            opacity: [0.4, 0.6, 0.4],
-            scale: [1, 1.15, 1],
-            rotate: [0, 45, 0],
-            x: [0, 30, 0]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-32 -left-32 w-[700px] h-[700px] rounded-full blur-[120px]"
-          style={{
-            background: 'radial-gradient(circle, var(--color-emerald-300) 0%, transparent 70%)',
-          }}
-        />
-
-        <motion.div 
-          animate={{ 
-            opacity: [0.4, 0.6, 0.4],
-            scale: [1, 1.2, 1],
-            x: [0, -30, 0],
-            rotate: [0, -45, 0]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-1/3 -right-48 w-[600px] h-[600px] rounded-full blur-[120px]"
-          style={{
-            background: 'radial-gradient(circle, var(--color-coral-300) 0%, transparent 70%)',
-          }}
-        />
-      </div>
-
-      <motion.div 
-        style={{ opacity, scale, y }}
-        className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8"
-      >
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* === COLONNE GAUCHE : CONTENU === */}
-          <div className="space-y-10">
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
             
-            {/* Badge Premium avec animation */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            {/* Badge */}
+            <motion.div 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-olive-100 border border-olive-300"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-emerald border-2 border-emerald-300 group cursor-pointer">
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                >
-                  <Sparkles className="w-4 h-4 text-emerald-600" />
-                </motion.div>
-                <span className="text-sm font-bold gradient-emerald">
-                  Un Esprit Sain dans un Corps Sain
-                </span>
-                <TrendingUp className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <Zap className="w-4 h-4 text-olive-700" strokeWidth={2} />
+              <span className="text-sm font-semibold text-olive-800">
+                Un Esprit Sain dans un Corps Sain
+              </span>
             </motion.div>
 
-            {/* Titre Principal MEGA */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-4"
-            >
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tight leading-[0.95]">
-                <span className="gradient-emerald">KAPSUL</span>
-                <motion.span 
-                  className="inline-block text-coral-500"
-                  animate={{ rotate: [0, 5, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  .
-                </motion.span>
-              </h1>
+            {/* Titre Principal */}
+            <div className="space-y-4">
+              <motion.h1 
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-none"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <span className="text-olive-700">KAPSUL</span>
+                <span className="text-terra-600">.</span>
+              </motion.h1>
               
-              <h2 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight'>
-                Moins cher qu'un psy,
-                <br/>
-                <span className='gradient-sunset'>plus efficace qu'une sieste.</span>
-              </h2>
-            </motion.div>
+              <motion.h2 
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-charcoal"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                Moins cher qu&apos;un psy,<br />
+                <span className="text-terra-600">plus efficace qu&apos;une sieste.</span>
+              </motion.h2>
+            </div>
 
             {/* Sous-titre */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-xl sm:text-2xl text-charcoal leading-relaxed max-w-xl font-medium"
+            <motion.p 
+              className="text-lg sm:text-xl text-gray-700 leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
               10h/jour devant un écran ?{' '}
-              <span className="text-emerald-600 font-bold">Récupérez</span> en 20 minutes avec nos{' '}
-              <span className="gradient-emerald font-bold">pods immersifs</span> et{' '}
-              <span className="gradient-coral font-bold">soins experts</span>.
+              <span className="text-olive-700 font-semibold">Récupérez</span> en 20 minutes avec nos{' '}
+              <span className="text-olive-700 font-semibold">pods immersifs</span> et{' '}
+              <span className="text-terra-600 font-semibold">soins experts</span>.
             </motion.p>
 
-            {/* Stats Premium Cards */}
-            <motion.div
+            {/* Stats Cards */}
+            <motion.div 
+              className="flex flex-wrap gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-wrap gap-4"
+              transition={{ duration: 0.6, delay: 0.5 }}
             >
               {[
                 { 
                   icon: DollarSign, 
-                  gradient: 'from-[var(--color-emerald-400)] to-[var(--color-emerald-600)]',
                   val: '12€', 
                   label: 'la séance',
-                  shadowColor: 'var(--glow-emerald)'
+                  bgColor: 'bg-olive-100',
+                  iconColor: 'text-olive-700'
                 },
                 { 
                   icon: Timer, 
-                  gradient: 'from-[var(--color-coral-400)] to-[var(--color-coral-600)]',
                   val: '20min', 
                   label: 'de détente',
-                  shadowColor: 'var(--glow-coral)'
+                  bgColor: 'bg-terra-100',
+                  iconColor: 'text-terra-700'
                 },
                 { 
                   icon: ThumbsUp, 
-                  gradient: 'from-[var(--color-lavender-400)] to-[var(--color-lavender-600)]',
                   val: '100%', 
                   label: 'satisfaction',
-                  shadowColor: 'var(--glow-lavender)'
+                  bgColor: 'bg-beige-100',
+                  iconColor: 'text-beige-500'
                 }
               ].map((stat, i) => (
                 <motion.div 
                   key={i}
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  className="flex items-center gap-4 px-6 py-4 rounded-2xl glass border-2 border-white cursor-pointer transition-all duration-300"
-                  style={{ boxShadow: stat.shadowColor }}
+                  className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white border border-gray-100 shadow-sm transition-transform duration-250 hover:-translate-y-1"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.6 + (i * 0.1) }}
                 >
-                  <div className={`w-14 h-14 rounded-xl bg-linear-to-br ${stat.gradient} flex items-center justify-center shadow-lg`}>
-                    <stat.icon className="w-7 h-7 text-white" strokeWidth={2.5} />
+                  <div className={`w-12 h-12 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
+                    <stat.icon className={`w-6 h-6 ${stat.iconColor}`} strokeWidth={2.5} />
                   </div>
                   <div>
-                    <div className="text-2xl sm:text-3xl font-extrabold text-ink">
+                    <div className="text-xl sm:text-2xl font-bold text-charcoal">
                       {stat.val}
                     </div>
-                    <div className="text-xs sm:text-sm text-slate font-bold uppercase tracking-wide">
+                    <div className="text-xs text-gray-500 font-semibold uppercase">
                       {stat.label}
                     </div>
                   </div>
@@ -183,180 +126,132 @@ export default function Hero() {
               ))}
             </motion.div>
 
-            {/* CTAs Premium */}
-            <motion.div
+            {/* CTAs */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col sm:flex-row gap-5"
+              transition={{ duration: 0.6, delay: 0.9 }}
             >
               <Link href="#pricing" className="flex-1 sm:flex-initial">
-                <motion.button 
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="btn-primary w-full sm:w-auto text-lg px-10 py-5 flex items-center justify-center gap-3 relative overflow-hidden group"
-                >
-                  <span className="relative z-10 font-bold">Réserver maintenant</span>
-                  <motion.div
-                    className="relative z-10"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-6 h-6" strokeWidth={3} />
-                  </motion.div>
-                </motion.button>
+                <button className="bg-olive-600 text-white w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 shadow-sm hover:bg-olive-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-250">
+                  <span>Réserver maintenant</span>
+                  <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+                </button>
               </Link>
 
               <Link href="#concept" className="flex-1 sm:flex-initial">
-                <motion.button 
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="group w-full sm:w-auto px-10 py-5 rounded-2xl glass border-2 border-emerald-200 text-ink font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 hover:border-emerald-400 hover:bg-emerald-50"
-                >
-                  <PlayCircle className="w-6 h-6 text-emerald-600 group-hover:scale-110 transition-transform" strokeWidth={2.5} />
-                  Le concept
-                </motion.button>
+                <button className="bg-transparent border-2 border-olive-400 text-olive-700 w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 hover:bg-olive-50 hover:border-olive-600 transition-all duration-250">
+                  <PlayCircle className="w-5 h-5" strokeWidth={2.5} />
+                  <span>Le concept</span>
+                </button>
               </Link>
             </motion.div>
 
-            {/* Social Proof Premium */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-5"
+            {/* Social Proof */}
+            <motion.div 
+              className="flex items-center gap-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1 }}
             >
-              <div className="flex -space-x-4">
+              <div className="flex -space-x-3">
                 {[...Array(5)].map((_, i) => (
-                  <motion.div 
+                  <div 
                     key={i}
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: 0.6 + i * 0.1, type: "spring", bounce: 0.5 }}
-                    className="w-12 h-12 rounded-full bg-linear-to-br from-emerald-200 to-coral-200 border-4 border-white flex items-center justify-center text-base font-black text-ink shadow-lg"
+                    className="w-10 h-10 rounded-full bg-linear-to-br from-olive-200 to-terra-200 border-2 border-white flex items-center justify-center text-sm font-bold text-charcoal shadow-sm"
                   >
                     {String.fromCharCode(65 + i)}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-              <div className="text-base text-charcoal font-medium">
-                Rejoignez <span className="gradient-emerald font-extrabold text-lg">500+ pros</span> de la tech
+              <div className="text-sm text-gray-700 font-medium">
+                Rejoignez <span className="text-olive-700 font-bold">500+ pros</span> de la tech
               </div>
             </motion.div>
 
-          </div>
+          </motion.div>
 
-          {/* === COLONNE DROITE : MÉDIA Premium === */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          {/* === COLONNE DROITE : MÉDIA === */}
+          <motion.div 
             className="relative"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
             
-            {/* Container principal avec effects */}
-            <div className="relative aspect-4/5 rounded-[3rem] overflow-hidden glass border-4 border-white shadow-2xl">
+            {/* Container principal */}
+            <div className="relative aspect-4/5 rounded-3xl overflow-hidden bg-sand shadow-xl">
               
               <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                onLoadedData={() => setImageLoaded(true)}
+                onLoadedData={() => setVideoLoaded(true)}
                 className="absolute inset-0 w-full h-full object-cover"
               >
                 <source src="/videos/hero-kapsul.mp4" type="video/mp4" />
               </video>
 
-              {/* Overlay gradient premium */}
-              <div className="absolute inset-0 bg-linear-to-t from-ink/80 via-ink/20 to-transparent" />
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-linear-to-t from-charcoal/80 via-charcoal/20 to-transparent" />
 
               {/* Card flottante "En ce moment" */}
-              <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                animate={{ opacity: imageLoaded ? 1 : 0, y: imageLoaded ? 0 : 30, scale: imageLoaded ? 1 : 0.9 }}
-                transition={{ duration: 0.8, delay: 1 }}
-                className="absolute bottom-8 left-8 right-8"
-              >
-                <div className="glass-emerald rounded-3xl p-6 border-2 border-emerald-300">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-bold text-ink">En ce moment</span>
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-linear-to-r from-green-400 to-green-500 border-2 border-white shadow-lg">
-                      <motion.span 
-                        className="w-2 h-2 rounded-full bg-white"
-                        animate={{ opacity: [1, 0.3, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                      <span className="text-white text-xs font-black uppercase tracking-wider">Live</span>
+              {videoLoaded && (
+                <motion.div 
+                  className="absolute bottom-6 left-6 right-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-semibold text-charcoal">En ce moment</span>
+                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500 border border-green-400">
+                        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                        <span className="text-white text-xs font-bold uppercase">Live</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-14 h-14 rounded-xl bg-olive-600 flex items-center justify-center text-white shadow-sm">
+                        <Zap className="w-7 h-7" strokeWidth={2} />
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-base font-bold text-charcoal">K-ESCAPE VR</div>
+                        <div className="text-sm text-gray-700">Session immersive active</div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white shadow-emerald">
-                      <Zap className="w-8 h-8" fill="currentColor" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-lg font-extrabold text-ink">K-ESCAPE VR</div>
-                      <div className="text-sm text-charcoal font-medium">Session immersive active</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              )}
 
               {/* Badge "Nouveau" */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.7, rotate: -10 }}
-                animate={{ opacity: imageLoaded ? 1 : 0, scale: imageLoaded ? 1 : 0.7, rotate: imageLoaded ? 0 : -10 }}
-                transition={{ duration: 0.6, delay: 1.2, type: "spring", bounce: 0.6 }}
-                className="absolute top-8 right-8"
-              >
-                <div className="px-5 py-2.5 rounded-full glass-coral border-2 border-coral-400 font-extrabold text-sm flex items-center gap-2 shadow-coral">
-                  <motion.span
-                    animate={{ rotate: [0, 15, -15, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    ⭐
-                  </motion.span>
-                  <span className="gradient-coral">Nouveau</span>
-                </div>
-              </motion.div>
+              {videoLoaded && (
+                <motion.div 
+                  className="absolute top-6 right-6"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1 }}
+                >
+                  <div className="px-4 py-2 rounded-full bg-terra-600 text-white font-bold text-sm flex items-center gap-2 shadow-md">
+                    <span>⭐</span>
+                    <span>Nouveau</span>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Loading skeleton */}
+              {!videoLoaded && (
+                <div className="absolute inset-0 bg-sand animate-pulse" />
+              )}
 
             </div>
-
-            {/* Blobs décoratifs autour */}
-            <motion.div
-              animate={{ 
-                rotate: 360,
-                scale: [1, 1.15, 1]
-              }}
-              transition={{ 
-                rotate: { duration: 30, repeat: Infinity, ease: 'linear' },
-                scale: { duration: 5, repeat: Infinity, ease: 'easeInOut' }
-              }}
-              className="absolute -top-12 -right-12 w-56 h-56 rounded-full blur-[80px]"
-              style={{
-                background: 'radial-gradient(circle, var(--color-emerald-400) 0%, transparent 70%)',
-              }}
-            />
-            <motion.div
-              animate={{ 
-                rotate: -360,
-                scale: [1, 1.2, 1]
-              }}
-              transition={{ 
-                rotate: { duration: 25, repeat: Infinity, ease: 'linear' },
-                scale: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }
-              }}
-              className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full blur-[80px]"
-              style={{
-                background: 'radial-gradient(circle, var(--color-coral-400) 0%, transparent 70%)',
-              }}
-            />
-
           </motion.div>
 
         </div>
 
-      </motion.div>
+      </div>
     </section>
   );
 }
