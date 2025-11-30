@@ -46,7 +46,7 @@ export default function Footer() {
             expérience <span className="text-olive-700">KAPSUL</span>
           </h2>
 
-          <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-700 mb-10 mt-10 leading-relaxed">
             <span className="text-terra-600 font-semibold">12€</span> pour 20 minutes qui vont changer votre rapport au bien-être.
           </p>
 

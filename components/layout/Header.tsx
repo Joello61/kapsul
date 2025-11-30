@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3 } from 'lucide-react';
+import { Menu, X, Zap, Sparkles, MapPin, DollarSign, Grid3x3, Home } from 'lucide-react';
 
 const navLinks = [
+  {name: 'Accueil', href: '#home', icon: Home },
   { name: 'Concept', href: '#concept', icon: Sparkles },
   { name: 'Services', href: '#services', icon: Grid3x3 },
   { name: 'Tarifs', href: '#pricing', icon: DollarSign },

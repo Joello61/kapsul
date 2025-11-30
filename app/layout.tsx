@@ -99,7 +99,7 @@ export default function RootLayout({
         {/* Layout structure */}
         <Header />
         
-        <main id="main-content" className="relative">
+        <main id="main-content" className="container mx-auto relative">
           {children}
         </main>
         

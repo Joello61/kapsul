@@ -53,7 +53,8 @@ export default function BentoCard({
                 object-cover
                 transition-all duration-700 ease-out
                 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
-              `} 
+              `}
+              loading="eager"
             />
             {/* Overlay gradiant pour lisibilité */}
             <div className="absolute inset-0 bg-linear-to-t from-charcoal/95 via-charcoal/70 to-charcoal/30" />
@@ -101,6 +102,7 @@ export default function BentoCard({
                 transition-all duration-700 ease-out
                 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
               `}
+              loading="eager"
             />
             
             {/* Badge highlight */}
@@ -149,6 +151,7 @@ export default function BentoCard({
                 transition-opacity duration-700 ease-out
                 ${imageLoaded ? 'opacity-100' : 'opacity-0'}
               `}
+              loading="eager"
             />
             
             {/* Loading skeleton */}

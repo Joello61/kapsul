@@ -2,7 +2,6 @@
 
 @theme {
   
-  /* === PALETTE DE COULEURS OKLCH === */
   /* Vert Olive : Couleur Principale (Calme, Nature, Équilibre) */
   --color-olive-50: oklch(0.98 0.012 140);
   --color-olive-100: oklch(0.95 0.025 140);
@@ -146,12 +145,15 @@
   --z-tooltip: 70;
 }
 
-/* === BASE STYLES === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
+
+/* === BASE STYLES === */
 
 html {
   font-size: 16px;
@@ -178,53 +180,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-charcoal);
-  margin: 0;
-}
-
-h1 {
-  font-size: clamp(2rem, 5vw + 1rem, 3.75rem);
-  font-weight: var(--font-weight-bold);
-}
-
-h2 {
-  font-size: clamp(1.75rem, 4vw + 0.75rem, 3rem);
-}
-
-h3 {
-  font-size: clamp(1.5rem, 3vw + 0.5rem, 2.25rem);
-}
-
-h4 {
-  font-size: clamp(1.25rem, 2vw + 0.5rem, 1.875rem);
-}
-
-h5 {
-  font-size: var(--font-size-xl);
-}
-
-h6 {
-  font-size: var(--font-size-lg);
-}
-
-p {
-  margin: 0;
-  color: var(--color-gray-700);
-}
-
-a {
-  color: var(--color-olive-600);
-  text-decoration: none;
-  transition: color var(--transition-base);
-}
-
-a:hover {
-  color: var(--color-olive-700);
-}
-
-a:focus-visible {
-  outline: 2px solid var(--color-olive-400);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
 }
 
 /* === SELECTION === */
