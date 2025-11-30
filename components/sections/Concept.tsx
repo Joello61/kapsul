@@ -41,7 +41,7 @@ export default function Concept() {
   };
 
   return (
-    <Section id="concept" variant="pattern">
+    <Section id="concept">
       
       {/* EN-TÊTE */}
       <motion.div 
@@ -85,7 +85,7 @@ export default function Concept() {
               desc={problem.desc}
               image={problemImages[idx]}
               imagePosition="top"
-              className="min-h-[380px]"
+              className="h-full"
             />
           </motion.div>
         ))}

@@ -13,7 +13,7 @@ export default function Space() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <Section id="space" variant="gradient">
+    <Section id="space">
       
       {/* EN-TÊTE */}
       <motion.div 

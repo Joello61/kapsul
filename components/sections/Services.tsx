@@ -16,7 +16,7 @@ export default function Services() {
   const currentServices = activeTab === 'olive' ? servicesTech : servicesHuman;
 
   return (
-    <Section id="services" variant="pattern">
+    <Section id="services">
       
       {/* EN-TÊTE */}
       <motion.div 

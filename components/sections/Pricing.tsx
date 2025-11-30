@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import Section from '@/components/shared/Section';
 import PricingCard from '@/components/ui/PricingCard';
 import { pricingPlans } from '@/lib/data';
-import { TrendingDown, Calculator, ShieldCheck, Sparkles, Calendar } from 'lucide-react';
+import { TrendingDown, Calculator, ShieldCheck, Sparkles, Calendar, Bath, HandHelping } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 
 export default function Pricing() {
@@ -13,7 +13,7 @@ export default function Pricing() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <Section id="pricing" variant="gradient">
+    <Section id="pricing">
       
       {/* EN-TÊTE */}
       <motion.div 
@@ -58,36 +58,43 @@ export default function Pricing() {
         
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
-            { label: 'Spa classique', price: '80-120€', time: '60 min', emoji: '🧖‍♀️' },
-            { label: 'Massage indépendant', price: '60-90€', time: '45 min', emoji: '💆‍♂️' },
-            { label: 'KAPSUL', price: '12€', time: '20 min', highlight: true, emoji: '✨' }
-          ].map((item, index) => (
-            <motion.div
-              key={item.label}
-              className={`
-                p-6 rounded-xl flex flex-col items-center text-center
-                transition-all duration-300 hover:-translate-y-1
-                ${item.highlight 
-                  ? 'bg-terra-600 text-white shadow-md scale-105' 
-                  : 'bg-white border border-gray-100'
-                }
-              `}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: item.highlight ? 1.05 : 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.3 + (index * 0.1) }}
-            >
-              <div className="text-3xl mb-4">{item.emoji}</div>
-              <div className={`text-xs mb-2 font-semibold uppercase tracking-wide ${item.highlight ? 'text-white/90' : 'text-gray-500'}`}>
-                {item.label}
-              </div>
-              <div className={`text-3xl sm:text-4xl font-bold mb-1 ${item.highlight ? 'text-white' : 'text-charcoal'}`}>
-                {item.price}
-              </div>
-              <div className={`text-xs font-semibold uppercase ${item.highlight ? 'text-white/80' : 'text-gray-500'}`}>
-                {item.time}
-              </div>
-            </motion.div>
-          ))}
+            { label: 'Spa classique', price: '80-120€', time: '60 min', icon: Bath },
+            { label: 'Massage indépendant', price: '60-90€', time: '45 min', icon: HandHelping },
+            { label: 'KAPSUL', price: '12€', time: '20 min', highlight: true, icon: Sparkles }
+          ].map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={item.label}
+                className={`
+                  p-6 rounded-xl flex flex-col items-center text-center
+                  transition-all duration-300 hover:-translate-y-1
+                  ${item.highlight 
+                    ? 'bg-terra-600 text-white shadow-md scale-105' 
+                    : 'bg-white border border-gray-100'
+                  }
+                `}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: item.highlight ? 1.05 : 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.3 + (index * 0.1) }}
+              >
+                {/* icône */}
+                <Icon className={`w-10 h-10 mb-4 ${item.highlight ? 'text-white' : 'text-terra-600'}`} />
+
+                <div className={`text-xs mb-2 font-semibold uppercase tracking-wide ${item.highlight ? 'text-white/90' : 'text-gray-500'}`}>
+                  {item.label}
+                </div>
+
+                <div className={`text-3xl sm:text-4xl font-bold mb-1 ${item.highlight ? 'text-white' : 'text-charcoal'}`}>
+                  {item.price}
+                </div>
+
+                <div className={`text-xs font-semibold uppercase ${item.highlight ? 'text-white/80' : 'text-gray-500'}`}>
+                  {item.time}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
 
@@ -129,8 +136,8 @@ export default function Pricing() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
           {[
             { label: 'À la carte', price: '12€', credit: '/crédit', highlight: false },
-            { label: 'Student Pass', price: '7.47€', credit: '/crédit', discount: '-38% 🔥', highlight: true },
-            { label: 'Standard Pass', price: '6.24€', credit: '/crédit', discount: '-48% 🔥', highlight: true }
+            { label: 'Student Pass', price: '7.47€', credit: '/crédit', highlight: true },
+            { label: 'Standard Pass', price: '6.24€', credit: '/crédit', highlight: true }
           ].map((item, index) => (
             <motion.div
               key={item.label}
@@ -145,11 +152,6 @@ export default function Pricing() {
               <div className="text-3xl font-bold">
                 {item.price}<span className={`text-base font-normal ${item.highlight ? 'text-white/80' : 'text-gray-500'}`}>{item.credit}</span>
               </div>
-              {item.discount && (
-                <div className="text-xs font-bold bg-terra-600 text-white px-3 py-1 rounded-full inline-block mt-2">
-                  {item.discount}
-                </div>
-              )}
             </motion.div>
           ))}
         </div>

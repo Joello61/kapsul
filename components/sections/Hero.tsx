@@ -1,19 +1,18 @@
 'use client';
 
-import { ArrowRight, PlayCircle, Zap, Timer, DollarSign, ThumbsUp } from 'lucide-react';
+import { ArrowRight, PlayCircle, Zap, Timer, DollarSign, ThumbsUp, Star } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Hero() {
-  const [videoLoaded, setVideoLoaded] = useState(false);
 
   return (
     <section 
       id="home" 
       className="relative min-h-screen flex items-center pt-32 sm:pt-40 pb-20 overflow-hidden bg-cream"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10 w-full">
+      <div className="px-6 sm:px-8 lg:px-12 relative z-10 w-full">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
@@ -182,24 +181,24 @@ export default function Hero() {
             
             {/* Container principal */}
             <div className="relative aspect-4/5 rounded-3xl overflow-hidden bg-sand shadow-xl">
-              
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                onLoadedData={() => setVideoLoaded(true)}
-                className="absolute inset-0 w-full h-full object-cover"
-              >
-                <source src="/videos/hero-kapsul.mp4" type="video/mp4" />
-              </video>
+
+              <Image
+                src="/images/hero-image.jpg"
+                alt="Hero Image"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw,
+                      (max-width: 1024px) 50vw,
+                      33vw"
+                priority
+                loading='eager'
+              />
 
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-linear-to-t from-charcoal/80 via-charcoal/20 to-transparent" />
 
               {/* Card flottante "En ce moment" */}
-              {videoLoaded && (
-                <motion.div 
+              <motion.div 
                   className="absolute bottom-6 left-6 right-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -224,10 +223,9 @@ export default function Hero() {
                     </div>
                   </div>
                 </motion.div>
-              )}
 
               {/* Badge "Nouveau" */}
-              {videoLoaded && (
+
                 <motion.div 
                   className="absolute top-6 right-6"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -235,16 +233,10 @@ export default function Hero() {
                   transition={{ duration: 0.5, delay: 1 }}
                 >
                   <div className="px-4 py-2 rounded-full bg-terra-600 text-white font-bold text-sm flex items-center gap-2 shadow-md">
-                    <span>⭐</span>
+                    <span><Star className='' fill='yellow'/></span>
                     <span>Nouveau</span>
                   </div>
                 </motion.div>
-              )}
-
-              {/* Loading skeleton */}
-              {!videoLoaded && (
-                <div className="absolute inset-0 bg-sand animate-pulse" />
-              )}
 
             </div>
           </motion.div>

@@ -85,6 +85,7 @@ export default function Header() {
             {/* DESKTOP NAV */}
             <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => {
+                const Icon = link.icon;
                 const isActive = activeSection === link.href;
                 
                 return (
@@ -93,7 +94,7 @@ export default function Header() {
                     href={link.href}
                     onClick={() => handleLinkClick(link.href)}
                     className={`
-                      relative px-4 py-2 text-sm font-semibold rounded-full
+                      relative px-3 py-1 text-md text-olive-600 font-semibold rounded-full
                       transition-all duration-250
                       ${isActive 
                         ? 'bg-olive-600 text-white shadow-sm' 
@@ -101,7 +102,10 @@ export default function Header() {
                       }
                     `}
                   >
-                    {link.name}
+                    <div className="flex items-center gap-2">
+                      <Icon className="w-4 h-4 inline-block" strokeWidth={2} />
+                      {link.name}
+                    </div>
                     {isActive && (
                       <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1/2 h-1 rounded-full bg-olive-400" />
                     )}
@@ -175,7 +179,7 @@ export default function Header() {
                     href={link.href}
                     onClick={() => handleLinkClick(link.href)}
                     className={`
-                      flex items-center gap-3 text-base font-semibold
+                      flex items-center gap-3 text-olive-600 text-base font-semibold
                       transition-all duration-250 p-4 rounded-xl
                       ${isActive 
                         ? 'bg-olive-600 text-white shadow-sm' 

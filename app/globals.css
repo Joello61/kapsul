@@ -12,8 +12,6 @@
   --color-olive-600: oklch(0.52 0.105 140);
   --color-olive-700: oklch(0.42 0.090 140);
   --color-olive-800: oklch(0.34 0.070 140);
-  --color-olive-900: oklch(0.26 0.050 140);
-  --color-olive-950: oklch(0.18 0.035 140);
 
   /* Terracotta : Couleur Secondaire (Chaleur, Humanité, Vitalité) */
   --color-terra-50: oklch(0.97 0.018 50);
@@ -25,17 +23,11 @@
   --color-terra-600: oklch(0.56 0.145 50);
   --color-terra-700: oklch(0.48 0.125 50);
   --color-terra-800: oklch(0.40 0.100 50);
-  --color-terra-900: oklch(0.32 0.080 50);
-  --color-terra-950: oklch(0.24 0.060 50);
 
   /* Beige Chaud : Accent (Douceur, Support) */
-  --color-beige-50: oklch(0.98 0.015 80);
   --color-beige-100: oklch(0.95 0.025 80);
-  --color-beige-200: oklch(0.91 0.040 80);
   --color-beige-300: oklch(0.85 0.055 80);
-  --color-beige-400: oklch(0.78 0.070 80);
   --color-beige-500: oklch(0.72 0.080 80);
-  --color-beige-600: oklch(0.64 0.075 80);
 
   /* Neutres : Fond et Texte */
   --color-cream: oklch(0.98 0.008 90);
@@ -43,7 +35,6 @@
   --color-white: oklch(0.99 0.003 105);
   
   --color-charcoal: oklch(0.30 0.012 280);
-  --color-gray-900: oklch(0.42 0.010 275);
   --color-gray-700: oklch(0.55 0.008 270);
   --color-gray-500: oklch(0.68 0.006 265);
   --color-gray-300: oklch(0.82 0.004 260);
