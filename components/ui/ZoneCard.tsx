@@ -13,10 +13,9 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
   const Icon = zone.icon;
   const [isHovered, setIsHovered] = useState(false);
 
-  // Combine l'état actif (sélectionné) et survolé
   const showActiveState = isHovered || isActive;
 
-  // Données fictives pour les équipements (à enrichir si besoin dans data.ts)
+  // Features par zone
   const features = zone.title.includes('Sociale') ? ['Fuel Bar', 'Networking', 'Coworking'] :
                    zone.title.includes('Active') ? ['Studio Yoga', 'Massage', 'Douches'] :
                    ['K-Pods', 'Silence Absolu', 'Lumière Tamisée'];
@@ -30,11 +29,11 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
       <div
         className={`
           relative h-full overflow-hidden rounded-3xl p-8 sm:p-10
-          bg-white border transition-all duration-500 ease-out
+          bg-white border transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
           flex flex-col
           ${showActiveState 
-            ? 'shadow-2xl -translate-y-1 border-transparent' 
-            : 'shadow-sm border-gray-100 hover:border-gray-200'
+            ? 'shadow-2xl -translate-y-2 border-transparent' 
+            : 'shadow-sm border-olive-100/50 hover:border-olive-200'
           }
         `}
         style={{
@@ -50,7 +49,7 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
           }}
         />
 
-        {/* Badge "En direct" (Optionnel - pour simuler l'activité) */}
+        {/* Badge "En direct" */}
         {isActive && (
           <div className="absolute top-6 right-6 flex items-center gap-2 animate-pulse">
             <span className="relative flex h-3 w-3">
@@ -63,32 +62,33 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
                 style={{ backgroundColor: zone.color }}
               />
             </span>
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Zone Active</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-charcoal/40">Zone Active</span>
           </div>
         )}
 
         {/* Header avec Icône */}
         <div className="relative z-10 flex items-start justify-between mb-6">
           <div 
-            className="w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:rotate-3 group-hover:scale-105"
+            className="w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:rotate-3 group-hover:scale-110 shadow-sm"
             style={{ 
-              backgroundColor: showActiveState ? zone.color : '#F9FAFB',
-              color: showActiveState ? '#FFFFFF' : zone.color
+              backgroundColor: showActiveState ? zone.color : 'oklch(0.98 0.008 90)',
+              color: showActiveState ? '#FFFFFF' : zone.color,
+              boxShadow: showActiveState ? `0 10px 30px -5px ${zone.color}30` : ''
             }}
           >
-            <Icon className="w-10 h-10" strokeWidth={1.5} />
+            <Icon className="w-10 h-10" strokeWidth={showActiveState ? 2 : 1.5} />
           </div>
         </div>
 
         {/* Contenu */}
         <div className="relative z-10 mb-8 flex-1">
           <h3 
-            className="font-heading text-3xl font-bold mb-3 transition-colors duration-300"
-            style={{ color: showActiveState ? zone.color : 'var(--color-charcoal)' }}
+            className="font-heading text-3xl font-bold mb-4 transition-colors duration-300 tracking-tight"
+            style={{ color: showActiveState ? zone.color : 'oklch(0.30 0.012 280)' }}
           >
             {zone.title}
           </h3>
-          <p className="text-gray-600 leading-relaxed text-lg">
+          <p className="text-charcoal/60 leading-relaxed text-lg">
             {zone.desc}
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
           {features.map((feature) => (
             <span 
               key={feature}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-gray-100 text-gray-500 shadow-sm"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-olive-100 text-charcoal/60 shadow-sm transition-all hover:border-olive-300 hover:text-olive-700"
             >
               {feature}
             </span>
@@ -106,11 +106,12 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
         </div>
 
         {/* Footer / CTA */}
-        <div className="relative z-10 mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wide transition-all duration-300 group-hover:gap-4"
-             style={{ color: zone.color }}
+        <div 
+          className="relative z-10 mt-auto flex items-center gap-2 font-bold text-sm uppercase tracking-wide transition-all duration-300 group-hover:gap-4"
+          style={{ color: zone.color }}
         >
           Explorer la zone
-          <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
+          <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
         </div>
 
         {/* Border Active Highlight */}
@@ -118,7 +119,7 @@ export default function ZoneCard({ zone, isActive }: ZoneCardProps) {
           className="absolute inset-0 rounded-3xl border-2 pointer-events-none transition-opacity duration-500"
           style={{ 
             borderColor: zone.color,
-            opacity: showActiveState ? 0.1 : 0
+            opacity: showActiveState ? 0.15 : 0
           }}
         />
       </div>

@@ -2,8 +2,8 @@ interface SectionProps {
   children: React.ReactNode;
   className?: string;
   id?: string;
-  background?: 'cream' | 'white' | 'olive' | 'terra' | 'none'; // Ajout de 'none' pour flexibilité
-  pattern?: boolean; // Option pour ajouter un motif de fond subtil
+  background?: 'cream' | 'white' | 'olive' | 'terra' | 'sand' | 'none';
+  pattern?: boolean;
 }
 
 export function Section({ 
@@ -14,11 +14,13 @@ export function Section({
   pattern = false
 }: SectionProps) {
 
+  // Utilisation stricte de la palette OKLCH depuis globals.css
   const backgrounds = {
     cream: 'bg-cream',
     white: 'bg-white',
     olive: 'bg-olive-50',
     terra: 'bg-terra-50',
+    sand: 'bg-sand',
     none: 'bg-transparent'
   };
 
@@ -31,15 +33,20 @@ export function Section({
         ${className}
       `}
     >
-      {/* Pattern décoratif optionnel (Grid Dot) */}
+      {/* Pattern décoratif optionnel - Dot Grid subtil */}
       {pattern && (
-        <div className="absolute inset-0 pointer-events-none opacity-[0.4]" 
-             style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
-        </div>
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-[0.035]" 
+          style={{ 
+            backgroundImage: `radial-gradient(oklch(0.30 0.012 280) 1px, transparent 1px)`, 
+            backgroundSize: '32px 32px',
+            backgroundPosition: 'center center'
+          }}
+        />
       )}
 
       {/* Container centré avec padding adaptatif */}
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10">
         {children}
       </div>
     </section>

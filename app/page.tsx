@@ -6,14 +6,11 @@ import Space from '@/components/sections/Space';
 
 export default function Home() {
   return (
-    <div className="flex flex-col w-full overflow-hidden">
+    <div className="flex flex-col w-full">
       <Hero />
-      
       <Concept />
       <Services />
-      
       <Pricing />
-      
       <Space />
     </div>
   );

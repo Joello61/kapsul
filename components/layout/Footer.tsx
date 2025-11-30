@@ -14,7 +14,6 @@ export default function Footer() {
     if (!email) return;
     
     setStatus('loading');
-    // Simulation d'appel API
     await new Promise(resolve => setTimeout(resolve, 1500));
     setStatus('success');
     setEmail('');
@@ -23,34 +22,34 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-white pt-20 pb-10 overflow-hidden">
-      {/* CTA SECTION - Intégrée visuellement au haut du footer */}
-      <div className="container mx-auto px-4 mb-20">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-charcoal text-white p-8 md:p-16 text-center shadow-2xl shadow-charcoal/20">
+    <footer className="relative bg-white pt-24 pb-10 overflow-hidden">
+      {/* CTA SECTION */}
+      <div className="container mx-auto px-4 mb-24">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-charcoal text-white p-10 md:p-20 text-center shadow-2xl shadow-charcoal/20">
           
           {/* Background Gradients */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-olive-500/20 rounded-full blur-3xl mix-blend-screen animate-pulse" style={{ animationDuration: '4s' }} />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-terra-500/20 rounded-full blur-3xl mix-blend-screen animate-pulse" style={{ animationDuration: '5s' }} />
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-olive-500/25 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
+            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-terra-500/25 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
           </div>
 
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-            <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl tracking-tight mb-6">
+            <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
               Prêt à déconnecter pour mieux reconnecter ?
             </h2>
-            <p className="text-gray-300 text-lg md:text-xl mb-10 leading-relaxed">
+            <p className="text-white/80 text-lg md:text-xl mb-12 leading-relaxed max-w-2xl">
               Rejoignez le mouvement Kapsul. Votre première session de 20 minutes suffit à changer votre journée.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <Link href="#pricing" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto bg-white text-charcoal hover:bg-olive-50 font-bold py-4 px-8 rounded-full transition-all transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center gap-2">
+                <button className="w-full sm:w-auto bg-white text-charcoal hover:bg-olive-50 font-bold py-4 px-8 rounded-full transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-white/20 flex items-center justify-center gap-2.5 group">
                   Réserver ma session
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </button>
               </Link>
               <Link href="#contact" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto bg-white/10 text-white hover:bg-white/20 font-semibold py-4 px-8 rounded-full backdrop-blur-md transition-all border border-white/10">
+                <button className="w-full sm:w-auto bg-white/10 text-white hover:bg-white/20 font-semibold py-4 px-8 rounded-full backdrop-blur-md transition-all border border-white/20 hover:border-white/30">
                   Nous contacter
                 </button>
               </Link>
@@ -59,25 +58,32 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+      <div className="container mx-auto px-4 md:px-8 relative">
+        {/* GIANT TEXT BACKGROUND - Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden opacity-[0.035] pointer-events-none select-none z-0">
+          <span className="text-[9vw] md:text-[11vw] lg:text-[13vw] font-black leading-none text-charcoal tracking-tighter text-center block whitespace-nowrap">
+            KAPSUL SPACE
+          </span>
+        </div>
+
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 mb-20">
           
-          {/* BRAND & NEWSLETTER (Colonnes 1-5) */}
+          {/* BRAND & NEWSLETTER */}
           <div className="lg:col-span-5 space-y-8">
             <Link href="/" className="inline-block group">
-              <span className="font-heading font-bold text-3xl text-charcoal tracking-tight flex items-center gap-1">
+              <span className="font-heading font-bold text-3xl text-charcoal tracking-tight flex items-center gap-1.5">
                 Kapsul
                 <span className="w-2.5 h-2.5 rounded-full bg-olive-600 group-hover:scale-125 transition-transform duration-300" />
               </span>
             </Link>
             
-            <p className="text-gray-500 text-lg max-w-sm leading-relaxed">
+            <p className="text-charcoal/60 text-lg max-w-sm leading-relaxed">
               L&apos;espace de récupération urbaine nouvelle génération. 
               Tech & Humain réunis pour votre équilibre mental.
             </p>
 
             <div className="max-w-sm pt-4">
-              <p className="text-sm font-semibold text-charcoal mb-3">Newsletter exclusive</p>
+              <p className="text-sm font-semibold text-charcoal mb-4">Newsletter exclusive</p>
               <form onSubmit={handleSubscribe} className="relative">
                 <input
                   type="email"
@@ -85,16 +91,17 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={status === 'loading' || status === 'success'}
-                  className="w-full bg-gray-50 border border-gray-200 text-charcoal rounded-2xl py-3.5 pl-5 pr-14 focus:outline-none focus:ring-2 focus:ring-olive-500/20 focus:border-olive-500 transition-all placeholder:text-gray-400 disabled:opacity-70"
+                  className="w-full bg-olive-50/50 border border-olive-200/50 text-charcoal rounded-2xl py-4 pl-5 pr-14 focus:outline-none focus:ring-2 focus:ring-olive-500/30 focus:border-olive-500 focus:bg-white transition-all placeholder:text-charcoal/40 disabled:opacity-70"
                 />
                 <button
                   type="submit"
                   disabled={status !== 'idle' || !email}
                   className={`
                     absolute right-2 top-2 bottom-2 aspect-square rounded-xl flex items-center justify-center transition-all
-                    ${status === 'success' ? 'bg-green-500 text-white' : 'bg-charcoal text-white hover:bg-olive-600'}
+                    ${status === 'success' ? 'bg-olive-600 text-white' : 'bg-charcoal text-white hover:bg-olive-600'}
                     disabled:opacity-50 disabled:cursor-not-allowed
                   `}
+                  aria-label={status === 'loading' ? 'Envoi en cours' : status === 'success' ? 'Inscription réussie' : 'S\'inscrire'}
                 >
                   {status === 'loading' ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -106,8 +113,8 @@ export default function Footer() {
                 </button>
               </form>
               {status === 'success' && (
-                <p className="text-green-600 text-xs mt-2 font-medium animate-in fade-in slide-in-from-top-1">
-                  Merci ! Vous êtes bien inscrit.
+                <p className="text-olive-700 text-sm mt-3 font-medium animate-in fade-in slide-in-from-top-1">
+                  ✓ Merci ! Vous êtes bien inscrit.
                 </p>
               )}
             </div>
@@ -116,8 +123,8 @@ export default function Footer() {
           {/* Spacer */}
           <div className="hidden lg:block lg:col-span-1" />
 
-          {/* LINKS COLUMNS (Colonnes 7-12) */}
-          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
+          {/* LINKS COLUMNS */}
+          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-10">
             
             {/* Services */}
             <div>
@@ -125,7 +132,10 @@ export default function Footer() {
               <ul className="space-y-4">
                 {footerLinks.services.map((link) => (
                   <li key={link}>
-                    <Link href="#services" className="text-gray-500 hover:text-olive-600 transition-colors text-sm font-medium block hover:translate-x-1 duration-200">
+                    <Link 
+                      href="#services" 
+                      className="text-charcoal/60 hover:text-olive-600 transition-all text-sm font-medium block hover:translate-x-1 duration-200"
+                    >
                       {link}
                     </Link>
                   </li>
@@ -139,7 +149,10 @@ export default function Footer() {
               <ul className="space-y-4">
                 {footerLinks.infos.map((link) => (
                   <li key={link}>
-                    <Link href="#" className="text-gray-500 hover:text-olive-600 transition-colors text-sm font-medium block hover:translate-x-1 duration-200">
+                    <Link 
+                      href="#" 
+                      className="text-charcoal/60 hover:text-olive-600 transition-all text-sm font-medium block hover:translate-x-1 duration-200"
+                    >
                       {link}
                     </Link>
                   </li>
@@ -147,29 +160,38 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Contact & Social */}
+            {/* Contact */}
             <div className="col-span-2 md:col-span-1">
               <h4 className="font-heading font-bold text-charcoal mb-6">Contact</h4>
               <ul className="space-y-4">
                 <li>
-                  <a href={`mailto:${footerLinks.location.email}`} className="flex items-center gap-3 text-gray-500 hover:text-terra-600 transition-colors group">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-terra-100 transition-colors">
+                  <a 
+                    href={`mailto:${footerLinks.location.email}`} 
+                    className="flex items-center gap-3 text-charcoal/60 hover:text-terra-600 transition-all group"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-olive-50 flex items-center justify-center group-hover:bg-terra-100 group-hover:scale-110 transition-all">
                       <Mail className="w-4 h-4" />
                     </div>
                     <span className="text-sm font-medium">Email</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 text-gray-500 hover:text-olive-600 transition-colors group">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-olive-100 transition-colors">
+                  <a 
+                    href={`tel:${footerLinks.location.phone}`} 
+                    className="flex items-center gap-3 text-charcoal/60 hover:text-olive-600 transition-all group"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-olive-50 flex items-center justify-center group-hover:bg-olive-100 group-hover:scale-110 transition-all">
                       <Phone className="w-4 h-4" />
                     </div>
                     <span className="text-sm font-medium">Appeler</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 text-gray-500 hover:text-blue-600 transition-colors group">
-                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                  <a 
+                    href="#" 
+                    className="flex items-center gap-3 text-charcoal/60 hover:text-olive-700 transition-all group"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-olive-50 flex items-center justify-center group-hover:bg-olive-100 group-hover:scale-110 transition-all">
                       <MapPin className="w-4 h-4" />
                     </div>
                     <span className="text-sm font-medium">Toulouse</span>
@@ -181,29 +203,27 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM BAR */}
-        <div className="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm font-medium">
+        <div className="relative z-10 pt-10 border-t border-olive-100 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-charcoal/50 text-sm font-medium">
             © {new Date().getFullYear()} Kapsul. Tous droits réservés.
           </p>
           
-          <div className="flex items-center gap-4">
-            {[Instagram, Linkedin, Facebook].map((Icon, i) => (
+          <div className="flex items-center gap-3">
+            {[
+              { Icon: Instagram, label: 'Instagram' },
+              { Icon: Linkedin, label: 'LinkedIn' },
+              { Icon: Facebook, label: 'Facebook' }
+            ].map(({ Icon, label }, i) => (
               <a 
                 key={i} 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-charcoal hover:bg-olive-600 hover:text-white transition-all duration-300 hover:-translate-y-1"
+                aria-label={label}
+                className="w-11 h-11 rounded-full bg-olive-50 flex items-center justify-center text-charcoal/70 hover:bg-olive-600 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-olive-600/20"
               >
                 <Icon className="w-5 h-5" />
               </a>
             ))}
           </div>
-        </div>
-
-        {/* GIANT TEXT BACKGROUND - Esthétique "Design" */}
-        <div className="w-full overflow-hidden mt-10 opacity-[0.03] pointer-events-none select-none">
-          <span className="text-[12vw] md:text-[14vw] font-black leading-none text-charcoal tracking-tighter text-center block">
-            KAPSUL SPACE
-          </span>
         </div>
       </div>
     </footer>
