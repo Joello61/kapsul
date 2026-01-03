@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Mail, Phone, Instagram, Linkedin, Facebook, ArrowRight, Check, Loader2 } from 'lucide-react';
+import { MapPin, Mail, Phone, Instagram, Linkedin, Facebook, ArrowRight, Check, Loader2, ExternalLink } from 'lucide-react';
 import { footerLinks } from '@/lib/data';
 
 export default function Footer() {
@@ -22,207 +22,208 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-white pt-24 pb-10 overflow-hidden">
-      {/* CTA SECTION */}
-      <div className="container mx-auto px-4 mb-24">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-charcoal text-white p-10 md:p-20 text-center shadow-2xl shadow-charcoal/20">
+    <footer className="relative bg-white overflow-hidden border-t border-sage-100">
+      
+      {/* FOOTER PRINCIPAL */}
+      <div className="bg-cream py-16">
+        <div className="container mx-auto px-6 md:px-12 lg:px-16 w-full relative">
           
-          {/* Background Gradients */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-olive-500/25 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }} />
-            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-terra-500/25 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }} />
+          {/* Watermark subtil */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden opacity-[0.02] pointer-events-none select-none">
+            <span className="text-[8vw] font-serif font-bold leading-none text-charcoal text-center block whitespace-nowrap">
+              KAPSUL
+            </span>
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-            <h2 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-              Prêt à déconnecter pour mieux reconnecter ?
-            </h2>
-            <p className="text-white/80 text-lg md:text-xl mb-12 leading-relaxed max-w-2xl">
-              Rejoignez le mouvement Kapsul. Votre première session de 20 minutes suffit à changer votre journée.
-            </p>
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
             
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="#pricing" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto bg-white text-charcoal hover:bg-olive-50 font-bold py-4 px-8 rounded-full transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-white/20 flex items-center justify-center gap-2.5 group">
-                  Réserver ma session
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </button>
+            {/* BRAND & NEWSLETTER */}
+            <div className="lg:col-span-4 space-y-6">
+              <Link href="/" className="inline-block group">
+                <span className="font-serif font-semibold text-3xl text-charcoal flex items-center gap-2">
+                  KAPSUL
+                  <span className="w-2 h-2 rounded-full bg-sage-600 group-hover:scale-125 transition-transform" />
+                </span>
               </Link>
-              <Link href="#contact" className="w-full sm:w-auto">
-                <button className="w-full sm:w-auto bg-white/10 text-white hover:bg-white/20 font-semibold py-4 px-8 rounded-full backdrop-blur-md transition-all border border-white/20 hover:border-white/30">
-                  Nous contacter
-                </button>
-              </Link>
+              
+              <p className="text-gray-700 text-sm max-w-xs leading-relaxed">
+                Le sanctuaire urbain de récupération. Tech et Touch pour votre équilibre corps-esprit.
+              </p>
+
+              {/* Stats discrets */}
+              <div className="flex items-center gap-6 pt-2">
+                <div>
+                  <div className="font-serif text-2xl font-semibold text-charcoal">500+</div>
+                  <div className="text-xs text-gray-600">Clients actifs</div>
+                </div>
+                <div className="w-px h-10 bg-sage-200/50" />
+                <div>
+                  <div className="font-serif text-2xl font-semibold text-sage-600">4.9/5</div>
+                  <div className="text-xs text-gray-600">Satisfaction</div>
+                </div>
+              </div>
+
+              {/* Newsletter compact */}
+              <div className="pt-4">
+                <p className="text-sm font-semibold text-charcoal mb-3">Newsletter</p>
+                <div className="relative max-w-xs">
+                  <input
+                    type="email"
+                    placeholder="votre@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={status !== 'idle'}
+                    className="w-full bg-white border border-sage-200/50 text-charcoal rounded-full py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-sage-400 transition-all placeholder:text-gray-500 disabled:opacity-70"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSubscribe}
+                    disabled={status !== 'idle' || !email}
+                    className={`absolute right-1 top-1 bottom-1 aspect-square rounded-full flex items-center justify-center transition-all ${status === 'success' ? 'bg-sage-600 text-white' : 'bg-sage-600 text-white hover:bg-sage-700'} disabled:opacity-50`}
+                    aria-label="S'inscrire"
+                  >
+                    {status === 'loading' ? (
+                      <Loader2 className="w-4 h-4 animate-spin" strokeWidth={2} />
+                    ) : status === 'success' ? (
+                      <Check className="w-4 h-4" strokeWidth={2} />
+                    ) : (
+                      <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                    )}
+                  </button>
+                </div>
+                {status === 'success' && (
+                  <p className="text-sage-700 text-xs mt-2 font-medium">✓ Merci !</p>
+                )}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="container mx-auto px-4 md:px-8 relative">
-        {/* GIANT TEXT BACKGROUND - Watermark */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full overflow-hidden opacity-[0.035] pointer-events-none select-none z-0">
-          <span className="text-[9vw] md:text-[11vw] lg:text-[13vw] font-black leading-none text-charcoal tracking-tighter text-center block whitespace-nowrap">
-            KAPSUL SPACE
-          </span>
-        </div>
+            {/* LINKS */}
+            <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+              
+              {/* Services */}
+              <div>
+                <h4 className="font-semibold text-charcoal text-sm mb-4">Services</h4>
+                <ul className="space-y-2.5">
+                  {footerLinks.services.map((link) => (
+                    <li key={link}>
+                      <Link 
+                        href="#services" 
+                        className="text-gray-600 hover:text-sage-600 transition-colors text-sm block"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 mb-20">
-          
-          {/* BRAND & NEWSLETTER */}
-          <div className="lg:col-span-5 space-y-8">
-            <Link href="/" className="inline-block group">
-              <span className="font-heading font-bold text-3xl text-charcoal tracking-tight flex items-center gap-1.5">
-                Kapsul
-                <span className="w-2.5 h-2.5 rounded-full bg-olive-600 group-hover:scale-125 transition-transform duration-300" />
-              </span>
-            </Link>
-            
-            <p className="text-charcoal/60 text-lg max-w-sm leading-relaxed">
-              L&apos;espace de récupération urbaine nouvelle génération. 
-              Tech & Humain réunis pour votre équilibre mental.
-            </p>
+              {/* Infos */}
+              <div>
+                <h4 className="font-semibold text-charcoal text-sm mb-4">Informations</h4>
+                <ul className="space-y-2.5">
+                  {footerLinks.infos.map((link) => (
+                    <li key={link}>
+                      <Link 
+                        href={link === 'À Propos' ? '/about' : '#'} 
+                        className="text-gray-600 hover:text-sage-600 transition-colors text-sm block"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            <div className="max-w-sm pt-4">
-              <p className="text-sm font-semibold text-charcoal mb-4">Newsletter exclusive</p>
-              <form onSubmit={handleSubscribe} className="relative">
-                <input
-                  type="email"
-                  placeholder="votre@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={status === 'loading' || status === 'success'}
-                  className="w-full bg-olive-50/50 border border-olive-200/50 text-charcoal rounded-2xl py-4 pl-5 pr-14 focus:outline-none focus:ring-2 focus:ring-olive-500/30 focus:border-olive-500 focus:bg-white transition-all placeholder:text-charcoal/40 disabled:opacity-70"
-                />
-                <button
-                  type="submit"
-                  disabled={status !== 'idle' || !email}
-                  className={`
-                    absolute right-2 top-2 bottom-2 aspect-square rounded-xl flex items-center justify-center transition-all
-                    ${status === 'success' ? 'bg-olive-600 text-white' : 'bg-charcoal text-white hover:bg-olive-600'}
-                    disabled:opacity-50 disabled:cursor-not-allowed
-                  `}
-                  aria-label={status === 'loading' ? 'Envoi en cours' : status === 'success' ? 'Inscription réussie' : 'S\'inscrire'}
-                >
-                  {status === 'loading' ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : status === 'success' ? (
-                    <Check className="w-4 h-4" />
-                  ) : (
-                    <ArrowRight className="w-4 h-4" />
-                  )}
-                </button>
-              </form>
-              {status === 'success' && (
-                <p className="text-olive-700 text-sm mt-3 font-medium animate-in fade-in slide-in-from-top-1">
-                  ✓ Merci ! Vous êtes bien inscrit.
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Spacer */}
-          <div className="hidden lg:block lg:col-span-1" />
-
-          {/* LINKS COLUMNS */}
-          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-10">
-            
-            {/* Services */}
-            <div>
-              <h4 className="font-heading font-bold text-charcoal mb-6">Services</h4>
-              <ul className="space-y-4">
-                {footerLinks.services.map((link) => (
-                  <li key={link}>
-                    <Link 
-                      href="#services" 
-                      className="text-charcoal/60 hover:text-olive-600 transition-all text-sm font-medium block hover:translate-x-1 duration-200"
+              {/* Contact */}
+              <div>
+                <h4 className="font-semibold text-charcoal text-sm mb-4">Contact</h4>
+                <ul className="space-y-2.5 text-sm">
+                  <li>
+                    <a 
+                      href={`mailto:${footerLinks.location.email}`} 
+                      className="text-gray-600 hover:text-sage-600 transition-colors flex items-center gap-2"
                     >
-                      {link}
-                    </Link>
+                      <Mail className="w-3.5 h-3.5" strokeWidth={2} />
+                      Email
+                    </a>
                   </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Infos */}
-            <div>
-              <h4 className="font-heading font-bold text-charcoal mb-6">Informations</h4>
-              <ul className="space-y-4">
-                {footerLinks.infos.map((link) => (
-                  <li key={link}>
-                    <Link 
+                  <li>
+                    <a 
+                      href={`tel:${footerLinks.location.phone}`} 
+                      className="text-gray-600 hover:text-sage-600 transition-colors flex items-center gap-2"
+                    >
+                      <Phone className="w-3.5 h-3.5" strokeWidth={2} />
+                      {footerLinks.location.phone}
+                    </a>
+                  </li>
+                  <li>
+                    <a 
                       href="#" 
-                      className="text-charcoal/60 hover:text-olive-600 transition-all text-sm font-medium block hover:translate-x-1 duration-200"
+                      className="text-gray-600 hover:text-sage-600 transition-colors flex items-center gap-2"
                     >
-                      {link}
-                    </Link>
+                      <MapPin className="w-3.5 h-3.5" strokeWidth={2} />
+                      St-Cyprien
+                    </a>
                   </li>
-                ))}
-              </ul>
-            </div>
+                </ul>
+              </div>
 
-            {/* Contact */}
-            <div className="col-span-2 md:col-span-1">
-              <h4 className="font-heading font-bold text-charcoal mb-6">Contact</h4>
-              <ul className="space-y-4">
-                <li>
-                  <a 
-                    href={`mailto:${footerLinks.location.email}`} 
-                    className="flex items-center gap-3 text-charcoal/60 hover:text-terra-600 transition-all group"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-olive-50 flex items-center justify-center group-hover:bg-terra-100 group-hover:scale-110 transition-all">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium">Email</span>
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href={`tel:${footerLinks.location.phone}`} 
-                    className="flex items-center gap-3 text-charcoal/60 hover:text-olive-600 transition-all group"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-olive-50 flex items-center justify-center group-hover:bg-olive-100 group-hover:scale-110 transition-all">
-                      <Phone className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium">Appeler</span>
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="#" 
-                    className="flex items-center gap-3 text-charcoal/60 hover:text-olive-700 transition-all group"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-olive-50 flex items-center justify-center group-hover:bg-olive-100 group-hover:scale-110 transition-all">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm font-medium">Toulouse</span>
-                  </a>
-                </li>
-              </ul>
+              {/* Horaires & Accès */}
+              <div>
+                <h4 className="font-semibold text-charcoal text-sm mb-4">Horaires</h4>
+                <ul className="space-y-2.5 text-sm text-gray-600">
+                  <li className="leading-relaxed">
+                    <strong className="text-charcoal block text-xs mb-1">Lun - Ven</strong>
+                    9h - 20h
+                  </li>
+                  <li className="leading-relaxed">
+                    <strong className="text-charcoal block text-xs mb-1">Sam - Dim</strong>
+                    10h - 18h
+                  </li>
+                  <li className="pt-2">
+                    <a 
+                      href="#" 
+                      className="text-sage-600 hover:text-sage-700 font-medium inline-flex items-center gap-1 text-xs"
+                    >
+                      Voir plan d&apos;accès
+                      <ExternalLink className="w-3 h-3" strokeWidth={2} />
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* BOTTOM BAR */}
-        <div className="relative z-10 pt-10 border-t border-olive-100 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-charcoal/50 text-sm font-medium">
-            © {new Date().getFullYear()} Kapsul. Tous droits réservés.
-          </p>
-          
-          <div className="flex items-center gap-3">
-            {[
-              { Icon: Instagram, label: 'Instagram' },
-              { Icon: Linkedin, label: 'LinkedIn' },
-              { Icon: Facebook, label: 'Facebook' }
-            ].map(({ Icon, label }, i) => (
-              <a 
-                key={i} 
-                href="#" 
-                aria-label={label}
-                className="w-11 h-11 rounded-full bg-olive-50 flex items-center justify-center text-charcoal/70 hover:bg-olive-600 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-olive-600/20"
-              >
-                <Icon className="w-5 h-5" />
-              </a>
-            ))}
+          {/* BOTTOM BAR */}
+          <div className="relative z-10 pt-8 border-t border-sage-200/50 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-gray-600">
+              <p>© {new Date().getFullYear()} KAPSUL</p>
+              <div className="hidden md:block w-px h-4 bg-sage-200/50" />
+              <div className="flex items-center gap-4">
+                <Link href="#" className="hover:text-sage-600 transition-colors">Mentions légales</Link>
+                <span className="text-sage-200">•</span>
+                <Link href="#" className="hover:text-sage-600 transition-colors">Confidentialité</Link>
+                <span className="text-sage-200">•</span>
+                <Link href="#" className="hover:text-sage-600 transition-colors">CGV</Link>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              {[
+                { Icon: Instagram, label: 'Instagram', url: '#' },
+                { Icon: Linkedin, label: 'LinkedIn', url: '#' },
+                { Icon: Facebook, label: 'Facebook', url: '#' }
+              ].map(({ Icon, label, url }, i) => (
+                <a 
+                  key={i} 
+                  href={url} 
+                  aria-label={label}
+                  className="w-9 h-9 rounded-full bg-white border border-sage-200/50 flex items-center justify-center text-gray-600 hover:bg-sage-600 hover:text-white hover:border-sage-600 transition-all duration-300"
+                >
+                  <Icon className="w-4 h-4" strokeWidth={2} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

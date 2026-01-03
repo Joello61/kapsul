@@ -3,13 +3,39 @@
 import { useState, useRef } from 'react';
 import Section from '@/components/shared/Section';
 import { zones } from '@/lib/data';
-import { MapPin, Maximize2, Volume2, Sparkles, Building2, MousePointer2 } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
+import { MapPin, Maximize2, Volume2, Sparkles, Building2, ChevronRight, ThermometerSun, Wind, Coffee } from 'lucide-react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+
+const spaceFeatures = [
+  {
+    icon: ThermometerSun,
+    title: "Température optimale",
+    desc: "21°C constant pour votre confort absolu"
+  },
+  {
+    icon: Wind,
+    title: "Air purifié H13",
+    desc: "Renouvellement toutes les 15 minutes"
+  },
+  {
+    icon: Coffee,
+    title: "Fuel Bar intégré",
+    desc: "Boissons adaptogènes et snacks sains"
+  }
+];
+
+const zoneImages = [
+  '/images/zone-sociale.jpg',      // Zone Sociale
+  '/images/zone-active.jpg',       // Zone Active
+  '/images/zone-silence.jpg'       // Zone Silence
+];
 
 export default function Space() {
-  const [activeZone, setActiveZone] = useState<number | null>(null);
+  const [selectedZone, setSelectedZone] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [,setImageLoaded] = useState(false);
 
   return (
     <Section id="space" background="cream">
@@ -20,126 +46,233 @@ export default function Space() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white border border-olive-200/60 mb-6 shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-sage-200/30 mb-6"
         >
-          <Building2 className="w-4 h-4 text-olive-600" strokeWidth={2} />
-          <span className="text-xs font-bold text-olive-800 uppercase tracking-wide">Design Biophilique</span>
+          <Building2 className="w-4 h-4 text-sage-600" strokeWidth={2} />
+          <span className="text-sm font-semibold text-charcoal">Votre sanctuaire</span>
         </motion.div>
 
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1, duration: 0.7 }}
-          className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-6 tracking-tight"
+          className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-charcoal mb-6"
         >
-          L&apos;Espace <span className="text-terra-600">Kapsul</span>
+          L&apos;espace KAPSUL.
+          <br />
+          <span className="text-sage-600">Conçu pour apaiser.</span>
         </motion.h2>
         
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="text-lg text-charcoal/60 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed"
         >
-          100m² optimisés pour le calme au cœur de l&apos;agitation toulousaine.
-          Une architecture conçue pour abaisser votre fréquence cardiaque dès l&apos;entrée.
+          Architecture biophilique au cœur de Toulouse. Chaque détail pensé pour baisser votre rythme cardiaque dès l&apos;entrée. Un sas de décompression dans la ville qui ne dort jamais.
         </motion.p>
       </div>
 
-      {/* PLAN INTERACTIF STYLISÉ */}
+      {/* ZONES SHOWCASE - Image qui change */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="relative bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-olive-900/5 mb-20 overflow-hidden border border-olive-100/50"
+        className="mb-16"
       >
-         {/* Background Grid */}
-         <div 
-           className="absolute inset-0 opacity-[0.025]" 
-           style={{ 
-             backgroundImage: 'linear-gradient(oklch(0.30 0.012 280) 1px, transparent 1px), linear-gradient(90deg, oklch(0.30 0.012 280) 1px, transparent 1px)', 
-             backgroundSize: '40px 40px' 
-           }} 
-         />
-         
-         <div className="relative z-10 flex flex-col md:flex-row items-stretch gap-6 h-[500px] md:h-[400px]">
-           
-           {/* Zone Items - Interactive Map */}
-           {zones.map((zone, idx) => {
-             const isActive = activeZone === idx;
-             const Icon = zone.icon;
-             
-             return (
-               <div 
-                  key={zone.title}
-                  onMouseEnter={() => setActiveZone(idx)}
-                  onMouseLeave={() => setActiveZone(null)}
-                  className={`
-                    relative flex-1 rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer group overflow-hidden border
-                    ${isActive ? 'flex-2 bg-olive-50/50 border-olive-200 shadow-inner' : 'bg-white border-olive-100/50 hover:border-olive-200'}
-                  `}
-               >
-                 {/* Zone Background Color Fade */}
-                 <div 
-                    className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
-                    style={{ backgroundColor: zone.color, opacity: isActive ? 0.08 : 0 }} 
-                 />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          {/* IMAGE PRINCIPALE QUI CHANGE */}
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-charcoal/5 aspect-4/3 order-2 lg:order-1">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedZone}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5 }}
+                className="relative w-full h-full"
+              >
+                <Image
+                  src={zoneImages[selectedZone]}
+                  alt={zones[selectedZone].title}
+                  fill
+                  className="object-cover"
+                  onLoad={() => setImageLoaded(true)}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </motion.div>
+            </AnimatePresence>
+            
+            {/* Overlay avec nom de la zone active */}
+            <div className="absolute inset-0 bg-linear-to-t from-charcoal/60 via-transparent to-transparent pointer-events-none" />
+            
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`badge-${selectedZone}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="absolute bottom-6 left-6 right-6"
+              >
+                <div className="glass px-5 py-4 rounded-2xl border border-white/40 backdrop-blur-md">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      {(() => {
+                        const Icon = zones[selectedZone].icon;
+                        return (
+                          <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                               style={{ backgroundColor: zones[selectedZone].color + '20' }}>
+                            <Icon className="w-5 h-5" style={{ color: zones[selectedZone].color }} strokeWidth={2} />
+                          </div>
+                        );
+                      })()}
+                      <div>
+                        <div className="font-semibold text-white">{zones[selectedZone].title}</div>
+                        <div className="text-xs text-white/80">{zones[selectedZone].desc.split('.')[0]}</div>
+                      </div>
+                    </div>
+                    <span className="text-xs font-medium text-white/80 px-3 py-1 rounded-full glass">
+                      {selectedZone + 1}/3
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-                 <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center">
+          {/* LISTE DES ZONES */}
+          <div className="space-y-4 order-1 lg:order-2">
+            <div className="mb-6">
+              <h3 className="text-2xl font-serif font-semibold text-charcoal mb-2">
+                Trois zones, trois ambiances
+              </h3>
+              <p className="text-sm text-gray-600">
+                Naviguez selon vos besoins du moment. Chaque zone est pensée pour un type de récupération spécifique.
+              </p>
+            </div>
+
+            {zones.map((zone, idx) => {
+              const Icon = zone.icon;
+              const isSelected = selectedZone === idx;
+              
+              return (
+                <button
+                  key={zone.title}
+                  onClick={() => setSelectedZone(idx)}
+                  className={`
+                    w-full text-left p-6 rounded-2xl cursor-pointer transition-all duration-300
+                    ${isSelected 
+                      ? 'glass shadow-lg border-sage-300 scale-[1.02]' 
+                      : 'glass border-sage-100 hover:border-sage-200 hover:shadow-md'
+                    }
+                    border
+                  `}
+                >
+                  <div className="flex items-start gap-4">
+                    {/* Icon avec glow si sélectionné */}
                     <div 
-                      className={`
-                        w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-500 shadow-sm
-                        ${isActive ? 'scale-110 shadow-lg' : 'opacity-60 group-hover:opacity-100 group-hover:scale-105'}
-                      `}
+                      className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                        isSelected ? 'scale-110' : 'scale-100'
+                      }`}
                       style={{ 
-                        backgroundColor: isActive ? zone.color : 'oklch(0.96 0.012 85)',
-                        color: isActive ? '#fff' : zone.color,
-                        boxShadow: isActive ? `0 10px 30px -5px ${zone.color}30` : ''
+                        backgroundColor: isSelected ? zone.color + '20' : zone.color + '10',
+                        boxShadow: isSelected ? `0 8px 24px -8px ${zone.color}40` : 'none'
                       }}
                     >
-                      <Icon className="w-8 h-8" strokeWidth={isActive ? 2 : 1.5} />
+                      <Icon 
+                        className="w-7 h-7 transition-all" 
+                        style={{ color: zone.color }}
+                        strokeWidth={isSelected ? 2 : 1.5} 
+                      />
                     </div>
 
-                    <h3 className={`font-heading font-bold text-lg mb-2 transition-colors ${isActive ? 'text-charcoal' : 'text-charcoal/40 group-hover:text-charcoal'}`}>
-                      {zone.title}
-                    </h3>
-
-                    {/* Contenu visible seulement si actif */}
-                    <div className={`
-                      transition-all duration-500 overflow-hidden
-                      ${isActive ? 'opacity-100 max-h-24 mt-2' : 'opacity-0 max-h-0'}
-                    `}>
-                       <p className="text-sm text-charcoal/60 leading-tight px-4">{zone.desc}</p>
+                    {/* Contenu */}
+                    <div className="flex-1">
+                      <h4 className={`font-semibold text-lg mb-2 transition-colors ${
+                        isSelected ? 'text-charcoal' : 'text-gray-700'
+                      }`}>
+                        {zone.title}
+                      </h4>
+                      <p className={`text-sm leading-relaxed transition-all duration-300 ${
+                        isSelected 
+                          ? 'text-gray-700 opacity-100 max-h-20' 
+                          : 'text-gray-600 opacity-70 max-h-0 overflow-hidden'
+                      }`}>
+                        {zone.desc}
+                      </p>
                     </div>
 
-                    {/* Indicateur "Survolez-moi" si inactif */}
-                    {!isActive && activeZone === null && (
-                      <div className="absolute bottom-6 opacity-0 group-hover:opacity-100 transition-opacity text-xs font-bold text-charcoal/40 flex items-center gap-1.5">
-                        <MousePointer2 className="w-3.5 h-3.5" strokeWidth={2} />
-                        Explorer
-                      </div>
-                    )}
-                 </div>
-               </div>
-             );
-           })}
-         </div>
+                    {/* Arrow indicator */}
+                    <ChevronRight 
+                      className={`w-5 h-5 shrink-0 transition-all duration-300 ${
+                        isSelected 
+                          ? 'text-sage-600 translate-x-0 opacity-100' 
+                          : 'text-gray-400 -translate-x-2 opacity-0'
+                      }`}
+                      strokeWidth={2}
+                    />
+                  </div>
 
-         {/* Légende bas de plan */}
-         <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
-            <span className="inline-block px-5 py-2 bg-white/90 backdrop-blur-sm text-xs font-bold text-charcoal/40 rounded-full border border-olive-100/50 shadow-sm">
-               Plan interactif de l&apos;espace — Survolez les zones
-            </span>
-         </div>
+                  {/* Progress bar si sélectionné */}
+                  {isSelected && (
+                    <motion.div 
+                      className="mt-4 h-1 rounded-full overflow-hidden bg-sage-100"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.5 }}
+                      style={{ transformOrigin: 'left' }}
+                    >
+                      <div className="h-full rounded-full" style={{ backgroundColor: zone.color }} />
+                    </motion.div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+        </div>
       </motion.div>
 
-      {/* INFO GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto">
+      {/* FEATURES DE L'ESPACE */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="mb-16"
+      >
+        <h3 className="text-2xl font-serif font-semibold text-charcoal text-center mb-8">
+          Confort et technologie au service de votre pause
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {spaceFeatures.map((feature, idx) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
+              className="p-6 rounded-2xl glass border border-sage-100 hover:border-sage-200 hover:shadow-md transition-all text-center"
+            >
+              <div className="w-12 h-12 rounded-xl bg-sage-600/10 flex items-center justify-center mx-auto mb-4">
+                <feature.icon className="w-6 h-6 text-sage-700" strokeWidth={2} />
+              </div>
+              <h4 className="font-semibold text-charcoal mb-2">{feature.title}</h4>
+              <p className="text-sm text-gray-600">{feature.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* SPECS GRID */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
         {[
-          { icon: Maximize2, label: "Surface", val: "100m²" },
-          { icon: Volume2, label: "Acoustique", val: "-40dB" },
-          { icon: Sparkles, label: "Air", val: "Purifié HEPA" },
+          { icon: Maximize2, label: "Surface", val: "150m²" },
+          { icon: Volume2, label: "Isolation", val: "-40dB" },
+          { icon: Sparkles, label: "Air purifié", val: "HEPA H13" },
           { icon: MapPin, label: "Quartier", val: "St-Cyprien" },
         ].map((item, i) => (
           <motion.div 
@@ -148,14 +281,43 @@ export default function Space() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 + (i * 0.1), duration: 0.6 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center text-center p-6 bg-white rounded-2xl border border-olive-100/50 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
+            className="flex flex-col items-center text-center p-6 glass rounded-2xl border border-sage-100/50 hover:border-sage-200/50 hover:-translate-y-1 transition-all"
           >
-            <item.icon className="w-6 h-6 text-olive-600 mb-3" strokeWidth={2} />
-            <div className="text-xs font-bold text-charcoal/40 uppercase tracking-wide mb-1">{item.label}</div>
-            <div className="text-xl font-bold text-charcoal">{item.val}</div>
+            <item.icon className="w-6 h-6 text-sage-600 mb-3" strokeWidth={2} />
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">{item.label}</div>
+            <div className="text-xl font-serif font-semibold text-charcoal">{item.val}</div>
           </motion.div>
         ))}
       </div>
+
+      {/* LOCALISATION CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="max-w-3xl mx-auto"
+      >
+        <div className="p-8 rounded-3xl bg-linear-to-br from-sage-50 to-terra-50 border border-sage-200">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-16 h-16 rounded-2xl bg-sage-600 flex items-center justify-center shrink-0">
+              <MapPin className="w-8 h-8 text-white" strokeWidth={2} />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h4 className="text-xl font-serif font-semibold text-charcoal mb-2">
+                Boulevard de l&apos;Innovation, St-Cyprien
+              </h4>
+              <p className="text-sm text-gray-700 mb-4">
+                Métro B — St-Cyprien République • Parking vélo sécurisé • Accès PMR
+              </p>
+              <button className="px-6 py-3 rounded-full bg-sage-600 text-white font-semibold text-sm hover:bg-sage-700 transition-all inline-flex items-center gap-2">
+                <MapPin className="w-4 h-4" strokeWidth={2} />
+                Voir sur Google Maps
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
     </Section>
   );

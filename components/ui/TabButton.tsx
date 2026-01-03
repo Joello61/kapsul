@@ -4,7 +4,7 @@ interface TabButtonProps {
   active: boolean;
   onClick: () => void;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  color: 'olive' | 'terra';
+  color: 'sage' | 'terra';
   children: React.ReactNode;
 }
 
@@ -16,17 +16,15 @@ export default function TabButton({
   children 
 }: TabButtonProps) {
   
-  // Configuration des styles selon la couleur active - Palette OKLCH stricte
+  // Configuration couleurs selon palette KAPSUL
   const styles = {
-    olive: {
-      active: 'bg-olive-600 text-white shadow-lg shadow-olive-600/25 ring-2 ring-olive-600 ring-offset-2',
-      hover: 'hover:bg-olive-50 hover:text-olive-700 hover:border-olive-200',
-      icon: 'text-olive-600'
+    sage: {
+      active: 'bg-sage-600 text-white shadow-md ring-2 ring-sage-400/30 ring-offset-2',
+      hover: 'hover:bg-sage-50 hover:text-sage-700',
     },
     terra: {
-      active: 'bg-terra-500 text-white shadow-lg shadow-terra-500/25 ring-2 ring-terra-500 ring-offset-2',
-      hover: 'hover:bg-terra-50 hover:text-terra-700 hover:border-terra-200',
-      icon: 'text-terra-500'
+      active: 'bg-terra-500 text-white shadow-md ring-2 ring-terra-400/30 ring-offset-2',
+      hover: 'hover:bg-terra-50 hover:text-terra-700',
     }
   };
 
@@ -36,33 +34,24 @@ export default function TabButton({
     <button
       onClick={onClick}
       className={`
-        group relative px-6 py-3.5 rounded-full flex items-center gap-3
-        font-heading font-bold text-sm md:text-base tracking-wide
-        transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-${color}-500 focus-visible:ring-offset-2
+        group cursor-pointer relative px-6 py-3 rounded-full flex items-center gap-3
+        font-sans font-semibold text-sm md:text-base
+        transition-all duration-300 ease-out active:scale-95
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-400 focus-visible:ring-offset-2
         ${active 
           ? currentStyle.active 
-          : `bg-white text-charcoal/70 border border-olive-100 ${currentStyle.hover}`
+          : `bg-white text-gray-700 border border-sage-100 ${currentStyle.hover}`
         }
       `}
     >
       <Icon 
         className={`
           w-5 h-5 transition-all duration-300
-          ${active ? 'scale-110' : 'scale-100 group-hover:scale-110 group-hover:rotate-6'}
-          ${active ? 'text-white' : 'text-charcoal/40 group-hover:text-current'}
+          ${active ? 'scale-105' : 'scale-100 group-hover:scale-105'}
         `} 
-        strokeWidth={active ? 2.5 : 2} 
+        strokeWidth={active ? 2 : 1.5} 
       />
       <span>{children}</span>
-      
-      {/* Indicateur de chargement / animation subtile au click */}
-      {active && (
-        <span 
-          className="absolute inset-0 rounded-full animate-ping opacity-20 bg-white pointer-events-none" 
-          style={{ animationDuration: '1.5s', animationIterationCount: '1' }} 
-        />
-      )}
     </button>
   );
 }

@@ -1,139 +1,46 @@
 @import "tailwindcss";
 
 @theme {
+  /* === TYPOGRAPHIE === */
   
-  /* Vert Olive : Couleur Principale (Calme, Nature, Équilibre) */
-  --color-olive-50: oklch(0.98 0.012 140);
-  --color-olive-100: oklch(0.95 0.025 140);
-  --color-olive-200: oklch(0.90 0.045 140);
-  --color-olive-300: oklch(0.82 0.070 140);
-  --color-olive-400: oklch(0.72 0.095 140);
-  --color-olive-500: oklch(0.62 0.115 140);
-  --color-olive-600: oklch(0.52 0.105 140);
-  --color-olive-700: oklch(0.42 0.090 140);
-  --color-olive-800: oklch(0.34 0.070 140);
+  /* Outfit pour le corps : rond, amical, moderne */
+  --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
+  
+  /* Playfair Display pour les titres : sophistiqué, éditorial, premium */
+  --font-serif: "Playfair Display", serif;
 
-  /* Terracotta : Couleur Secondaire (Chaleur, Humanité, Vitalité) */
-  --color-terra-50: oklch(0.97 0.018 50);
-  --color-terra-100: oklch(0.94 0.038 50);
-  --color-terra-200: oklch(0.88 0.070 50);
-  --color-terra-300: oklch(0.80 0.105 50);
+  /* === COULEURS KAPSUL === */
+  
+  /* Vert Sauge - Couleur principale */
+  --color-sage-200: oklch(0.90 0.045 140);
+  --color-sage-400: oklch(0.72 0.095 140);
+  --color-sage-500: oklch(0.62 0.115 140);
+  --color-sage-600: oklch(0.52 0.105 140);
+
+  /* Terracotta - Accent chaleur */
   --color-terra-400: oklch(0.70 0.140 50);
   --color-terra-500: oklch(0.64 0.160 50);
   --color-terra-600: oklch(0.56 0.145 50);
-  --color-terra-700: oklch(0.48 0.125 50);
-  --color-terra-800: oklch(0.40 0.100 50);
 
-  /* Beige Chaud : Accent (Douceur, Support) */
-  --color-beige-100: oklch(0.95 0.025 80);
-  --color-beige-300: oklch(0.85 0.055 80);
-  --color-beige-500: oklch(0.72 0.080 80);
-
-  /* Neutres : Fond et Texte */
+  /* Neutres - Fonds et texte */
+  --color-stone: oklch(0.96 0.012 85);
   --color-cream: oklch(0.98 0.008 90);
-  --color-sand: oklch(0.96 0.012 85);
-  --color-white: oklch(0.99 0.003 105);
-  
   --color-charcoal: oklch(0.30 0.012 280);
   --color-gray-700: oklch(0.55 0.008 270);
   --color-gray-500: oklch(0.68 0.006 265);
   --color-gray-300: oklch(0.82 0.004 260);
-  --color-gray-100: oklch(0.92 0.003 255);
-
-  /* États système */
-  --color-success: oklch(0.65 0.125 145);
-  --color-warning: oklch(0.72 0.145 65);
-  --color-error: oklch(0.60 0.170 35);
-  --color-info: oklch(0.68 0.110 240);
-
-  /* === TYPOGRAPHIE === */
-  --font-sans: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
-  --font-heading: var(--font-sans);
-  
-  --font-size-xs: 0.75rem;      /* 12px */
-  --font-size-sm: 0.875rem;     /* 14px */
-  --font-size-base: 1rem;       /* 16px */
-  --font-size-lg: 1.125rem;     /* 18px */
-  --font-size-xl: 1.25rem;      /* 20px */
-  --font-size-2xl: 1.5rem;      /* 24px */
-  --font-size-3xl: 1.875rem;    /* 30px */
-  --font-size-4xl: 2.25rem;     /* 36px */
-  --font-size-5xl: 3rem;        /* 48px */
-  --font-size-6xl: 3.75rem;     /* 60px */
-
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  --line-height-tight: 1.25;
-  --line-height-snug: 1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.625;
-  --line-height-loose: 1.75;
-
-  --letter-spacing-tight: -0.025em;
-  --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.025em;
-
-  /* === ESPACEMENTS === */
-  --spacing-0: 0;
-  --spacing-1: 0.25rem;   /* 4px */
-  --spacing-2: 0.5rem;    /* 8px */
-  --spacing-3: 0.75rem;   /* 12px */
-  --spacing-4: 1rem;      /* 16px */
-  --spacing-5: 1.25rem;   /* 20px */
-  --spacing-6: 1.5rem;    /* 24px */
-  --spacing-8: 2rem;      /* 32px */
-  --spacing-10: 2.5rem;   /* 40px */
-  --spacing-12: 3rem;     /* 48px */
-  --spacing-16: 4rem;     /* 64px */
-  --spacing-20: 5rem;     /* 80px */
-  --spacing-24: 6rem;     /* 96px */
-  --spacing-32: 8rem;     /* 128px */
 
   /* === BORDER RADIUS === */
-  --radius-none: 0;
-  --radius-sm: 0.375rem;   /* 6px */
-  --radius-DEFAULT: 0.5rem;  /* 8px */
-  --radius-md: 0.625rem;   /* 10px */
-  --radius-lg: 0.75rem;    /* 12px */
+  --radius-lg: 0.75rem;    /* 12px - Cartes */
   --radius-xl: 1rem;       /* 16px */
-  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-2xl: 1.5rem;    /* 24px - Pilules */
   --radius-3xl: 2rem;      /* 32px */
   --radius-full: 9999px;
 
   /* === OMBRES === */
-  --shadow-xs: 0 1px 2px oklch(0.30 0.012 280 / 0.05);
-  --shadow-sm: 0 2px 4px oklch(0.30 0.012 280 / 0.06), 0 1px 2px oklch(0.30 0.012 280 / 0.04);
-  --shadow-DEFAULT: 0 4px 6px oklch(0.30 0.012 280 / 0.07), 0 2px 4px oklch(0.30 0.012 280 / 0.05);
-  --shadow-md: 0 6px 12px oklch(0.30 0.012 280 / 0.08), 0 3px 6px oklch(0.30 0.012 280 / 0.06);
-  --shadow-lg: 0 10px 20px oklch(0.30 0.012 280 / 0.10), 0 4px 8px oklch(0.30 0.012 280 / 0.08);
-  --shadow-xl: 0 20px 40px oklch(0.30 0.012 280 / 0.12), 0 8px 16px oklch(0.30 0.012 280 / 0.10);
-  --shadow-2xl: 0 25px 50px oklch(0.30 0.012 280 / 0.15);
-
-  /* === TRANSITIONS === */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* === BREAKPOINTS === */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-
-  /* === Z-INDEX === */
-  --z-base: 0;
-  --z-dropdown: 10;
-  --z-sticky: 20;
-  --z-fixed: 30;
-  --z-modal-backdrop: 40;
-  --z-modal: 50;
-  --z-popover: 60;
-  --z-tooltip: 70;
+  --shadow-sm: 0 2px 8px oklch(0.30 0.012 280 / 0.08);
+  --shadow-md: 0 4px 16px oklch(0.30 0.012 280 / 0.10);
+  --shadow-lg: 0 8px 24px oklch(0.30 0.012 280 / 0.12);
 }
 
 @layer base {
@@ -142,94 +49,67 @@
     padding: 0;
     box-sizing: border-box;
   }
-}
 
-/* === BASE STYLES === */
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  font-family: var(--font-sans);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-charcoal);
-  background-color: var(--color-cream);
-  overflow-x: hidden;
-}
-
-/* === TYPOGRAPHIE === */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--color-charcoal);
-}
-
-/* === SELECTION === */
-::selection {
-  background-color: var(--color-olive-200);
-  color: var(--color-charcoal);
-}
-
-::-moz-selection {
-  background-color: var(--color-olive-200);
-  color: var(--color-charcoal);
-}
-
-/* === SCROLLBAR === */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-sand);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-olive-400);
-  border-radius: var(--radius-full);
-  transition: background var(--transition-base);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-olive-500);
-}
-
-/* === FOCUS VISIBLE === */
-*:focus-visible {
-  outline: 2px solid var(--color-olive-400);
-  outline-offset: 2px;
-}
-
-/* === ACCESSIBILITY === */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
   }
-}
 
-/* === PRINT === */
-@media print {
   body {
-    background: white;
-    color: black;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--color-charcoal);
+    background-color: var(--color-stone);
+    line-height: 1.6;
   }
-  
-  .no-print {
-    display: none !important;
+
+  /* Typographie */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-charcoal);
+  }
+
+  /* Sélection */
+  ::selection {
+    background-color: var(--color-sage-200);
+    color: var(--color-charcoal);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-sage-400);
+    border-radius: var(--radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-sage-500);
+  }
+
+  /* Focus */
+  *:focus-visible {
+    outline: 2px solid var(--color-sage-400);
+    outline-offset: 2px;
+  }
+}
+
+/* Utilities */
+.glass {
+  background: oklch(0.98 0.008 90 / 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(0.99 0.003 105 / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

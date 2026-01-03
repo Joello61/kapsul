@@ -1,115 +1,86 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
+import { Outfit, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 
-const fontHeading = Plus_Jakarta_Sans({ 
-  subsets: ['latin'],
-  variable: '--font-heading',
-  display: 'swap',
-  weight: ['500', '600', '700', '800'],
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-});
-
-const fontSans = Inter({ 
+// Outfit : Corps de texte rond et amical
+const outfit = Outfit({ 
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
   weight: ['400', '500', '600'],
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
+});
+
+// Playfair Display : Titres sophistiqués et éditoriaux
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+  weight: ['600', '700'],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kapsul.co'),
   title: {
-    default: 'KAPSUL | Espace de Déconnexion Urbaine & Récupération',
+    default: 'KAPSUL — Sanctuaire Urbain de Récupération',
     template: '%s | KAPSUL'
   },
-  description: 'Sanctuaire urbain à Toulouse. Pods de sieste, Réalité Virtuelle, Massage et Yoga. 20 minutes pour régénérer votre potentiel mental et physique.',
-  keywords: ['wellness', 'tech', 'déconnexion', 'sieste', 'vr', 'toulouse', 'bien-être', 'recovery', 'kapsul'],
-  authors: [{ name: 'KAPSUL Team' }],
+  description: 'Réparer le corps. Apaiser l\'esprit. Votre pause régénération à Toulouse : Pods immersifs, massages experts, yoga doux. 20 minutes pour tout changer.',
+  keywords: ['sanctuaire urbain', 'déconnexion', 'récupération', 'pods', 'massage', 'yoga', 'toulouse', 'bien-être', 'burnout', 'stress'],
+  authors: [{ name: 'KAPSUL' }],
   creator: 'KAPSUL',
-  publisher: 'KAPSUL',
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
     url: 'https://kapsul.co',
     siteName: 'KAPSUL',
-    title: 'KAPSUL - Récupération & Performance Mentale',
-    description: 'Sanctuaire urbain à Toulouse. 20 minutes pour régénérer votre potentiel mental et physique.',
-    images: [
-      { 
-        url: '/og-kapsul.jpg', 
-        width: 1200, 
-        height: 630, 
-        alt: 'KAPSUL - Espace de Récupération Urbaine' 
-      }
-    ],
+    title: 'KAPSUL — Sanctuaire Urbain de Récupération',
+    description: 'Réparer le corps. Apaiser l\'esprit. Votre cocon de décompression au cœur de Toulouse.',
+    images: [{ 
+      url: '/og-kapsul.jpg', 
+      width: 1200, 
+      height: 630, 
+      alt: 'KAPSUL - Sanctuaire Urbain' 
+    }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KAPSUL - Récupération & Performance Mentale',
-    description: 'Sanctuaire urbain à Toulouse. 20 minutes pour régénérer votre potentiel.',
+    title: 'KAPSUL — Sanctuaire Urbain',
+    description: 'Réparer le corps. Apaiser l\'esprit.',
     images: ['/og-kapsul.jpg'],
   },
   robots: { 
     index: true, 
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FAFAF9' },
-    { media: '(prefers-color-scheme: dark)', color: '#FAFAF9' },
-  ],
+  themeColor: '#F5F3F0',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
-      <body 
-        className={`
-          ${fontSans.variable} ${fontHeading.variable} 
-          antialiased min-h-screen flex flex-col
-          bg-cream text-charcoal 
-          selection:bg-olive-200 selection:text-olive-900
-        `}
-      >
-        {/* Skip Link - Accessibilité WCAG 2.1 */}
+    <html lang="fr" className="scroll-smooth">
+      <body className={`${outfit.variable} ${playfair.variable} antialiased`}>
         <a 
-          href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:px-6 focus:py-3 focus:bg-olive-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-olive-700 focus:ring-offset-2"
+          href="#main" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-6 focus:py-3 focus:bg-sage-600 focus:text-white focus:rounded-2xl"
         >
-          Aller au contenu principal
+          Aller au contenu
         </a>
 
         <Header />
         
-        <main id="main-content" className="flex-1 w-full relative z-0" role="main">
+        <main id="main">
           {children}
         </main>
         

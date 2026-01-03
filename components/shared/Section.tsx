@@ -2,7 +2,7 @@ interface SectionProps {
   children: React.ReactNode;
   className?: string;
   id?: string;
-  background?: 'cream' | 'white' | 'olive' | 'terra' | 'sand' | 'none';
+  background?: 'cream' | 'white' | 'sage' | 'terra' | 'stone' | 'none';
   pattern?: boolean;
 }
 
@@ -14,13 +14,13 @@ export function Section({
   pattern = false
 }: SectionProps) {
 
-  // Utilisation stricte de la palette OKLCH depuis globals.css
+  // Palette KAPSUL depuis globals.css
   const backgrounds = {
     cream: 'bg-cream',
     white: 'bg-white',
-    olive: 'bg-olive-50',
-    terra: 'bg-terra-50',
-    sand: 'bg-sand',
+    sage: 'bg-sage-200/20',
+    terra: 'bg-terra-100/30',
+    stone: 'bg-stone',
     none: 'bg-transparent'
   };
 
@@ -28,25 +28,25 @@ export function Section({
     <section 
       id={id}
       className={`
-        relative py-20 md:py-32 overflow-hidden
+        relative py-16 md:py-24 lg:py-32 overflow-hidden
         ${backgrounds[background]}
         ${className}
       `}
     >
-      {/* Pattern décoratif optionnel - Dot Grid subtil */}
+      {/* Pattern dot subtil (optionnel) */}
       {pattern && (
         <div 
-          className="absolute inset-0 pointer-events-none opacity-[0.035]" 
+          className="absolute inset-0 pointer-events-none opacity-[0.025]" 
           style={{ 
-            backgroundImage: `radial-gradient(oklch(0.30 0.012 280) 1px, transparent 1px)`, 
+            backgroundImage: `radial-gradient(var(--color-charcoal) 1px, transparent 1px)`, 
             backgroundSize: '32px 32px',
-            backgroundPosition: 'center center'
+            backgroundPosition: 'center'
           }}
         />
       )}
 
-      {/* Container centré avec padding adaptatif */}
-      <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+      {/* Container avec respiration */}
+      <div className="mx-auto px-6 md:px-12 lg:px-16 relative z-10 w-full container">
         {children}
       </div>
     </section>
