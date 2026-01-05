@@ -4,10 +4,7 @@
   /* === TYPOGRAPHIE === */
   
   /* Outfit pour le corps : rond, amical, moderne */
-  --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
-  
-  /* Playfair Display pour les titres : sophistiqué, éditorial, premium */
-  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 
   /* === COULEURS KAPSUL === */
   

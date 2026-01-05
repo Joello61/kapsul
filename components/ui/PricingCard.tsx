@@ -35,15 +35,17 @@ export default function PricingCard({ plan, onSelect }: PricingCardProps) {
       )}
 
       {/* Carte */}
-      <div className={`
+      <div
+        className={`
         relative flex flex-col h-full rounded-3xl overflow-hidden
         bg-white border transition-all duration-300
-        ${isPopular 
-          ? 'border-sage-300 shadow-lg' 
-          : 'border-sage-100/50 shadow-sm'
+        ${
+          isPopular
+            ? 'border-sage-300 shadow-lg'
+            : 'border-sage-100/50 shadow-sm'
         }
-      `}>
-        
+      `}
+      >
         {/* Glow pour plan populaire */}
         {isPopular && (
           <div className="absolute inset-0 bg-linear-to-br from-sage-200/20 to-transparent opacity-50" />
@@ -51,21 +53,23 @@ export default function PricingCard({ plan, onSelect }: PricingCardProps) {
 
         {/* Header */}
         <div className="p-8 pb-6 relative">
-          <h3 className="font-serif text-xl font-semibold text-charcoal mb-4">
+          <h3 className="font-sans text-xl font-semibold text-charcoal mb-4">
             {plan.name}
           </h3>
-          
+
           <div className="flex items-baseline gap-1">
-            <span className={`text-5xl font-bold tracking-tight ${isPopular ? 'text-sage-700' : 'text-charcoal'}`}>
+            <span
+              className={`text-5xl font-bold tracking-tight ${
+                isPopular ? 'text-sage-700' : 'text-charcoal'
+              }`}
+            >
               {plan.price}
             </span>
             <span className="text-gray-500 font-medium">{plan.period}</span>
           </div>
 
           {plan.name === 'STUDENT PASS' && (
-            <p className="text-sm text-gray-500 mt-3">
-              Carte étudiant requise
-            </p>
+            <p className="text-sm text-gray-500 mt-3">Carte étudiant requise</p>
           )}
         </div>
 
@@ -75,14 +79,20 @@ export default function PricingCard({ plan, onSelect }: PricingCardProps) {
         {/* Features */}
         <ul className="px-8 py-6 space-y-3 flex-1 relative">
           {plan.features.map((feature, idx) => (
-            <li key={idx} className="flex items-start gap-3 text-gray-700 group/item">
-              <div className={`
+            <li
+              key={idx}
+              className="flex items-start gap-3 text-gray-700 group/item"
+            >
+              <div
+                className={`
                 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all duration-300
-                ${isPopular 
-                  ? 'bg-sage-100 text-sage-700 group-hover/item:bg-sage-600 group-hover/item:text-white' 
-                  : 'bg-sage-50 text-sage-600 group-hover/item:bg-terra-100 group-hover/item:text-terra-600'
+                ${
+                  isPopular
+                    ? 'bg-sage-100 text-sage-700 group-hover/item:bg-sage-600 group-hover/item:text-white'
+                    : 'bg-sage-50 text-sage-600 group-hover/item:bg-terra-100 group-hover/item:text-terra-600'
                 }
-              `}>
+              `}
+              >
                 <Check className="w-3 h-3" strokeWidth={3} />
               </div>
               <span className="text-sm leading-relaxed">{feature}</span>
@@ -98,9 +108,10 @@ export default function PricingCard({ plan, onSelect }: PricingCardProps) {
               w-full py-4 rounded-2xl font-semibold text-sm tracking-wide
               transition-all duration-300 transform active:scale-95
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-400 focus-visible:ring-offset-2
-              ${isPopular 
-                ? 'bg-sage-600 text-white hover:bg-sage-700 shadow-md hover:shadow-lg' 
-                : 'bg-sage-50 text-charcoal hover:bg-charcoal hover:text-white border border-sage-100 hover:border-charcoal'
+              ${
+                isPopular
+                  ? 'bg-sage-600 text-white hover:bg-sage-700 shadow-md hover:shadow-lg'
+                  : 'bg-sage-50 text-charcoal hover:bg-charcoal hover:text-white border border-sage-100 hover:border-charcoal'
               }
             `}
           >

@@ -10,7 +10,7 @@ export interface Service {
   desc: string;
   badge: string;
   icon: LucideIcon;
-  color: string;
+  color?: string;
 }
 
 export interface PricingPlan {
@@ -51,29 +51,22 @@ export const servicesTech: Service[] = [
     desc: 'Immersion VR nature et olfactothérapie. Évadez-vous instantanément dans des paysages apaisants.',
     badge: 'Immersion',
     icon: Leaf,
-    color: '#7FA084'
+    color: 'sage'
   },
   {
     name: 'K-SLEEP',
     desc: 'Micro-sieste en position zéro gravité. Récupération optimale en 20 minutes chrono.',
     badge: 'Repos',
     icon: Moon,
-    color: '#9CA89E'
+    color: 'sage'
   },
   {
     name: 'K-FOCUS',
     desc: 'Luminothérapie bleue et sons binauraux. Retrouvez votre concentration maximale.',
     badge: 'Mental',
     icon: Brain,
-    color: '#7FA084'
+    color: 'sage'
   },
-  {
-    name: 'FUEL BAR',
-    desc: 'Boissons fonctionnelles et nootropiques. Soutenez vos performances naturellement.',
-    badge: 'Nutrition',
-    icon: Coffee,
-    color: '#B8856A'
-  }
 ];
 
 export const servicesHuman: Service[] = [
@@ -82,14 +75,21 @@ export const servicesHuman: Service[] = [
     desc: 'Protocole dos et trapèzes par des praticiens experts. Libérez les tensions accumulées.',
     badge: 'Soin Manuel',
     icon: Heart,
-    color: '#B8856A'
+    color: 'terra'
   },
   {
     name: 'K-YOGA',
     desc: 'Yoga postural en petit groupe avec coach certifié. Reconnectez-vous à votre corps.',
     badge: 'Coach Humain',
     icon: Users,
-    color: '#A57760'
+    color: 'terra'
+  },
+  {
+    name: 'FUEL BAR',
+    desc: 'Boissons fonctionnelles et nootropiques. Soutenez vos performances naturellement.',
+    badge: 'Nutrition',
+    icon: Coffee,
+    color: 'terra'
   }
 ];
 

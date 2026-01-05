@@ -30,7 +30,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <div 
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none blur-2xl"
           style={{ 
-            background: `radial-gradient(circle at 50% 0%, ${service.color}15, transparent 70%)`
+            background: `radial-gradient(circle at 50% 0%, text-${service.color}15, transparent 70%)`
           }}
         />
 
@@ -39,7 +39,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <span 
             className="px-3 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-300"
             style={{
-              backgroundColor: isHovered ? `${service.color}15` : 'var(--color-sage-200)',
+              backgroundColor: isHovered ? `bg-${service.color}15` : 'var(--color-sage-200)',
               color: isHovered ? service.color : 'var(--color-charcoal)',
             }}
           >
@@ -52,7 +52,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <div 
             className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-105"
             style={{ 
-              backgroundColor: `${service.color}10`,
+              backgroundColor: `bg-${service.color}10`,
               boxShadow: isHovered ? `0 8px 24px -8px ${service.color}40` : 'none'
             }}
           >

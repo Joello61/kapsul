@@ -28,7 +28,7 @@ export function Section({
     <section 
       id={id}
       className={`
-        relative py-16 md:py-24 lg:py-32 overflow-hidden
+        relative py-8 md:py-16 lg:py-16 overflow-hidden
         ${backgrounds[background]}
         ${className}
       `}

@@ -1,26 +1,16 @@
 import type { Metadata, Viewport } from 'next';
-import { Outfit, Playfair_Display } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 
-// Outfit : Corps de texte rond et amical
-const outfit = Outfit({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
-  display: 'swap',
   weight: ['400', '500', '600'],
-});
-
-// Playfair Display : Titres sophistiqués et éditoriaux
-const playfair = Playfair_Display({ 
-  subsets: ['latin'],
-  variable: '--font-serif',
   display: 'swap',
-  weight: ['600', '700'],
 });
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://kapsul.co'),
   title: {
@@ -70,7 +60,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className="scroll-smooth">
-      <body className={`${outfit.variable} ${playfair.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased`}>
         <a 
           href="#main" 
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-6 focus:py-3 focus:bg-sage-600 focus:text-white focus:rounded-2xl"
