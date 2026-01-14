@@ -113,7 +113,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: 'STUDENT PASS',
-    price: '29.90€',
+    price: '25.99€',
     period: '/mois',
     features: [
       '4 crédits par mois inclus',
@@ -126,7 +126,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: 'STANDARD PASS',
-    price: '49.90€',
+    price: '39.99€',
     period: '/mois',
     features: [
       '8 crédits par mois inclus',
@@ -136,6 +136,19 @@ export const pricingPlans: PricingPlan[] = [
     ],
     cta: 'Souscrire',
     popular: false
+  },
+  {
+    name: 'PRO PASS',
+    price: '59.99€',
+    period: '/mois',
+    features: [
+      '12 crédits par mois inclus',
+      'Accès illimité 7j/7',
+      'Fuel Bar -20% permanent',
+      'Réservation prioritaire'
+    ],
+    cta: 'Souscrire',
+    popular: true
   }
 ];
 

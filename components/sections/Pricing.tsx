@@ -170,7 +170,7 @@ export default function Pricing() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-30 w-full mx-auto mb-16"
+        className="grid grid-cols-1 md:grid-cols-4 gap-10 w-full mx-auto mb-16"
       >
         {pricingPlans.map((plan) => (
           <motion.div key={plan.name} variants={itemVariants}>

@@ -168,7 +168,7 @@ export default function Hero() {
               <div className="flex items-center gap-6">
                 <div className="text-center">
                   <div className="font-sans text-4xl font-semibold text-charcoal leading-none mb-1">
-                    20<span className="text-2xl">min</span>
+                    30<span className="text-2xl">min</span>
                   </div>
                   <div className="text-xs text-gray-500 uppercase tracking-wider font-medium">
                     Par séance
@@ -190,10 +190,10 @@ export default function Hero() {
 
                 <div className="text-center">
                   <div className="font-sans text-4xl font-semibold text-terra-600 leading-none mb-1">
-                    10€
+                    12€
                   </div>
                   <div className="text-xs text-gray-500 uppercase tracking-wider font-medium">
-                    Dès 9h
+                    Dès 10h
                   </div>
                 </div>
               </div>
