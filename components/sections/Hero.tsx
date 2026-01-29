@@ -76,14 +76,14 @@ export default function Hero() {
 
             {/* Titres - Plus épurés et élégants */}
             <div className="space-y-6">
-              <motion.h1
+              <motion.h3
                 variants={fadeInUp}
-                className="font-sans text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] text-charcoal"
+                className="font-sans text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.3] text-charcoal"
               >
-                Réparer le corps.
+                Moins cher qu'une thérapie,
                 <br />
-                <span className="text-sage-600">Apaiser l&apos;esprit.</span>
-              </motion.h1>
+                <span className="text-sage-600">Plus efficace qu'une sieste.</span>
+              </motion.h3>
 
               <motion.p
                 variants={fadeInUp}
@@ -190,7 +190,7 @@ export default function Hero() {
 
                 <div className="text-center">
                   <div className="font-sans text-4xl font-semibold text-terra-600 leading-none mb-1">
-                    12€
+                    10€
                   </div>
                   <div className="text-xs text-gray-500 uppercase tracking-wider font-medium">
                     Dès 10h
