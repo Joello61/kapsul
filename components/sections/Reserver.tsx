@@ -48,7 +48,7 @@ export default function Reserver() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const services = getAllServices();
+  const services = getAllServices().slice(0, -1);
 
   const handleServiceSelect = (serviceName: string) => {
     setSelectedService(serviceName);

@@ -86,7 +86,7 @@ export default function Header() {
             {/* CTA DESKTOP */}
             <div className="flex items-center gap-3 pl-3">
               <Link href="/reserver" className="hidden md:block">
-                <button className="group relative overflow-hidden rounded-full bg-sage-600 text-white shadow-md transition-all hover:bg-sage-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-400 focus-visible:ring-offset-2 px-6 py-3 text-sm font-semibold">
+                <button className="group cursor-pointer relative overflow-hidden rounded-full bg-sage-600 text-white shadow-md transition-all hover:bg-sage-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-400 focus-visible:ring-offset-2 px-6 py-3 text-sm font-semibold">
                   <span className="relative z-10 flex items-center gap-2">
                     Réserver
                     <Calendar className="w-4 h-4" strokeWidth={2} />
